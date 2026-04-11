@@ -1,27 +1,32 @@
 const registros = [
     {
+        fecha: "12.04.2026",
+        carta: "VI de espadas",
+        nota: "Dejar atrás y seguir avanzando. A veces, para poder avanzar mejor hay que dejar cosas en el pasado."
+    },
+    {
         fecha: "11.04.2026",
-        carta: "7 de bastos",
+        carta: "VII de bastos",
         nota: "Defensa de mis convicciones. Mantengo mi posición con integridad frente a los desafíos externos."
     },
     {
         fecha: "10.04.2026",
-        carta: "7 de espadas",
+        carta: "VII de espadas",
         nota: "Estrategia y discreción. Es momento de ser prudente y observar qué información comparto."
     },
     {
         fecha: "09.04.2026",
-        carta: "7 de pentáculos",
+        carta: "VII de pentáculos",
         nota: "Paciencia y evaluación. Confío en que mis esfuerzos darán fruto a su debido tiempo."
     },
     {
         fecha: "08.04.2026",
-        carta: "7 de copas",
+        carta: "VII de copas",
         nota: "Clarificación de deseos. Diferencio entre las fantasías pasajeras y lo que realmente nutre mi alma."
     },
     {
         fecha: "07.04.2026",
-        carta: "5 de espadas",
+        carta: "V de espadas",
         nota: "Gestión de conflictos. Elijo mis batallas con sabiduría; no todas las victorias valen el desgaste."
     },
     {
@@ -36,7 +41,7 @@ const registros = [
     },
     {
         fecha: "04.04.2026",
-        carta: "8 de pentáculos",
+        carta: "VIII de pentáculos",
         nota: "Dedicación y maestría. Me enfoco en los detalles y en el placer de perfeccionar mi trabajo diario."
     }
 ];
