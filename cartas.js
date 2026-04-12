@@ -1,5 +1,10 @@
 const registros = [
     {
+        fecha: "13.04.2026",
+        carta: "VI de espadas",
+        nota: "Dejar atrás, seguir avanzando, transición. Quizás se acerca una transición inminentemente."
+    },
+    {
         fecha: "12.04.2026",
         carta: "VI de espadas",
         nota: "Dejar atrás y seguir avanzando. A veces, para poder avanzar mejor hay que dejar cosas en el pasado."
