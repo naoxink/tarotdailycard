@@ -1,5 +1,9 @@
 const registros = [
     {
+        fecha: "14.04.2026",
+        carta: "X de espadas",
+        nota: "Final, dolor, disgusto. Tranquilo, todo pasa. Hay que ver el nuevo camino que nos muestra el final de este."
+    {
         fecha: "13.04.2026",
         carta: "VI de espadas",
         nota: "Dejar atrás, seguir avanzando, transición. Quizás se acerca una transición inminentemente."
