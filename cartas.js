@@ -1,5 +1,10 @@
 const registros = [
     {
+        fecha: "15.04.2026",
+        carta: "El emperador (IV)",
+        nota: "Florece mi lado paternal"
+    },
+    {
         fecha: "14.04.2026",
         carta: "X de espadas",
         nota: "Final, dolor, disgusto. Tranquilo, todo pasa. Hay que ver el nuevo camino que nos muestra el final de este."
