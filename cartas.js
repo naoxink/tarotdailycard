@@ -2,7 +2,7 @@ const registros = [
     {
         fecha: "17.04.2026",
         carta: "El juicio (XX)",
-        nota: "es hora de reflexionar sobre el estado de mi vida personal para crecer"
+        nota: "Es hora de reflexionar sobre el estado de mi vida personal para crecer"
     },
     {
         fecha: "16.04.2026",
