@@ -1,5 +1,10 @@
 const registros = [
     {
+        fecha: "16.04.2026",
+        carta: "XII de copas",
+        nota: "No debo fiarme y confiarme en las ilusiones (espejismos), expectativas o ideas preconcebidas"
+    },
+    {
         fecha: "15.04.2026",
         carta: "El emperador (IV)",
         nota: "Florece mi lado paternal"
