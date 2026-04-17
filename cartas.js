@@ -1,3 +1,9 @@
+// EDITAR ESTO UNA VEZ AL AÑO / SEMANA
+const especiales = {
+    año: "VI de copas",
+    semana: "VII de espadas"
+};
+
 const registros = [
     {
         fecha: "17.04.2026",
