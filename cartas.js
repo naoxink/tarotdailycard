@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "21.04.2026",
+        carta: "As de espadas",
+        nota: "Claridad mental. Cuidado de no herir a los demás con demasiada sinceridad ante la falta de emoción."
+    },
+    {
         fecha: "20.04.2026",
         carta: "El colgado (XII)",
         nota: "A veces es necesario ver algunas cosas desde otro punto de vista. esperemos que no sea un sacrificio."
