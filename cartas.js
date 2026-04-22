@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "22.04.2026",
+        carta: "El Diablo (XV)",
+        nota: "Excesos, vicios y ataduras terrenales. Hay que disfrutar de vez en cuando pero sin que te domine."
+    },
+    {
         fecha: "21.04.2026",
         carta: "As de espadas",
         nota: "Claridad mental. Cuidado de no herir a los demás con demasiada sinceridad ante la falta de emoción."
