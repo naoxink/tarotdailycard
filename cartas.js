@@ -13,7 +13,7 @@ const registros = [
     {
         fecha: "23.04.2026",
         carta: "III de copas",
-        nota: "Buenos momentos y celebración. Puede que sea un buen momento para la resolución de algun problema."
+        nota: "Buenos momentos y celebración. Puede que sea un buen momento para la resolución de algún problema."
     },
     {
         fecha: "22.04.2026",
