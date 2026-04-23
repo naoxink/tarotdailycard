@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "24.04.2026",
+        carta: "Sota de espadas",
+        nota: "Si me enfrento a una situación inesperada, mejor no actuar precipitadamente y pensar bien antes de actuar. También indica curiosidad, inquietud 🤔"
+    },
+    {
         fecha: "23.04.2026",
         carta: "III de copas",
         nota: "Buenos momentos y celebración. Puede que sea un buen momento para la resolución de algun problema."
