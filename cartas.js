@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "25.04.2026",
+        carta: "Caballero de pentáculos",
+        nota: "No involucrarse tan emocionalmente en los asuntos. Perseverancia, esfuerzo y compromiso para conseguir los logros."
+    },
+    {
         fecha: "24.04.2026",
         carta: "Sota de espadas",
         nota: "Si me enfrento a una situación inesperada, mejor no actuar precipitadamente y pensar bien antes de actuar. También indica curiosidad, inquietud 🤔"
