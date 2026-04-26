@@ -1,7 +1,7 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: "VI de copas",
-    semana: "Reina de espadas"
+    semana: "Sota de bastos"
 };
 
 const registros = [
