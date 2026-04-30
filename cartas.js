@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "01.05.2026",
+        carta: "El emperador (IV)",
+        nota: "Liderazgo, control y logros. Buen momento para iniciar proyectos y puede surgir alguna oportunidad."
+    },
+    {
         fecha: "30.04.2026",
         carta: "El carro (VII)",
         nota: "Hay que tomar las riendas, tomar decisiones y tomar oportunidades que se presenten."
