@@ -8,7 +8,7 @@ const registros = [
     {
         fecha: "02.05.2026",
         carta: "II de espadas",
-        nota: "Equilibrio o conflicto interno o con alguien. Quizás encontrar paz"
+        nota: "Equilibrio o conflicto interno o con alguien. Quizás encontrar paz. ¿Indecisión?"
     },
     {
         fecha: "01.05.2026",
