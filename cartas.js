@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "03.05.2026",
+        carta: "VI de espadas",
+        nota: "Realizar la transición que tanto cuesta. Hay que soltar cosas, demasiada carga. Avancemos."
+    },
+    {
         fecha: "02.05.2026",
         carta: "II de espadas",
         nota: "Equilibrio o conflicto interno o con alguien. Quizás encontrar paz. ¿Indecisión?"
