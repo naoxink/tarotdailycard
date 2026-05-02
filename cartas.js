@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "02.05.2026",
+        carta: "II de espadas",
+        nota: "Equilibrio o conflicto interno o con alguien. Quizás encontrar paz"
+    },
+    {
         fecha: "01.05.2026",
         carta: "El emperador (IV)",
         nota: "Liderazgo, control y logros. Buen momento para iniciar proyectos y puede surgir alguna oportunidad."
