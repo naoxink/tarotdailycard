@@ -1,10 +1,15 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: "VI de copas",
-    semana: "Sota de bastos"
+    semana: "La muerte (XIII)"
 };
 
 const registros = [
+    {
+        fecha: "04.05.2026",
+        carta: "II de espadas",
+        nota: "Espero que no sea conflicto con alguien, seguramente conmigo mismo. Podría ser encontrar el balance adecuado."
+    },
     {
         fecha: "03.05.2026",
         carta: "VI de espadas",
