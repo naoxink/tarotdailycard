@@ -8,7 +8,7 @@ const registros = [
     {
         fecha: "04.05.2026",
         carta: "II de espadas",
-        nota: "Espero que no sea conflicto con alguien, seguramente conmigo mismo. Podría ser encontrar el balance adecuado."
+        nota: "Espero que no sea conflicto con alguien, seguramente conmigo mismo. Podría ser encontrar el balance adecuado o una elección difícil. También se refiere a sentirse atascado."
     },
     {
         fecha: "03.05.2026",
