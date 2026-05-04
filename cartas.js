@@ -1,7 +1,7 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
-    año: "VI de copas",
-    semana: "La muerte (XIII)"
+    año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio" },
+    semana: { carta: "La muerte (XIII)", nota: "Nuevos comienzos, transformación" }
 };
 
 const registros = [

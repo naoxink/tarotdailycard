@@ -63,8 +63,8 @@
         // Renderizar Especiales (AÑADIR ESTO)
         const destacados = document.getElementById('destacados');
         destacados.innerHTML = `
-            <div class="special-card"><span class="label">Año 2026</span><span class="special-name">${especiales.año}</span></div>
-            <div class="special-card"><span class="label">Semana Actual</span><span class="special-name">${especiales.semana}</span></div>
+            <div class="special-card"><span class="label">Año 2026</span><span class="special-name">${especiales.año.carta}</span><span class="note">${especiales.año.nota}</span></div>
+            <div class="special-card"><span class="label">Semana Actual</span><span class="special-name">${especiales.semana.carta}</span><span class="note">${especiales.semana.nota}</span></div>
         `;
 
         registros.forEach((item, index) => {
