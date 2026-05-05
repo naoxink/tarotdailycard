@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "05.05.2026",
+        carta: "VI de pentáculos",
+        nota: "Armonía y bienestar. Interacciones fluídas con el entorno. Se verán resultados pequeños de las cosas que he estado cuidando. Sensación de equilibrio."
+    },
+    {
         fecha: "04.05.2026",
         carta: "II de espadas",
         nota: "Espero que no sea conflicto con alguien, seguramente conmigo mismo. Podría ser encontrar el balance adecuado o una elección difícil. También se refiere a sentirse atascado."
