@@ -1,10 +1,15 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
-    año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio" },
-    semana: { carta: "La muerte (XIII)", nota: "Nuevos comienzos, transformación" }
+    año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
+    semana: { carta: "La muerte (XIII)", nota: "Nuevos comienzos, transformación." }
 };
 
 const registros = [
+    {
+        fecha: "06.05.2026",
+        carta: "II de bastos",
+        nota: "Sentirse dividido entre dos opciones o bien observar las experiencias que están por llegar."
+    },
     {
         fecha: "05.05.2026",
         carta: "VI de pentáculos",
