@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "08.05.2026",
+        carta: "El Mago (I)",
+        nota: "Tengo las habilidades para superar los problemas. También podría ser algún engañillo a otra persona o a mí mismo."
+    },
+    {
         fecha: "07.05.2026",
         carta: "El Diablo (XV)",
         nota: "Cuidado con engancharse, todo con su medida, sin excesos."
