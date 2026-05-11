@@ -1,10 +1,15 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
-    semana: { carta: "La muerte (XIII)", nota: "Nuevos comienzos, transformación." }
+    semana: { carta: "Reina de espadas", nota: "Hay que usar más la razón que los sentimientos." }
 };
 
 const registros = [
+    {
+        fecha: "11.05.2026",
+        carta: "La Luna (XVIII)",
+        nota: "Habrá que seguir la intuición en el camino desconocido. Quizás me estén ocurriendo cosas de las que no soy consciente."
+    },
     {
         fecha: "10.05.2026",
         carta: "VIII de bastos",
