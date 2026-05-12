@@ -60,7 +60,13 @@
             border-bottom-right-radius: 0;
         }
         .stats-panel::-webkit-details-marker { display: none; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 1px solid #eee; border-top: none; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 10px; background: #fff9db; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; border: 1px solid #eee; border-top: none; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 10px; background: #fff9db; }
+        .chart-container { grid-column: 1 / -1; margin: 20px 0 10px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; }
+        .chart-title { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; color: #666; display: block; margin-bottom: 10px; }
+        .chart-bar { display: flex; align-items: center; margin-bottom: 5px; }
+        .chart-label { width: 100px; font-size: 0.8rem; color: #555; }
+        .chart-bar-fill { height: 12px; background: #53006a; border-radius: 2px; transition: width 0.3s; }
+        .chart-percent { margin-left: 10px; font-size: 0.8rem; font-weight: 700; color: #333; }
         .special-card,
         .stats-card { background: transparent; padding: 0; border: none; border-radius: 0; }
         .label { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #888; display: block; }
@@ -117,6 +123,29 @@
             return 'Arcanos mayores';
         };
 
+        const renderSuitChart = (suitCounts) => {
+            const total = Object.values(suitCounts).reduce((sum, count) => sum + count, 0);
+            if (total === 0) return '<div class="chart-container">No hay datos para este mes.</div>';
+
+            const suits = ['Espadas', 'Bastos', 'Copas', 'Pentáculos', 'Arcanos mayores'];
+            let chartHTML = '<div class="chart-container"><div class="chart-title">Distribución de palos este mes</div>';
+            suits.forEach(suit => {
+                const count = suitCounts[suit] || 0;
+                const percent = total > 0 ? Math.round((count / total) * 100) : 0;
+                const barWidth = percent === 0 ? '1px' : `${percent}%`;
+                const barColor = percent === 0 ? '#ccc' : '#53006a';
+                chartHTML += `
+                    <div class="chart-bar">
+                        <span class="chart-label">${suit}</span>
+                        <div class="chart-bar-fill" style="width: ${barWidth}; background: ${barColor}"></div>
+                        <span class="chart-percent">${percent}%</span>
+                    </div>
+                `;
+            });
+            chartHTML += '</div>';
+            return chartHTML;
+        };
+
         const suitCount = registros.reduce((acc, item) => {
             const suit = getSuit(item.carta);
             acc[suit] = (acc[suit] || 0) + 1;
@@ -148,15 +177,13 @@
         };
 
         const frequentSuit = getMostRepeated(suitCount);
-        const frequentSuitMonth = registrosMesActual.length ? getMostRepeated(suitCountMonth) : 'N/A';
 
         estadisticas.innerHTML = `
             <div class="stats-card"><span class="label">Entradas</span><span class="stats-value">${registros.length}</span></div>
             <div class="stats-card"><span class="label">Cartas distintas</span><span class="stats-value">${cartasDistintas}</span></div>
             <div class="stats-card"><span class="label">Carta más repetida</span><span class="stats-value">${cartasFrecuentes.join(', ')} (${maxRepeticiones})</span></div>
             <div class="stats-card"><span class="label">Palo más repetido</span><span class="stats-value">${frequentSuit}</span></div>
-            <div class="stats-card"><span class="label">Palo más repetido este mes</span><span class="stats-value">${frequentSuitMonth}</span></div>
-            <div class="stats-card"><span class="label">Rango de fechas</span><span class="stats-value">${fechas[0].split('-').reverse().join('.')} — ${fechas[fechas.length - 1].split('-').reverse().join('.')}</span></div>
+            ${renderSuitChart(suitCountMonth)}
         `;
 
         const today = new Date();
