@@ -34,6 +34,85 @@ const getSuit = carta => {
     return 'Arcanos mayores';
 };
 
+function generarInterpretacionDinamica(porcentajes) {
+  const biblioteca = {
+    espadas: [
+      "claridad mental y decisiones", "enfoque lógico", 
+      "comunicación directa", "análisis de la situación"
+    ],
+    bastos: [
+      "fuerza creativa", "impulso vital", 
+      "ganas de emprender", "acción y movimiento"
+    ],
+    copas: [
+      "conexión emocional", "intuición profunda", 
+      "armonía en las relaciones", "paz interior"
+    ],
+    oros: [
+      "estabilidad económica", "frutos del esfuerzo", 
+      "seguridad material", "sentido práctico"
+    ],
+    arcanosMayores: [
+      "grandes cambios de vida", "lecciones del destino", 
+      "un propósito mayor", "momentos de revelación"
+    ],
+    vacio: {
+      espadas: "poca claridad",
+      bastos: "falta de motivación",
+      copas: "cierta sequedad emocional",
+      oros: "descuido de lo material",
+      arcanosMayores: "asuntos triviales"
+    }
+  };
+
+  const azar = (array) => array[Math.floor(Math.random() * array.length)];
+  const separar = (items) => {
+    if (items.length === 0) return "";
+    if (items.length === 1) return items[0];
+    return items.slice(0, -1).join(', ') + ' y ' + items[items.length - 1];
+  };
+
+  const partes = { mucho: [], algo: [], poco: [], nada: [] };
+
+  for (const [palo, valor] of Object.entries(porcentajes)) {
+    const concepto = biblioteca[palo] ? azar(biblioteca[palo]) : "";
+    if (valor >= 50) {
+      partes.mucho.push(concepto);
+    } else if (valor >= 20) {
+      partes.algo.push(concepto);
+    } else if (valor > 0) {
+      partes.poco.push(concepto);
+    } else {
+      partes.nada.push(biblioteca.vacio[palo]);
+    }
+  }
+
+  const frases = [];
+  if (partes.mucho.length > 0) {
+    frases.push(`un fuerte enfoque en ${separar(partes.mucho)}`);
+  }
+  if (partes.algo.length > 0) {
+    frases.push(`notable ${separar(partes.algo)}`);
+  }
+  if (partes.poco.length > 0) {
+    frases.push(`pinceladas de ${separar(partes.poco)}`);
+  }
+
+  let frase = "El tarot indica para ti";
+  if (frases.length > 0) {
+    frase += ' ' + frases.join(', ') + '.';
+  } else {
+    frase += ' un periodo sin signos muy marcados.';
+  }
+
+  if (partes.nada.length > 0) {
+    frase = frase.replace(/\.$/, '');
+    frase += `, aunque podrías sentir ${separar(partes.nada)}.`;
+  }
+
+  return frase;
+}
+
 const renderSuitChart = (suitCounts) => {
     const total = Object.values(suitCounts).reduce((sum, count) => sum + count, 0);
     if (total === 0) return '<div class="chart-container">No hay datos para este mes.</div>';
@@ -53,6 +132,18 @@ const renderSuitChart = (suitCounts) => {
             </div>
         `;
     });
+
+    // Generate interpretation
+    const porcentajes = {
+        espadas: suitCounts['Espadas'] || 0,
+        bastos: suitCounts['Bastos'] || 0,
+        copas: suitCounts['Copas'] || 0,
+        oros: suitCounts['Pentáculos'] || 0,
+        arcanosMayores: suitCounts['Arcanos mayores'] || 0
+    };
+    const interpretacion = generarInterpretacionDinamica(porcentajes);
+
+    chartHTML += `<p class="chart-interpretation">${interpretacion}</p>`;
     chartHTML += '</div>';
     return chartHTML;
 };

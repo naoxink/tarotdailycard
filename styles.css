@@ -60,6 +60,7 @@ h1 { font-size: 1.2rem; text-align: left; border-bottom: 2px solid #eee; padding
 .chart-label { width: 100px; font-size: 0.8rem; color: #555; }
 .chart-bar-fill { height: 12px; background: #53006a; border-radius: 2px; transition: width 0.3s; }
 .chart-percent { margin-left: 10px; font-size: 0.8rem; font-weight: 700; color: #333; }
+.chart-interpretation { margin-top: 15px; font-size: 0.9rem; color: #555; line-height: 1.4; font-style: italic; }
 .special-card,
 .stats-card { background: transparent; padding: 0; border: none; border-radius: 0; }
 .label { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: #888; display: block; }
