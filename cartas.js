@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "13.05.2026",
+        carta: "Los enamorados (VI)",
+        nota: "Decisiones importantes. Es importante seguir el corazón, pero también tener en cuenta la razón."
+    },
+    {
         fecha: "12.05.2026",
         carta: "IX de pentáculos",
         nota: "Algo está a punto de dar su fruto, ha valido la pena."
