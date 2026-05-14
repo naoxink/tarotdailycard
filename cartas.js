@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "14.05.2026",
+        carta: "IV de pentáculos",
+        nota: "Cuidado con el apego a lo material, a las cosas, a las personas.. Hay que aprender a soltar y a no aferrarse a nada."
+    },
+    {
         fecha: "13.05.2026",
         carta: "Los enamorados (VI)",
         nota: "Decisiones importantes. Es importante seguir el corazón, pero también tener en cuenta la razón."
