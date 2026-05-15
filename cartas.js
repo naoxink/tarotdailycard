@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "15.05.2026",
+        carta: "X de bastos",
+        nota: "Cuidado con la sobrecarga de responsabilidades. No hay que cargar con más de lo que puedo manejar."
+    },
+    {
         fecha: "14.05.2026",
         carta: "IV de pentáculos",
         nota: "Cuidado con el apego a lo material, a las cosas, a las personas.. Hay que aprender a soltar y a no aferrarse a nada."
