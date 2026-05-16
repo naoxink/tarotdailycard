@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "16.05.2026",
+        carta: "V de copas",
+        nota: "Puede que llegue una decepción o algún momento triste; algún sentimiento de que falte alguien o algo."
+    },
+    {
         fecha: "15.05.2026",
         carta: "X de bastos",
         nota: "Cuidado con la sobrecarga de responsabilidades. No hay que cargar con más de lo que puedo manejar."
