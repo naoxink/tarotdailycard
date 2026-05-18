@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "18.05.2026",
+        carta: "IV de copas",
+        nota: "Parece que algo no va bien. Es hora de un poco de introspección para ver qué ocurre. Puede ser también cansancio, desánimo o insatisfacción"
+    },
+    {
         fecha: "17.05.2026",
         carta: "El Juicio (XX)",
         nota: "Toca reflexionar internamente. Se acaba un ciclo, así que hay que evaluar qué cambio para el siguiente."
