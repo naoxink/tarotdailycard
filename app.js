@@ -34,85 +34,6 @@ const getSuit = carta => {
     return 'Arcanos mayores';
 };
 
-function generarInterpretacionDinamica(porcentajes) {
-  const biblioteca = {
-    espadas: [
-      "claridad mental y decisiones", "enfoque lógico", 
-      "comunicación directa", "análisis de la situación"
-    ],
-    bastos: [
-      "fuerza creativa", "impulso vital", 
-      "ganas de emprender", "acción y movimiento"
-    ],
-    copas: [
-      "conexión emocional", "intuición profunda", 
-      "armonía en las relaciones", "paz interior"
-    ],
-    oros: [
-      "estabilidad económica", "frutos del esfuerzo", 
-      "seguridad material", "sentido práctico"
-    ],
-    arcanosMayores: [
-      "grandes cambios de vida", "lecciones del destino", 
-      "un propósito mayor", "momentos de revelación"
-    ],
-    vacio: {
-      espadas: "poca claridad",
-      bastos: "falta de motivación",
-      copas: "cierta sequedad emocional",
-      oros: "descuido de lo material",
-      arcanosMayores: "asuntos triviales"
-    }
-  };
-
-  const azar = (array) => array[Math.floor(Math.random() * array.length)];
-  const separar = (items) => {
-    if (items.length === 0) return "";
-    if (items.length === 1) return items[0];
-    return items.slice(0, -1).join(', ') + ' y ' + items[items.length - 1];
-  };
-
-  const partes = { mucho: [], algo: [], poco: [], nada: [] };
-
-  for (const [palo, valor] of Object.entries(porcentajes)) {
-    const concepto = biblioteca[palo] ? azar(biblioteca[palo]) : "";
-    if (valor >= 50) {
-      partes.mucho.push(concepto);
-    } else if (valor >= 20) {
-      partes.algo.push(concepto);
-    } else if (valor > 0) {
-      partes.poco.push(concepto);
-    } else {
-      partes.nada.push(biblioteca.vacio[palo]);
-    }
-  }
-
-  const frases = [];
-  if (partes.mucho.length > 0) {
-    frases.push(`un fuerte enfoque en ${separar(partes.mucho)}`);
-  }
-  if (partes.algo.length > 0) {
-    frases.push(`notable ${separar(partes.algo)}`);
-  }
-  if (partes.poco.length > 0) {
-    frases.push(`pinceladas de ${separar(partes.poco)}`);
-  }
-
-  let frase = "El tarot indica para ti";
-  if (frases.length > 0) {
-    frase += ' ' + frases.join(', ') + '.';
-  } else {
-    frase += ' un periodo sin signos muy marcados.';
-  }
-
-  if (partes.nada.length > 0) {
-    frase = frase.replace(/\.$/, '');
-    frase += `, aunque podrías sentir ${separar(partes.nada)}.`;
-  }
-
-  return frase;
-}
-
 const renderSuitChart = (suitCounts) => {
     const total = Object.values(suitCounts).reduce((sum, count) => sum + count, 0);
     if (total === 0) return '<div class="chart-container">No hay datos para este mes.</div>';
@@ -123,7 +44,7 @@ const renderSuitChart = (suitCounts) => {
         const count = suitCounts[suit] || 0;
         const percent = total > 0 ? Math.round((count / total) * 100) : 0;
         const barWidth = percent === 0 ? '1px' : `${percent}%`;
-        const barColor = percent === 0 ? '#ccc' : '#53006a';
+        const barColor = percent === 0 ? 'var(--border-chart)' : 'var(--purple)';
         chartHTML += `
             <div class="chart-bar">
                 <span class="chart-label">${suit}</span>
@@ -132,18 +53,6 @@ const renderSuitChart = (suitCounts) => {
             </div>
         `;
     });
-
-    // Generate interpretation
-    const porcentajes = {
-        espadas: suitCounts['Espadas'] || 0,
-        bastos: suitCounts['Bastos'] || 0,
-        copas: suitCounts['Copas'] || 0,
-        oros: suitCounts['Pentáculos'] || 0,
-        arcanosMayores: suitCounts['Arcanos mayores'] || 0
-    };
-    const interpretacion = generarInterpretacionDinamica(porcentajes);
-
-    chartHTML += `<p class="chart-interpretation">${interpretacion}</p>`;
     chartHTML += '</div>';
     return chartHTML;
 };
@@ -191,16 +100,128 @@ estadisticas.innerHTML = `
 const today = new Date();
 const todayString = String(today.getDate()).padStart(2, '0') + '.' + String(today.getMonth() + 1).padStart(2, '0') + '.' + today.getFullYear();
 
+// 1. Averiguamos la carta de hoy
+const registroHoy = registros.find(r => r.fecha === todayString);
+const cartaDeHoy = registroHoy ? registroHoy.carta.trim() : null;
+
+let seccionMes = null;
+let cuerpoMes = null;
+let esPrimerMes = true;
+
+const nombresMeses = {
+    "01": "Enero", "02": "Febrero", "03": "Marzo", "04": "Abril",
+    "05": "Mayo", "06": "Junio", "07": "Julio", "08": "Agosto",
+    "09": "Septiembre", "10": "Octubre", "11": "Noviembre", "12": "Diciembre"
+};
+
 registros.forEach((item, index) => {
+    const partes = item.fecha.split('.');
+    const mesAnioActual = `${partes[1]}.${partes[2]}`;
+
+    if (!seccionMes || !cuerpoMes || !container.innerHTML.includes(`${nombresMeses[partes[1]]} ${partes[2]}`)) {
+        const nombreMes = nombresMeses[partes[1]] || "Mes";
+        seccionMes = document.createElement('details');
+        
+        // Asignamos la clase única para no confundirlo con las estadísticas
+        seccionMes.className = 'mes-log';
+        
+        if (esPrimerMes) {
+            seccionMes.open = true;
+            esPrimerMes = false;
+        }
+
+        seccionMes.style.marginTop = "10px";
+        seccionMes.style.outline = "none";
+
+        const cabeceraMes = document.createElement('summary');
+        cabeceraMes.className = 'month-divider';
+        cabeceraMes.style.cursor = 'pointer';
+        cabeceraMes.innerText = `${nombreMes} ${partes[2]}`;
+        
+        cuerpoMes = document.createElement('div');
+        seccionMes.appendChild(cabeceraMes);
+        seccionMes.appendChild(cuerpoMes);
+        container.appendChild(seccionMes);
+    }
+
     const div = document.createElement('div');
     div.className = 'entry';
+    div.setAttribute('data-carta', item.carta.trim());
+
+    let botonHistorial = "";
     if (item.fecha === todayString) {
         div.classList.add('today');
+        // El SPAN nace limpio, sin onclick conflictivos
+        botonHistorial = ` <span id="btn-historial" style="cursor:pointer; font-size:0.9rem; margin-left:6px;" title="Ver coincidencias pasadas">👁️</span>`;
     }
+
     div.innerHTML = `
         <span class="date">${item.fecha}</span>
-        <span class="card">${item.carta}</span>
+        <span class="card">${item.carta}${botonHistorial}</span>
         <p class="note">${item.nota}</p>
     `;
-    container.appendChild(div);
+    
+    cuerpoMes.appendChild(div);
 });
+
+// 2. LÓGICA DEL FILTRO (Escuchador de eventos nativo y seguro)
+if (cartaDeHoy) {
+    const btnHistorial = document.getElementById('btn-historial');
+    let filtradoActivo = false;
+
+    if (btnHistorial) {
+        btnHistorial.addEventListener('click', (event) => {
+            // Frenamos completamente al acordeón nativo <details>
+            event.stopPropagation();
+            event.preventDefault();
+
+            filtradoActivo = !filtradoActivo;
+            
+            // Cambiamos el icono del botón
+            btnHistorial.innerText = filtradoActivo ? "❌" : "👁️";
+            btnHistorial.title = filtradoActivo ? "Quitar filtro" : "Ver coincidencias pasadas";
+
+            // Buscamos SÓLO los bloques de meses reales
+            const bloquesMesesReales = document.querySelectorAll('details.mes-log');
+
+            bloquesMesesReales.forEach((details, idx) => {
+                let mesTieneCoincidencia = false;
+                const entries = details.querySelectorAll('.entry');
+                
+                entries.forEach(entry => {
+                    const nombreCartaOculta = entry.getAttribute('data-carta');
+                    
+                    if (!filtradoActivo) {
+                        entry.style.display = 'grid';
+                    } else {
+                        if (nombreCartaOculta === cartaDeHoy) {
+                            entry.style.display = 'grid';
+                            mesTieneCoincidencia = true;
+                        } else {
+                            entry.style.display = 'none';
+                        }
+                    }
+                });
+
+                // Control estricto de aperturas/cierres tras el click
+                if (!filtradoActivo) {
+                    details.style.display = 'block';
+                    if (idx === 0) {
+                        // Forzamos apertura del mes actual de forma segura
+                        setTimeout(() => { details.open = true; }, 20);
+                    } else {
+                        details.open = false;
+                    }
+                } else {
+                    if (mesTieneCoincidencia) {
+                        details.style.display = 'block';
+                        details.open = true;
+                    } else {
+                        details.style.display = 'none';
+                        details.open = false;
+                    }
+                }
+            });
+        });
+    }
+}
