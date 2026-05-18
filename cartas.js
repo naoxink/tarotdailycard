@@ -1,7 +1,7 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
-    semana: { carta: "Reina de espadas", nota: "Hay que usar más la razón que los sentimientos." }
+    semana: { carta: "As de bastos", nota: "Afrontar la semana con energía y determinación." }
 };
 
 const registros = [
