@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "19.05.2026",
+        carta: "El loco (0)",
+        nota: "Vamos a la aventura. Alegría y entusiasmo para afrontar lo que venga."
+    },
+    {
         fecha: "18.05.2026",
         carta: "IV de copas",
         nota: "Parece que algo no va bien. Es hora de un poco de introspección para ver qué ocurre. Puede ser también cansancio, desánimo o insatisfacción"
