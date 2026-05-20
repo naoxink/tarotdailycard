@@ -194,7 +194,7 @@ if (cartaDeHoy) {
                     if (!filtradoActivo) {
                         entry.style.display = 'grid';
                     } else {
-                        if (nombreCartaOculta === cartaDeHoy) {
+                        if (nombreCartaOculta.toLocaleLowerCase() === cartaDeHoy.toLocaleLowerCase()) {
                             entry.style.display = 'grid';
                             mesTieneCoincidencia = true;
                         } else {

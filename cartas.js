@@ -7,7 +7,7 @@ const especiales = {
 const registros = [
     {
         fecha: "20.05.2026",
-        carta: "El Carro (VII)",
+        carta: "El carro (VII)",
         nota: "Quizás tenga que tomar las riendas de alguna situación. Puede que surja alguna oportunidad de algo y deba aprovecharla o bien encuentre la necesidad de dirigirme hacia algo nuevo."
     },
     {
