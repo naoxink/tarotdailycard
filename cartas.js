@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "20.05.2026",
+        carta: "El Carro (VII)",
+        nota: "Quizás tenga que tomar las riendas de alguna situación. Puede que surja alguna oportunidad de algo y deba aprovecharla o bien encuentre la necesidad de dirigirme hacia algo nuevo."
+    },
+    {
         fecha: "19.05.2026",
         carta: "El loco (0)",
         nota: "Vamos a la aventura. Alegría y entusiasmo para afrontar lo que venga."
