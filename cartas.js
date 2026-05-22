@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "22.05.2026",
+        carta: "Reina de espadas",
+        nota: "Tengo que estar más perceptivo. Mantener la mente clara y ser agudo, sobre todo para las cuestiones prácticas del día a día."
+    },
+    {
         fecha: "21.05.2026",
         carta: "V de copas",
         nota: "Aunque llegue una decepción o frustración, lo mejor es superarla y seguir adelante."
