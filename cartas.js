@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "23.05.2026",
+        carta: "El emperador (IV)",
+        nota: "Toca hacer de padre. Establecer límites y normas, probablemente a los familiares."
+    },
+    {
         fecha: "22.05.2026",
         carta: "Reina de espadas",
         nota: "Tengo que estar más perceptivo. Mantener la mente clara y ser agudo, sobre todo para las cuestiones prácticas del día a día."
