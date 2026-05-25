@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "25.05.2026",
+        carta: "V de copas",
+        nota: "Si me llega una decepción o frustración, lo mejor es superarla y seguir adelante."
+    },
+    {
         fecha: "24.05.2026",
         carta: "Rey de copas",
         nota: "Dominar los sentimientos, apelar a ellos aunque la situación no esté por la labor."
