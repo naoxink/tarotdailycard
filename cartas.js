@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "26.05.2026",
+        carta: "VIII de bastos",
+        nota: "Usar la intuición, podrían venir cambios inesperados. Todo puede cambiar de un momento a otro."
+    },
+    {
         fecha: "25.05.2026",
         carta: "V de copas",
         nota: "Si me llega una decepción o frustración, lo mejor es superarla y seguir adelante."
