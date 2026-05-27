@@ -1,10 +1,15 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
-    semana: { carta: "As de bastos", nota: "Afrontar la semana con energía y determinación." }
+    semana: { carta: "Rey de espadas", nota: "Afrontar la semana con energía y determinación." }
 };
 
 const registros = [
+    {
+        fecha: "27.05.2026",
+        carta: "La sacerdotisa (II)",
+        nota: "Es hora de escuchar la voz interior, la intuición. No es momento de actuar, sino de observar y esperar a que las cosas se revelen por sí mismas."
+    },
     {
         fecha: "26.05.2026",
         carta: "VIII de bastos",
