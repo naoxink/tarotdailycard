@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "28.05.2026",
+        carta: "X de bastos",
+        nota: "No hay que cargarse con demasiadas responsabilidades, ni por muy pequeñas que sean. Hay que aprender a delegar y a pedir ayuda."
+    },
+    {
         fecha: "27.05.2026",
         carta: "La sacerdotisa (II)",
         nota: "Es hora de escuchar la voz interior, la intuición. No es momento de actuar, sino de observar y esperar a que las cosas se revelen por sí mismas."
