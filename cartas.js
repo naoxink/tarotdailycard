@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "29.05.2026",
+        carta: "II de bastos",
+        nota: "Observemos las opciones y experiencias que se presenten. Puede que esté indeciso en algo o que tenga que tomar alguna decisión."
+    },
+    {
         fecha: "28.05.2026",
         carta: "X de bastos",
         nota: "No hay que cargarse con demasiadas responsabilidades, ni por muy pequeñas que sean. Hay que aprender a delegar y a pedir ayuda."
