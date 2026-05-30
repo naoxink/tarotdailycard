@@ -128,3 +128,31 @@ h1 { font-size: 1.2rem; text-align: left; border-bottom: 2px solid var(--border-
     border-radius: 3px;
     letter-spacing: 0.5px;
 }
+
+
+
+
+/* Leyenda de la gráfica SVG semanal */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.legend-color {
+    width: 12px;
+    height: 4px;
+    border-radius: 2px;
+    margin-right: 5px;
+    display: inline-block;
+}
+.legend-text {
+    font-weight: 500;
+}
