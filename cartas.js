@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "31.05.2026",
+        carta: "Rey de copas",
+        nota: "El sentimiento de comunidad es más grande, los sentimientos se van masterizando."
+    },
+    {
         fecha: "30.05.2026",
         carta: "VIII de espadas",
         nota: "Mis pensamientos podrían ser a veces los obstáculos que no me permiten obtener lo que quiero."
