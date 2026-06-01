@@ -1,10 +1,15 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
-    semana: { carta: "Rey de espadas", nota: "Afrontar la semana con energía y determinación." }
+    semana: { carta: "La muerte (XIII)", nota: "Ha llegado un fin de ciclo. Hay que cerrar lo que ya no es útil o necesario." }
 };
 
 const registros = [
+    {
+        fecha: "01.06.2026",
+        carta: "Sota de copas",
+        nota: "Puede que llegue una buena noticia. También habría que conectar más con el niño interior, ser más creativo."
+    },
     {
         fecha: "31.05.2026",
         carta: "Rey de copas",
