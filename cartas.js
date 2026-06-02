@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "02.06.2026",
+        carta: "III de pentáculos",
+        nota: "Colaborar con los demás, compartir conocimientos y habilidades para lograr objetivos comunes."
+    },
+    {
         fecha: "01.06.2026",
         carta: "Sota de copas",
         nota: "Puede que llegue una buena noticia. También habría que conectar más con el niño interior, ser más creativo."
