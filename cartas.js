@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "04.06.2026",
+        carta: "Reina de espadas",
+        nota: "Se ve que tengo que trabajar el pensar antes de actuar ¿demasiado impulsivo?"
+    },
+    {
         fecha: "03.06.2026",
         carta: "Reina de espadas",
         nota: "Pensar más las cosas, ser más receptivo, menos emocional, menos impulsivo."
