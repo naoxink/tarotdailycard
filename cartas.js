@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "07.06.2026",
+        carta: "Sota de pentáculos",
+        nota: "Entusiasmarse un poco más con esos pequeños sueños"
+    },
+    {
         fecha: "06.06.2026",
         carta: "El juicio (XX)",
         nota: "Revisar mi interior para ajustar lo necesario antes de completar un ciclo"
