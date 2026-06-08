@@ -1,19 +1,24 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
-    semana: { carta: "La muerte (XIII)", nota: "Ha llegado un fin de ciclo. Hay que cerrar lo que ya no es útil o necesario." }
+    semana: { carta: "Caballero de copas", nota: "Es bueno momento para mejorar las relaciones que quizás no están muy cuidadas." }
 };
 
 const registros = [
     {
+        fecha: "08.06.2026",
+        carta: "VII de espadas",
+        nota: "Cuidado con la desinformación y las mentirijillas. Hay que tener cuidado no ya con caer en algún engaño externo, sino también con engañarme a mí mismo."
+    },
+    {
         fecha: "07.06.2026",
         carta: "Sota de pentáculos",
-        nota: "Entusiasmarse un poco más con esos pequeños sueños"
+        nota: "Entusiasmarse un poco más con esos pequeños sueños."
     },
     {
         fecha: "06.06.2026",
         carta: "El juicio (XX)",
-        nota: "Revisar mi interior para ajustar lo necesario antes de completar un ciclo"
+        nota: "Revisar mi interior para ajustar lo necesario antes de completar un ciclo."
     },
     {
         fecha: "05.06.2026",
