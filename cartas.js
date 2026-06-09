@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "09.06.2026",
+        carta: "III de pentáculos",
+        nota: "Colaboración, aportar a la comunidad para conseguir objetivos comunes."
+    },
+    {
         fecha: "08.06.2026",
         carta: "VII de espadas",
         nota: "Cuidado con la desinformación y las mentirijillas. Hay que tener cuidado no ya con caer en algún engaño externo, sino también con engañarme a mí mismo."
