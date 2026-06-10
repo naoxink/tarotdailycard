@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "10.06.2026",
+        carta: "Rey de bastos",
+        nota: "Quizás tenga que tirar de autoritarismo en algún momento. O también puede referirse a alguna ganancia inesperada."
+    },
+    {
         fecha: "09.06.2026",
         carta: "III de pentáculos",
         nota: "Colaboración, aportar a la comunidad para conseguir objetivos comunes."
