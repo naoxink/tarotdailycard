@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "11.06.2026",
+        carta: "Reina de copas",
+        nota: "Mantener una postura tranquila y comprensiva con los demás, aunque no estén por la labor. Cuidar a los demás"
+    },
+    {
         fecha: "10.06.2026",
         carta: "Rey de bastos",
         nota: "Quizás tenga que tirar de autoritarismo en algún momento. O también puede referirse a alguna ganancia inesperada."
