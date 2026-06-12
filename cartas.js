@@ -6,9 +6,14 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "12.06.2026",
+        carta: "IX de bastos",
+        nota: "Puedo superar los desafíos que se presenten. Tengo que mantener la perseverancia."
+    },
+    {
         fecha: "11.06.2026",
         carta: "Reina de copas",
-        nota: "Mantener una postura tranquila y comprensiva con los demás, aunque no estén por la labor. Cuidar a los demás"
+        nota: "Mantener una postura tranquila y comprensiva con los demás, aunque no estén por la labor. Cuidar a los demás."
     },
     {
         fecha: "10.06.2026",
