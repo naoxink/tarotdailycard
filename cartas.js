@@ -9,6 +9,7 @@ const registros = [
         fecha: "14.06.2026",
         carta: "El mundo (XXI)",
         nota: "A tomarse el final de esta semana con alegría."
+    },
     {
         fecha: "13.06.2026",
         carta: "IX de pentáculos",
