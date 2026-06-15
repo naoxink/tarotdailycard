@@ -1,10 +1,15 @@
 // EDITAR ESTO UNA VEZ AL AÑO / SEMANA
 const especiales = {
     año: { carta: "VI de copas", nota: "No hay que tomarse todo demasiado en serio." },
-    semana: { carta: "Caballero de copas", nota: "Es bueno momento para mejorar las relaciones que quizás no están muy cuidadas." }
+    semana: { carta: "V de bastos", nota: "Puede que tenga que repensar y cambiar mis planes para conseguir lo que quiero." }
 };
 
 const registros = [
+    {
+        fecha: "15.06.2026",
+        carta: "El emperador (IV)",
+        nota: "Hay que ponerse serio. Ser el responsable y el que carga."
+    },
     {
         fecha: "14.06.2026",
         carta: "El mundo (XXI)",
