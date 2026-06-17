@@ -6,6 +6,11 @@ const especiales = {
 
 const registros = [
     {
+        fecha: "17.06.2026",
+        carta: "El juicio (XX)",
+        nota: "He de ponerme a reflexionar sobre mi interior y ver cómo puedo mejorar."
+    },
+    {
         fecha: "16.06.2026",
         carta: "Rey de pentáculos",
         nota: "Tengo estabilidad. Ahora hay que mantenerla y gestionarla bien, para eso tengo que mantener la cabeza fría y no dejarme llevar por los impulsos."
