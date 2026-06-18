@@ -12,6 +12,11 @@ window.TAROT_YEAR_DATA[2026] = {
   },
   "registros": [
     {
+      "fecha": "18.06.2026",
+      "carta": "La muerte (XIII)",
+      "nota": "Se tiene que cerrar un ciclo y comenzar uno nuevo. Algo hay que cortar y dejar atrás"
+    },
+    {
       "fecha": "17.06.2026",
       "carta": "El juicio (XX)",
       "nota": "He de ponerme a reflexionar sobre mi interior y ver cómo puedo mejorar."
