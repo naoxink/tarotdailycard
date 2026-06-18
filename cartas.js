@@ -8,7 +8,7 @@ const yearEntries = Object.entries(yearDataByYear).sort(([a], [b]) => Number(a) 
 
 const registros = yearEntries
     .flatMap(([, data]) => Array.isArray(data.registros) ? data.registros : [])
-    .sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
+    .sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
 
 const latestYearData = yearEntries.length
     ? yearEntries[yearEntries.length - 1][1]
