@@ -1,4 +1,5 @@
 window.TAROT_YEAR_DATA = window.TAROT_YEAR_DATA || {};
+
 window.TAROT_YEAR_DATA[2026] = {
   "especiales": {
     "año": {
@@ -10,7 +11,13 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "Puede que tenga que repensar y cambiar mis planes para conseguir lo que quiero."
     }
   },
+
   "registros": [
+    {
+      "fecha": "19.06.2026",
+      "carta": "III de copas",
+      "nota": "Alegría y celebración. Se nota que ha llegado el viernes."
+    },
     {
       "fecha": "18.06.2026",
       "carta": "La muerte (XIII)",
