@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "20.06.2026",
+      carta: "Sota de espadas",
+      nota: "Mejor no tomar decisiones a lo loco, usar la cabeza y pensar bien antes de actuar y evitar tirar de emociones."
+    },
+    {
       "fecha": "19.06.2026",
       "carta": "III de copas",
       "nota": "Alegría y celebración. Se nota que ha llegado el viernes."
