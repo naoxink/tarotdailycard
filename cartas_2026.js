@@ -7,12 +7,17 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "V de bastos",
-      "nota": "Puede que tenga que repensar y cambiar mis planes para conseguir lo que quiero."
+      "carta": "El Hierofante (V)",
+      "nota": "Mantenerme en a las rutinas me da seguridad y tranquilidad. Quizás volver a las raíces en algún tema puede estar bien."
     }
   },
 
   "registros": [
+    {
+      fecha: "22.06.2026",
+      carta: "Sota de copas",
+      nota: "Parece que ha llegado el buen momento. Iré con toda la energía y entusiasmo que tenga."
+    },
     {
       fecha: "21.06.2026",
       carta: "XI de pentáculos",
