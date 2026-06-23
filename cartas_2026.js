@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "23.06.2026",
+      carta: "VIII de copas",
+      nota: "Ante una situación mala quizás tenga que soltar algo del pasado para poder atravesarla. Incluso cuando todo parece desolador hay que pensar en positivo."
+    },
+    {
       fecha: "22.06.2026",
       carta: "Sota de copas",
       nota: "Parece que ha llegado el buen momento. Iré con toda la energía y entusiasmo que tenga."
