@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "24.06.2026",
+      carta: "II de espadas",
+      nota: "Estoy demasiado a la defensiva, tengo que relajarme y evitar generar conflictos con otras personas. No tomar decisiones precipitadas en estos momentos y buscar más el equilibrio interno."
+    },
+    {
       fecha: "23.06.2026",
       carta: "VIII de copas",
       nota: "Ante una situación mala quizás tenga que soltar algo del pasado para poder atravesarla. Incluso cuando todo parece desolador hay que pensar en positivo."
