@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "25.06.2026",
+      carta: "III de bastos",
+      nota: "Para conseguir lo que quiero hay que tomar la iniciativa y dar el primer paso."
+    },
+    {
       fecha: "24.06.2026",
       carta: "II de espadas",
       nota: "Estoy demasiado a la defensiva, tengo que relajarme y evitar generar conflictos con otras personas. No tomar decisiones precipitadas en estos momentos y buscar más el equilibrio interno."
