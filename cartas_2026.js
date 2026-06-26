@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "26.06.2026",
+      carta: "Sota de pentáculos",
+      nota: "Pensar en los logros que he conseguido hasta ahora. Lo que no quita seguir buscando algo superior."
+    },
+    {
       fecha: "25.06.2026",
       carta: "III de bastos",
       nota: "Para conseguir lo que quiero hay que tomar la iniciativa y dar el primer paso."
