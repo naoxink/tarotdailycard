@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "27.06.2026",
+      carta: "II de espadas",
+      nota: "Tengo que tener en cuenta que todas las decisiones tienen su lado bueno y su lado malo."
+    },
+    {
       fecha: "26.06.2026",
       carta: "Sota de pentáculos",
       nota: "Pensar en los logros que he conseguido hasta ahora. Lo que no quita seguir buscando algo superior."
