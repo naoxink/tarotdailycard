@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "El Hierofante (V)",
-      "nota": "Mantenerme en a las rutinas me da seguridad y tranquilidad. Quizás volver a las raíces en algún tema puede estar bien."
+      "carta": "La fuerza (VIII)",
+      "nota": "El coraje y la determinación son clave para el éxito. También necesito autocontrol, sobre todo para luchar con mi interior."
     }
   },
 
   "registros": [
+    {
+      fecha: "29.06.2026",
+      carta: "VII de pentáculos",
+      nota: "Paciencia y tranquilidad, todo por lo que he estado luchando tendrá su fruto, pero hay que tener paciencia."
+    },
+    {
+      fecha: "28.06.2026",
+      carta: "Reina de espadas",
+      nota: "Pensar las cosas antes de reaccionar. Aunque el entorno sea un caos, tengo que pensar las cosas, no tirar de emoción."
+    },
     {
       fecha: "27.06.2026",
       carta: "II de espadas",
