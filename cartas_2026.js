@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "30.06.2026",
+      carta: "IX de bastos",
+      nota: "No ser tan impulsivo. Paciencia para afrontar los problemas."
+    },
+    {
       fecha: "29.06.2026",
       carta: "VII de pentáculos",
       nota: "Paciencia y tranquilidad, todo por lo que he estado luchando tendrá su fruto, pero hay que tener paciencia."
