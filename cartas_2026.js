@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "02.07.2026",
+      carta: "Caballero de copas",
+      nota: "Tengo que aprender a manejar las emociones con habilidad. Mantenerlas firmes aunque el entorno no ayude."
+    },
+    {
       fecha: "01.07.2026",
       carta: "VII de pentáculos",
       nota: "Seguimos con la paciencia, el trabajo que hemos invertido dará sus frutos, pero no de forma inmediata."
