@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "03.06.2026",
+      carta: "La muerte (XIII)",
+      nota: "Tengo que cambiar para salir de este bucle, no hay otra. Está en mi mano."
+    },
+    {
       fecha: "02.07.2026",
       carta: "Caballero de copas",
       nota: "Tengo que aprender a manejar las emociones con habilidad. Mantenerlas firmes aunque el entorno no ayude."
