@@ -14,7 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
-      fecha: "03.06.2026",
+      fecha: "04.06.2026",
+      carta: "IX de espadas",
+      nota: "Debo recordar que los momentos malos no duran para siempre."
+    },
+    {
+      fecha: "03.07.2026",
       carta: "La muerte (XIII)",
       nota: "Tengo que cambiar para salir de este bucle, no hay otra. Está en mi mano."
     },
