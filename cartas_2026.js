@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "La fuerza (VIII)",
-      "nota": "El coraje y la determinación son clave para el éxito. También necesito autocontrol, sobre todo para luchar con mi interior."
+      "carta": "La muerte (XIII)",
+      "nota": "Ya sabemos que hay ciclos, pues este debe acabar para que llegue el siguiente. Más y mejor."
     }
   },
 
   "registros": [
+    {
+      fecha: "06.07.2026",
+      carta: "IV de pentáculos",
+      nota: "Tengo que compartir, no guardarme nada con ansia."
+    },
+    {
+      fecha: "05.07.2026",
+      carta: "V de espadas",
+      nota: "A veces las batallas se ganan de una forma que no gusta."
+    },
     {
       fecha: "04.07.2026",
       carta: "IX de espadas",
