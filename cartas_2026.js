@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "07.07.2026",
+      carta: "III de copas",
+      nota: "Hay que celebrar los triunfos, por muy pequeños que sean."
+    },
+    {
       fecha: "06.07.2026",
       carta: "IV de pentáculos",
       nota: "Tengo que compartir, no guardarme nada con ansia."
