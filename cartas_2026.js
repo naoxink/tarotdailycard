@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "08.07.2026",
+      carta: "VII de espadas",
+      nota: "Hay que vivir también de la ilusión pero cuidado con autoengañarse. También no creer demasiado a los demás, a veces no es lo mejor para uno."
+    },
+    {
       fecha: "07.07.2026",
       carta: "III de copas",
       nota: "Hay que celebrar los triunfos, por muy pequeños que sean."
