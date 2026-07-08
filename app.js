@@ -230,54 +230,54 @@ if (cartaDeHoy) {
 
 
 // ====== GRÁFICA SEMANAL EN SVG ENCAPSULADA (SOLO MES ACTUAL) ======
-function renderGraficaSemanas() {
-    const contenedorGrafica = document.getElementById('grafica-semanal');
+function renderGraficaAnual() {
+    const contenedorGrafica = document.getElementById('grafica-anual');
     if (!contenedorGrafica || registros.length === 0) return;
 
-    // 1. Obtener el año y mes actual en el que estamos viviendo
+    // Año y mes actual
     const hoy = new Date();
     const anioActual = hoy.getFullYear();
-    const mesActual = hoy.getMonth() + 1; // JS cuenta los meses de 0 a 11
+    const mesActual = hoy.getMonth(); // 0-11
 
-    // 2. Filtrar los registros para quedarnos SOLO con los de este mes
-    const registrosMesActual = registros.filter(item => {
-        const [, month, year] = item.fecha.split('.').map(Number);
-        return year === anioActual && month === mesActual;
+    // Registros del año actual
+    const registrosAnio = registros.filter(item => {
+        const [, , year] = item.fecha.split('.').map(Number);
+        return year === anioActual;
     });
 
-    if (registrosMesActual.length === 0) {
-        contenedorGrafica.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:10px;">Aún no hay registros en el mes actual para generar la tendencia.</p>';
+    if (registrosAnio.length === 0) {
+        contenedorGrafica.innerHTML =
+            '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:10px;">Aún no hay registros este año para generar la tendencia.</p>';
         return;
     }
 
-    // 3. Inicializar las 4 semanas fijas del mes
-    // Estructura limpia para acumular los palos por cada una de las 4 semanas
-    const semanasDelMes = [
-        { Espadas: 0, Bastos: 0, Copas: 0, Pentáculos: 0, "Arcanos mayores": 0, total: 0 }, // Sem 1 (Días 1-7)
-        { Espadas: 0, Bastos: 0, Copas: 0, Pentáculos: 0, "Arcanos mayores": 0, total: 0 }, // Sem 2 (Días 8-14)
-        { Espadas: 0, Bastos: 0, Copas: 0, Pentáculos: 0, "Arcanos mayores": 0, total: 0 }, // Sem 3 (Días 15-21)
-        { Espadas: 0, Bastos: 0, Copas: 0, Pentáculos: 0, "Arcanos mayores": 0, total: 0 }  // Sem 4 (Días 22+)
-    ];
+    // Datos por mes
+    const mesesDelAnio = Array.from({ length: 12 }, () => ({
+        Espadas: 0,
+        Bastos: 0,
+        Copas: 0,
+        Pentáculos: 0,
+        "Arcanos mayores": 0,
+        total: 0
+    }));
 
-    // 4. Repartir las cartas del mes en su semana correspondiente
-    registrosMesActual.forEach(item => {
-        const dia = parseInt(item.fecha.split('.')[0], 10);
-        let indiceSemana = 0;
+    registrosAnio.forEach(item => {
+        const [, mes] = item.fecha.split('.').map(Number);
+        const indiceMes = mes - 1;
 
-        if (dia <= 7) indiceSemana = 0;
-        else if (dia <= 14) indiceSemana = 1;
-        else if (dia <= 21) indiceSemana = 2;
-        else indiceSemana = 3; // El resto del mes se acumula en la última semana
+        const suit = getSuit(item.carta);
 
-        const suit = getSuit(item.carta); // Tu función global de lectura de palos
-        semanasDelMes[indiceSemana][suit]++;
-        semanasDelMes[indiceSemana].total++;
+        if (mesesDelAnio[indiceMes][suit] !== undefined) {
+            mesesDelAnio[indiceMes][suit]++;
+            mesesDelAnio[indiceMes].total++;
+        }
     });
 
-    // 5. Configuración geométrica del SVG (Mantenemos tu proporción responsive)
-    const width = 500;
-    const height = 250;
-    const paddingLeft = 40;
+    // SVG
+    const width = 700;
+    const height = 260;
+
+    const paddingLeft = 45;
     const paddingRight = 20;
     const paddingTop = 20;
     const paddingBottom = 40;
@@ -286,80 +286,207 @@ function renderGraficaSemanas() {
     const chartHeight = height - paddingTop - paddingBottom;
 
     const coloresPalos = {
-        "Bastos": "#a34e36",           // Marrón-rojo (Tono arcilla/fuego sutil)
-        "Pentáculos": "#d4af37",       // Oro (Tono dorado clásico, visible en fondo blanco y negro)
-        "Espadas": "#5f7d95",          // Azul metálico (Gris azulado acero)
-        "Copas": "#3a9fb7",            // Azul agua (Tono turquesa/océano limpio)
-        "Arcanos mayores": "var(--purple, #53006a)" // Tu morado dinámico
+        Bastos: "#a34e36",
+        Pentáculos: "#d4af37",
+        Espadas: "#5f7d95",
+        Copas: "#3a9fb7",
+        "Arcanos mayores": "var(--purple, #53006a)"
     };
 
-    const lineasPuntos = { "Espadas": [], "Bastos": [], "Copas": [], "Pentáculos": [], "Arcanos mayores": [] };
+    const lineasPuntos = {
+        Espadas: [],
+        Bastos: [],
+        Copas: [],
+        Pentáculos: [],
+        "Arcanos mayores": []
+    };
 
-    // 6. Calcular los puntos (X, Y) basándonos estrictamente en las 4 semanas
-    semanasDelMes.forEach((sem, idx) => {
-        // Eje X: 4 puntos fijos distribuidos perfectamente
-        const x = paddingLeft + (idx / 3) * chartWidth;
+    // Calcular puntos
+    mesesDelAnio.forEach((mes, idx) => {
+
+        // Los meses futuros no existen aún
+        if (idx > mesActual) {
+
+            for (const palo in lineasPuntos)
+                lineasPuntos[palo].push(null);
+
+            return;
+        }
+
+        const x = paddingLeft + (idx / 11) * chartWidth;
 
         for (const palo in lineasPuntos) {
-            const cantidad = sem[palo] || 0;
-            // Si una semana no tiene cartas, el porcentaje cae a 0% para evitar divisiones por cero
-            const porcentaje = sem.total > 0 ? (cantidad / sem.total) * 100 : 0;
-            const y = paddingTop + chartHeight - (porcentaje / 100) * chartHeight;
-            
-            lineasPuntos[palo].push(`${x},${y}`);
+
+            // Mes sin registros -> hueco
+            if (mes.total === 0) {
+                lineasPuntos[palo].push(null);
+                continue;
+            }
+
+            const porcentaje = (mes[palo] / mes.total) * 100;
+
+            const y =
+                paddingTop +
+                chartHeight -
+                (porcentaje / 100) * chartHeight;
+
+            lineasPuntos[palo].push({ x, y });
         }
     });
 
-    // 7. Construir el SVG
-    let svgHTML = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; height:auto; display:block;">`;
+    // Genera un path suave respetando huecos
+    function crearPathSuave(puntos) {
 
-    // Líneas horizontales de escala (0%, 25%, 50%, 75%, 100%)
+        let d = "";
+        let segmento = [];
+
+        function dibujarSegmento(seg) {
+
+            if (seg.length === 0) return;
+
+            if (seg.length === 1) {
+                d += `M ${seg[0].x} ${seg[0].y}`;
+                return;
+            }
+
+            d += `M ${seg[0].x} ${seg[0].y}`;
+
+            for (let i = 1; i < seg.length; i++) {
+
+                const p0 = seg[i - 1];
+                const p1 = seg[i];
+
+                const cx = (p0.x + p1.x) / 2;
+
+                d += ` C ${cx} ${p0.y}, ${cx} ${p1.y}, ${p1.x} ${p1.y}`;
+            }
+        }
+
+        puntos.forEach(p => {
+
+            if (p) {
+                segmento.push(p);
+            } else {
+                dibujarSegmento(segmento);
+                segmento = [];
+            }
+
+        });
+
+        dibujarSegmento(segmento);
+
+        return d;
+    }
+
+    let svgHTML = `<svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;display:block;">`;
+
+    // Líneas horizontales
     for (let i = 0; i <= 4; i++) {
-        const porc = i * 25;
-        const y = paddingTop + chartHeight - (porc / 100) * chartHeight;
+
+        const porcentaje = i * 25;
+
+        const y =
+            paddingTop +
+            chartHeight -
+            (porcentaje / 100) * chartHeight;
+
         svgHTML += `
-            <line x1="${paddingLeft}" y1="${y}" x2="${width - paddingRight}" y2="${y}" stroke="var(--border-light, #eee)" stroke-width="1" stroke-dasharray="4,4" />
-            <text x="${paddingLeft - 8}" y="${y + 4}" font-size="10" text-anchor="end" fill="var(--text-muted, #888)">${porc}%</text>
+            <line
+                x1="${paddingLeft}"
+                y1="${y}"
+                x2="${width - paddingRight}"
+                y2="${y}"
+                stroke="var(--border-light,#eee)"
+                stroke-width="1"
+                stroke-dasharray="4,4"/>
+
+            <text
+                x="${paddingLeft - 8}"
+                y="${y + 4}"
+                font-size="10"
+                text-anchor="end"
+                fill="var(--text-muted,#888)">
+                ${porcentaje}%
+            </text>
         `;
     }
 
-    // Dibujar los caminos polilineales de los palos
+    // Dibujar líneas
     for (const palo in lineasPuntos) {
+
+        const d = crearPathSuave(lineasPuntos[palo]);
+
+        if (!d) continue;
+
         svgHTML += `
-            <polyline 
-                points="${lineasPuntos[palo].join(' ')}" 
-                fill="none" 
-                stroke="${coloresPalos[palo]}" 
-                stroke-width="3" 
-                stroke-linecap="round" 
-                stroke-linejoin="round"
-            />
+            <path
+                d="${d}"
+                fill="none"
+                stroke="${coloresPalos[palo]}"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
         `;
+
+        // Puntos
+        lineasPuntos[palo].forEach(p => {
+
+            if (!p) return;
+
+            svgHTML += `
+                <circle
+                    cx="${p.x}"
+                    cy="${p.y}"
+                    r="3.5"
+                    fill="${coloresPalos[palo]}"/>
+            `;
+        });
     }
 
-    // Etiquetas fijas del Eje X: 4 semanas del mes en curso
-    const nombresSemanas = ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
-    nombresSemanas.forEach((nombre, idx) => {
-        const x = paddingLeft + (idx / 3) * chartWidth;
-        svgHTML += `<text x="${x}" y="${height - paddingBottom + 18}" font-size="10" text-anchor="middle" fill="var(--text-muted, #888)">${nombre}</text>`;
+    // Meses
+    const nombresMeses = [
+        "Ene", "Feb", "Mar", "Abr",
+        "May", "Jun", "Jul", "Ago",
+        "Sep", "Oct", "Nov", "Dic"
+    ];
+
+    nombresMeses.forEach((nombre, idx) => {
+
+        const x = paddingLeft + (idx / 11) * chartWidth;
+
+        svgHTML += `
+            <text
+                x="${x}"
+                y="${height - paddingBottom + 18}"
+                font-size="10"
+                text-anchor="middle"
+                fill="var(--text-muted,#888)">
+                ${nombre}
+            </text>
+        `;
     });
 
     svgHTML += `</svg>`;
 
-    // Leyenda de colores inferior
+    // Leyenda
     let leyendaHTML = `<div class="chart-legend">`;
+
     for (const palo in coloresPalos) {
+
         leyendaHTML += `
             <div class="legend-item">
-                <span class="legend-color" style="background: ${coloresPalos[palo]}"></span>
+                <span class="legend-color" style="background:${coloresPalos[palo]}"></span>
                 <span class="legend-text">${palo}</span>
             </div>
         `;
     }
+
     leyendaHTML += `</div>`;
 
-    // Renderizado final
-    contenedorGrafica.innerHTML = `<div class="chart-title">Tendencia del mes (% semanal)</div>` + svgHTML + leyendaHTML;
+    contenedorGrafica.innerHTML =
+        `<div class="chart-title">Tendencia anual (% mensual)</div>` +
+        svgHTML +
+        leyendaHTML;
 }
 
-renderGraficaSemanas();
+renderGraficaAnual();
