@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "09.07.2026",
+      carta: "VII de pentáculos",
+      nota: "Paciencia, el trabajo y tiempo invertidos darán su fruto. Disfruta el momento y relájate."
+    },
+    {
       fecha: "08.07.2026",
       carta: "VII de espadas",
       nota: "Hay que vivir también de la ilusión pero cuidado con autoengañarse. También no creer demasiado a los demás, a veces no es lo mejor para uno."
