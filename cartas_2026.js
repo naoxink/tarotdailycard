@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "10.07.2026",
+      carta: "VIII de bastos",
+      nota: "Tener en cuenta que todo puede cambiar de un momento a otro."
+    },
+    {
       fecha: "09.07.2026",
       carta: "VII de pentáculos",
       nota: "Paciencia, el trabajo y tiempo invertidos darán su fruto. Disfruta el momento y relájate."
