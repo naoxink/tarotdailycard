@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "11.07.2026",
+      carta: "El mundo (XX)",
+      nota: "Toca introspección. Encontrar lo que no me gusta para poder cambiarlo."
+    },
+    {
       fecha: "10.07.2026",
       carta: "VIII de bastos",
       nota: "Tener en cuenta que todo puede cambiar de un momento a otro."
