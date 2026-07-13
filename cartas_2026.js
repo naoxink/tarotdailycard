@@ -16,7 +16,7 @@ window.TAROT_YEAR_DATA[2026] = {
     {
       fecha: "13.07.2026",
       carta: "X de copas",
-      nota: "¡Celebremos de nuevo!
+      nota: "¡Celebremos de nuevo!"
     },
     {
       fecha: "12.07.2026",
