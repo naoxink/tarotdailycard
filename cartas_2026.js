@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "La muerte (XIII)",
-      "nota": "Ya sabemos que hay ciclos, pues este debe acabar para que llegue el siguiente. Más y mejor."
+      "carta": "As de bastos",
+      "nota": "Llevemos la semana con iniciativa."
     }
   },
 
   "registros": [
+    {
+      fecha: "13.07.2026",
+      carta: "X de copas",
+      nota: "¡Celebremos de nuevo!
+    },
+    {
+      fecha: "12.07.2026",
+      carta: "X de copas",
+      nota: "Momento de celebración, sea lo que sea, siempre hay alguna cosita positiva por pequeña que sea."
+    },
     {
       fecha: "11.07.2026",
       carta: "El mundo (XX)",
