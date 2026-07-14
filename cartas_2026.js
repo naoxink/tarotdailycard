@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "14.07.2026",
+      carta: "Reina de pentáculos",
+      nota: "Teóricamente el esfuerzo que he empleado me dará una buena recompensa en el sentido de estabilidad. A ver si es verdad."
+    },
+    {
       fecha: "13.07.2026",
       carta: "X de copas",
       nota: "¡Celebremos de nuevo!"
