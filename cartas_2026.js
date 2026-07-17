@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "17.07.2026",
+      carta: "X de bastos",
+      nota: "Demasiada presión, hay que saber delegar o establecer prioridades."
+    },
+    {
       fecha: "16.07.2026",
       carta: "El emperador (IV)",
       nota: ""
