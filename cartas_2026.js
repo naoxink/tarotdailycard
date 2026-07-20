@@ -7,12 +7,17 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "As de bastos",
-      "nota": "Llevemos la semana con iniciativa."
+      "carta": "?",
+      "nota": "?"
     }
   },
 
   "registros": [
+    {
+      fecha: "20.07.2026",
+      carta: "VIII de bastos",
+      nota: "Actuar con astucia en momentos de decisión rápida. Quizas alguna buena noticia."
+    },
     {
       fecha: "19.07.2026",
       carta: "Rey de espadas",
