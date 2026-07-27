@@ -7,12 +7,17 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "?",
-      "nota": "?"
+      "carta": "El juicio (XX)",
+      "nota": "Toca revisión interna personal. Quizás las partes que no me gustan tomen el control, tendría que tomar nota para corregirlas en un futuro."
     }
   },
 
   "registros": [
+    {
+      fecha: "27.07.2026",
+      carta: "VIII de espadas",
+      nota: "Nada bueno pero siempre habría que intentar superar lo que nos llegue por muy doloroso y difícil que sea. Hay que quitarse la venda y ver las cosas como son aplicándoles la lógica desde un punto de vista limpio, quizás así podemos superar estas situaciones."
+    },
     {
       fecha: "20.07.2026",
       carta: "VIII de bastos",
