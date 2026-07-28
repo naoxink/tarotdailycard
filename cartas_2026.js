@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "28.07.2026",
+      carta: "El hierofante (V)",
+      nota: "Me ayuda mantener las estructuras, los rituales, las rutinas.. me dan seguridad, pero cuidado, tampoco hay que estancarse, se pueden utilizar para avanzar."
+    },
+    {
       fecha: "27.07.2026",
       carta: "VIII de espadas",
       nota: "Nada bueno pero siempre habría que intentar superar lo que nos llegue por muy doloroso y difícil que sea. Hay que quitarse la venda y ver las cosas como son aplicándoles la lógica desde un punto de vista limpio, quizás así podemos superar estas situaciones."
