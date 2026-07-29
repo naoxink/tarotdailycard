@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "29.07.2026",
+      carta: "VI de bastos",
+      nota: "Mis proyectos tienen sus raíces bien nutridas y estables por mi esfuerzo. Están y seguirán dando frutos mientras siga aportándoles mi energía."
+    },
+    {
       fecha: "28.07.2026",
       carta: "El hierofante (V)",
       nota: "Me ayuda mantener las estructuras, los rituales, las rutinas.. me dan seguridad, pero cuidado, tampoco hay que estancarse, se pueden utilizar para avanzar."
