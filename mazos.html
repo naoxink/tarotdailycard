@@ -190,6 +190,46 @@
             header { flex-direction: column; gap: 10px; align-items: flex-start; }
             .selector-mazo { width: 100%; }
         }
+        .palabra-clave {
+            border-bottom: 1px dashed var(--accent);
+            color: var(--accent);
+            cursor: help;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        .palabra-clave:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0f111a;
+            color: #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            font-weight: normal;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            pointer-events: none; /* Evita que el tooltip interfiera con el ratón */
+        }
+        
+        /* Pequeño triángulo apuntando hacia abajo para el tooltip */
+        .palabra-clave:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #0f111a transparent transparent transparent;
+            z-index: 100;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -257,9 +297,38 @@
                 const cartaActiva = ref(null);      // Carta seleccionada en el modal
 
                 const glosario = [
-                    { palabra: "león", definicion: "fuego, impulsos, fuerza" },
-                    { palabra: "rojo", definicion: "pasión, acción, vitalidad" },
-                    { palabra: "agua", definicion: "emociones, subconsciente, intuición" }
+                    // --- Elementos Básicos y Palos ---
+                    { palabra: "agua", definicion: "Emociones, intuición, el reino del subconsciente (Copas)" },
+                    { palabra: "fuego", definicion: "Voluntad, acción, pasiones, chispa vital (Bastos)" },
+                    { palabra: "tierra", definicion: "Mundo material, cuerpo físico, recursos, estabilidad (Oros)" },
+                    { palabra: "aire", definicion: "Intelecto, mente, comunicación, conflicto (Espadas)" },
+                    
+                    // --- Colores ---
+                    { palabra: "blanco", definicion: "Pureza, inocencia, limpieza espiritual, la luz antes de refractarse" },
+                    { palabra: "negro", definicion: "Misterio, el vacío fértil, el final de un ciclo, lo oculto" },
+                    { palabra: "amarillo", definicion: "Consciencia, luz solar, intelecto activo, divinidad" },
+                    { palabra: "rojo", definicion: "Pasión, acción, sangre, vitalidad, el mundo terrenal" },
+                    { palabra: "azul", definicion: "Subconsciente, fluidez, espiritualidad, reflexión" },
+                    { palabra: "gris", definicion: "Sabiduría, neutralidad, tristeza o apatía" },
+                
+                    // --- Animales ---
+                    { palabra: "león", definicion: "Fuego, impulsos, fuerza vital salvaje, coraje" },
+                    { palabra: "perro", definicion: "Instinto domesticado, lealtad, la mente consciente protectora" },
+                    { palabra: "lobo", definicion: "Instinto salvaje, miedos primitivos, lo indómito" },
+                    { palabra: "caballo", definicion: "Vehículo de la voluntad, energía de avance, instinto dirigido" },
+                    { palabra: "pájaro", definicion: "Pensamientos, mensajes del espíritu, libertad mental" },
+                
+                    // --- Símbolos y Naturaleza ---
+                    { palabra: "infinito", definicion: "Lemniscata: equilibrio perfecto, dominio espiritual sobre la materia" },
+                    { palabra: "corona", definicion: "Autoridad, dominio mental, conexión con la mente superior (Kether)" },
+                    { palabra: "montaña", definicion: "Desafíos, conocimiento abstracto, la morada de la divinidad" },
+                    { palabra: "nube", definicion: "Intervención divina, pensamientos que ocultan la verdad, lo efímero" },
+                    { palabra: "torre", definicion: "Estructuras falsas del ego, revelación brusca, liberación forzada" },
+                    { palabra: "sol", definicion: "Claridad absoluta, éxito, energía masculina, consciencia" },
+                    { palabra: "luna", definicion: "Misterio, miedos, ciclos, energía femenina, ilusión" },
+                    { palabra: "estrella", definicion: "Esperanza, guía cósmica, inspiración, sanación tras la tormenta" },
+                    { palabra: "río", definicion: "El flujo de la vida, transición, el cauce del subconsciente" },
+                    { palabra: "castillo", definicion: "Civilización, metas alcanzadas, a veces aislamiento o defensas" }
                 ];
                 
                 const procesarAnotaciones = (texto) => {
