@@ -157,7 +157,7 @@ h1 { font-size: 1.2rem; text-align: left; border-bottom: 2px solid var(--border-
     font-weight: 500;
 }
 
-.link-mazos {
+.link-block {
     color: var(--purple);
     text-align: center;
     padding: 5px 0;
