@@ -1,0 +1,18 @@
+{
+  "nombre": "El gran tarot esotérico",
+  "descripcion": "Edición 2024. Fournier.",
+  "cartas": [
+    {
+      "id": "0-loco",
+      "nombre": "El Loco (0)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": "Para mí representa el salto de fe ciego..."
+    },
+    {
+      "id": "1-mago",
+      "nombre": "El Mago (I)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": "Tener las herramientas sobre la mesa..."
+    }
+  ]
+}
