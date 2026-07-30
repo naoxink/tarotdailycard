@@ -241,9 +241,7 @@
                 <h2 style="margin: 10px 0 5px 0; color: var(--accent);">{{ cartaActiva.nombre }}</h2>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 20px 0;">Notas de: {{ mazoActual.nombre }}</p>
                 
-                <div class="modal-nota">
-                    {{ cartaActiva.nota_personal || 'No has escrito ninguna interpretación para esta carta todavía.' }}
-                </div>
+                <div class="modal-nota" v-html="procesarAnotaciones(cartaActiva.nota_personal || 'No has escrito ninguna interpretación todavía.')"></div>
             </div>
         </div>
     </div>
@@ -257,7 +255,29 @@
                 const idMazoSeleccionado = ref(''); // ID del mazo activo en el select
                 const mazoActual = ref(null);       // Datos completos del mazo cargado dinámicamente
                 const cartaActiva = ref(null);      // Carta seleccionada en el modal
-    
+
+                const glosario = [
+                    { palabra: "león", definicion: "fuego, impulsos, fuerza" },
+                    { palabra: "rojo", definicion: "pasión, acción, vitalidad" },
+                    { palabra: "agua", definicion: "emociones, subconsciente, intuición" }
+                ];
+                
+                const procesarAnotaciones = (texto) => {
+                    if (!texto) return '';
+                    let textoProcesado = texto;
+                    
+                    glosario.forEach(item => {
+                        // Busca la palabra ignorando mayúsculas/minúsculas (gi), 
+                        // asegurándose de que esté rodeada por espacios, puntuación o el inicio/fin del texto.
+                        const regex = new RegExp(`(?<=^|\\s|[.,;:!¡¿?\\n])(${item.palabra})(?=\\s|[.,;:!¡¿?\\n]|$)`, 'gi');
+                        
+                        // Reemplaza envolviendo la coincidencia ($1 mantiene si estaba en mayúscula o minúscula)
+                        textoProcesado = textoProcesado.replace(regex, `<span class="palabra-clave" data-tooltip="${item.definicion}">$1</span>`);
+                    });
+                    
+                    return textoProcesado;
+                };
+                
                 // 1. Al cargar la web, traemos solo el índice general
                 onMounted(async () => {
                     try {
