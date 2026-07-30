@@ -16,57 +16,57 @@
     },
     {
       "id": "2-sacerdotisa",
-      "nombre": "La Sacerdotisa (II)",
+      "nombre": "La Sacerdotisa (II) - La consultante",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "La que parece ser Eva, una mujer totalmente desnuda entre árboles verdes, en un paisaje bello con un sol de fondo con rallos rojos y amarillos. El cielo gris parece no perturbar a la mujer. Está cogiendo \"el fruto prohibido\" (una granada) de un árbol. La otra mano la tiene escondida tras la cadera. Busca el **conocimiento** (la granada) y no le importa lo demás. Está tranquila con sus acciones y tiene algunos **secretos**."
     },
     {
       "id": "3-emperatriz",
       "nombre": "La Emperatriz (III)",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Esta carta me sugiere una mujer sabia y tranquila. Con fuerza dominante. Ella **protege** y da **recursos** pero también puede ser fiera. Sabe mantenerse controlada. Podría relacionarla con la propia **naturaleza**.\nEl escudo que porta me sugiere que es el ciclo del día; siempre está ahí, paciente, protegiendo, proveyendo."
     },
     {
       "id": "4-emperador",
       "nombre": "El Emperador (IV)",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Un emperador en toda regla. Un señor que no se perturba por nada. Con su cetro en mano impone las reglas pero también protege, desde el lado más físico y fuerte. Con sus piernas cruzadas da la impresión de que no le requiere mucho esfuerzo realizar su trabajo. Su casco con cornamenta indica que es la cabeza, el que manda sin duda alguna.\nÉl establece los **límites** y mantiene el **orden**."
     },
     {
       "id": "5-hierofante",
-      "nombre": "El Hierofante (V)",
+      "nombre": "El Hierofante (V) - El maestro",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Un señor sabio, quizás uno de los más sabios, tocado por la mano de Dios. Su **sabiduría** ha sido directamente infundida y está enseñando sus conocimientos a los más nuevos. Las columnas indican **rectitud**, **estructuras**, **tradiciones**."
     },
     {
       "id": "6-enamorados",
-      "nombre": "Los Enamorados (VI)",
+      "nombre": "Los Enamorados (VI) - Los dos caminos",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Un jóven tiene que hacer una **elección** entre dos amores (una bifurcación de caminos). La elección es muy difícil, debe elegir desde lo más profundo de su corazón pero con las ideas muy claras."
     },
     {
       "id": "7-carro",
-      "nombre": "El Carro (VII)",
+      "nombre": "El Carro (VII) - El carro de Hermes",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Este carro es fuerte, duro y puede ir sobre cualquier terreno. Puede llevar donde se quiera, pero debe tener **equilibradas** las dos fuerzas (caballo blanco y caballo negro) que tiran de él. Hermes en este caso, está **dejando atrás** sus pertenencias materiales y está viajando a un lugar nuevo.\nSu traje y capa rojos indican que tiene toda la voluntad puesta en esa **transición**."
     },
     {
       "id": "8-justicia",
       "nombre": "La Justicia (VIII)",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Un rey imponente con su espada levantada a punto de ejecutar a una persona. Sentado en su trono (rojo y amarillo). Indica claramente la justicia en su sentido más fuerte: si no odebeces habrá castigo. El \"paisaje\" de fondo llano, indica que está **tranquilo** impartiendo la justicia y que también es **imparcial**, se limita a ejecutar, no a juzgar."
     },
     {
       "id": "9-ermitano",
       "nombre": "El Ermitaño (IX)",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "Este señor mayor con su candil en la mano y su bastón en la otra está **buscando** algo: respuestas. Pero no respuestas en general, sino **sobre sí mismo**. Está solo en la montaña, con la naturaleza. Se le ve tranquilo y paciente aunque atento a cualquier cosa que pueda ocurrir o encontrar."
     },
     {
       "id": "10-rueda",
       "nombre": "La Rueda de la Fortuna (X)",
       "tipo": "Arcano Mayor",
-      "nota_personal": ""
+      "nota_personal": "**Los vientos cambian**. En las ruedas, lo que está arriba, baja y al contrario. Ambas partes no pueden convivir porque son **opuestas**. Aquí el oso blanco se comería al mono. El árbol no puede expandirse con una estructura por arriba."
     },
     {
       "id": "11-fuerza",
@@ -219,6 +219,90 @@
       "nota_personal": ""
     },
     {
+      "id": "as-Espadas",
+      "nombre": "As de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-Espadas",
+      "nombre": "2 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-Espadas",
+      "nombre": "3 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-Espadas",
+      "nombre": "4 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-Espadas",
+      "nombre": "5 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-Espadas",
+      "nombre": "6 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-Espadas",
+      "nombre": "7 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-Espadas",
+      "nombre": "8 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-Espadas",
+      "nombre": "9 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-Espadas",
+      "nombre": "10 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "sota-Espadas",
+      "nombre": "Sota de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "caballo-Espadas",
+      "nombre": "Caballo de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "reina-Espadas",
+      "nombre": "Reina de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "rey-Espadas",
+      "nombre": "Rey de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
       "id": "as-oros",
       "nombre": "As de Oros",
       "tipo": "Oros",
@@ -300,6 +384,90 @@
       "id": "rey-oros",
       "nombre": "Rey de Oros",
       "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "as-Copas",
+      "nombre": "As de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-Copas",
+      "nombre": "2 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-Copas",
+      "nombre": "3 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-Copas",
+      "nombre": "4 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-Copas",
+      "nombre": "5 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-Copas",
+      "nombre": "6 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-Copas",
+      "nombre": "7 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-Copas",
+      "nombre": "8 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-Copas",
+      "nombre": "9 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-Copas",
+      "nombre": "10 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "sota-Copas",
+      "nombre": "Sota de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "caballo-Copas",
+      "nombre": "Caballo de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "reina-Copas",
+      "nombre": "Reina de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "rey-Copas",
+      "nombre": "Rey de Copas",
+      "tipo": "Copas",
       "nota_personal": ""
     }
   ]
