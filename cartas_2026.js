@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "30.07.2026",
+      carta: "IV de bastos",
+      nota: "Sigo manteniendo el esfuerzo para obtener los resultados. Mantenerse constante es clave."
+    },
+    {
       fecha: "29.07.2026",
       carta: "VI de bastos",
       nota: "Mis proyectos tienen sus raíces bien nutridas y estables por mi esfuerzo. Están y seguirán dando frutos mientras siga aportándoles mi energía."
