@@ -1,5 +1,27 @@
 [
   {
+    "fecha": "2026-07-31",
+    "pregunta": "Después de los malos rollos con algunos de mis familiares, este fin de semana voy al pueblo que es la feria y ellos van ¿cómo irá la cosa, me divertiré, aguantaré las tonterías?",
+    "cartas": [
+      {
+        "posicion": "#1",
+        "nombre": "La muerte (XIII)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "El mundo (XXI)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "Reina de Oros",
+        "palo": "Oros"
+      }
+    ],
+    "interpretacion": "Deberías ir con una actitud nueva, romper con el ambiente actual y comenzar de cero. Te lo pasarás genial obviando lo pasado y disfrutando lo presente, estarás en armonía contigo mismo y no necesitarás a los demás (ni aguantar sus tonterías). Ganando esta actitud te valorarás mucho más y serás impasible a los demás y serás superior a los malos rollos que vengan. Aprenderás a manejarlos y te será un camino mucho más fácil."
+  },
+  {
     "fecha": "2026-07-30",
     "pregunta": "A pesar de haber salido del armario, me sigo poniendo nervioso cuando enseño algo en mi móvil (twitter por ejemplo) por si aparece algún vídeo/foto de algún chico (sin camiseta por ejemplo)",
     "cartas": [
