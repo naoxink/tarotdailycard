@@ -160,7 +160,7 @@
                 
                 <div class="tirada-header">
                     <span class="fecha">{{ formatearFecha(tirada.fecha) }}</span>
-                    <span class="anonimo-tag">Consultante: Anónimo</span>
+                    <span class="anonimo-tag">Consultante: {{ tirada.consultante || 'Anónimo' }}</span>
                 </div>
 
                 <h2 class="pregunta">"{{ tirada.pregunta }}"</h2>
