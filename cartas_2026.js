@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "31.07.2026",
+      carta: "VII de espadas",
+      nota: "No veo claro algún tema, estoy dividido y no llego a entender del todo. Mi parte inconsciente puede que tenga la solución pero mis pensamientos están alterando la búsqueda."
+    },
+    {
       fecha: "30.07.2026",
       carta: "IV de bastos",
       nota: "Sigo manteniendo el esfuerzo para obtener los resultados. Mantenerse constante es clave."
