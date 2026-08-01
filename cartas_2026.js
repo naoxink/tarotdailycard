@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "01.08.2026",
+      carta: "VIII de espadas",
+      nota: "Estoy a la defensiva por mi propia forma de pensar ahora mismo. Estoy cerrado. Debería abrir la posición defensiva para abrir también mi mente."
+    },
+    {
       fecha: "31.07.2026",
       carta: "VII de espadas",
       nota: "No veo claro algún tema, estoy dividido y no llego a entender del todo. Mi parte inconsciente puede que tenga la solución pero mis pensamientos están alterando la búsqueda."
