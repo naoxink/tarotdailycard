@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "El juicio (XX)",
-      "nota": "Toca revisión interna personal. Quizás las partes que no me gustan tomen el control, tendría que tomar nota para corregirlas en un futuro."
+      "carta": "La torre (XVI)",
+      "nota": "Afontar los cambios con la mejor perspectiva posible. Adaptarme aunque no me gusten, y mucho menos si son a última hora y/o a peor. Be water my friend."
     }
   },
 
   "registros": [
+    {
+      fecha: "03.08.2026",
+      carta: "Caballero de copas",
+      nota: "Dejar de aparentar lo que no soy. Olvidarme un poco del orgullo y fijarme más detenidamente en mis sentimientos."
+    },
+    {
+      fecha: "02.08.2026",
+      carta: "El carro (VII)",
+      nota: "Sigo en transición. Tengo que aprender a dejar atrás y aceptar lo nuevo."
+    },
     {
       fecha: "01.08.2026",
       carta: "VIII de espadas",
