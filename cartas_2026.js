@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "04.08.2026",
+      carta: "Sota de espadas",
+      nota: "Mejorar la gestión de pensamientos, aún me pierdo a veces. Pensar bien las cosas antes de actuar, elegir bien la estrategia para atajar los problemas antes de lanzarme a la acción. Pararme, observar y evaluar las posibles opciones."
+    },
+    {
       fecha: "03.08.2026",
       carta: "Caballero de copas",
       nota: "Dejar de aparentar lo que no soy. Olvidarme un poco del orgullo y fijarme más detenidamente en mis sentimientos."
