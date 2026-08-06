@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "06.08.2026",
+      carta: "IV de copas",
+      nota: "En este momento he de centrarme en mis sentimientos, en mis relaciones con los demás, es lo que me dará frutos. Mis pensamientos están privándome de esto, están interfiriendo y alterando mis sentimientos."
+    },
+    {
       fecha: "05.08.2026",
       carta: "X de bastos",
       nota: "Parece ser que todos los esfuerzos están funcionando. He completado un ciclo con bastante esfuerzo y he de seguir con intención. El ímpetu y el esfuerzo es vital para seguir adelante."
