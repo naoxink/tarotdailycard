@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "07.08.2026",
+      carta: "La luna (XVIII)",
+      nota: "Hay que ir con cuidado para evitar caer en los obstáculos, confiar más en el subconsciente, en la intuición. Debo buscar en mis relaciones y mis sentimientos."
+    },
+    {
       fecha: "06.08.2026",
       carta: "IV de copas",
       nota: "En este momento he de centrarme en mis sentimientos, en mis relaciones con los demás, es lo que me dará frutos. Mis pensamientos están privándome de esto, están interfiriendo y alterando mis sentimientos."
