@@ -1,5 +1,27 @@
 [
   {
+    "fecha": "2026-08-09",
+    "pregunta": "¿Cómo me irá en la comida familiar hoy?",
+    "cartas": [
+      {
+        "posicion": "#1",
+        "nombre": "II de copas",
+        "palo": "Copas"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "El sol (XIX)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "La rueda de la fortuna (X)",
+        "palo": "Arcanos Mayores"
+      }
+    ],
+    "interpretacion": "Parece que saldrá todo bien, tienes que tener a raya tu inconsciente y mantener las relaciones y sentimientos por encima de los pensamientos y los impulsos. Cuidado que los vientos cambian rápido y cuando te das cuenta lo bueno se convierte en malo. Resumen, todo guay, prioriza las relaciones buenas que son las que te dan fruto."
+  },
+  {
     "fecha": "2026-07-31",
     "pregunta": "Después de los malos rollos con algunos de mis familiares, este fin de semana voy al pueblo que es la feria y ellos van ¿cómo irá la cosa, me divertiré, aguantaré las tonterías?",
     "cartas": [
