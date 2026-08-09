@@ -14,6 +14,16 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "09.08.2026",
+      carta: "Rey de espadas",
+      nota: "Muchas espadas estoy obteniendo últimamente, necesito trabajar más en la gestión de mis pensamientos e ideas. Me dejo llevar demasiado por los impulsos."
+    },
+    {
+      fecha: "08.08.2026",
+      carta: "Sota de espadas",
+      nota: "Cuidado con la inpulsividad y la poca estrategia. Siempre peco de actuar antes de pensar."
+    },
+    {
       fecha: "07.08.2026",
       carta: "La luna (XVIII)",
       nota: "Hay que ir con cuidado para evitar caer en los obstáculos, confiar más en el subconsciente, en la intuición. Debo buscar en mis relaciones y mis sentimientos."
