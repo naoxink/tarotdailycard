@@ -7,12 +7,17 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "La torre (XVI)",
-      "nota": "Afontar los cambios con la mejor perspectiva posible. Adaptarme aunque no me gusten, y mucho menos si son a última hora y/o a peor. Be water my friend."
+      "carta": "Rey de copas",
+      "nota": "Esta semana hay que trabajar en las relaciones personales. Sé cómo hacerlo pero mi consciente no ayuda."
     }
   },
 
   "registros": [
+    {
+      fecha: "10.08.2026",
+      carta: "IV de pentáculos",
+      nota: "Estoy intentando crecer pero falta algo. Algo me está bloqueando, o bien inconscientemente no quiero soltar algo, pasar página."
+    },
     {
       fecha: "09.08.2026",
       carta: "Rey de espadas",
