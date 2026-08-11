@@ -1,3 +1,8 @@
 [
-  { "id": "gran-tarot-esoterico", "nombre": "El gran tarot esotérico", "archivo": "mazos/tarot-esoterico.json" }
+  { "id": "gran-tarot-esoterico", "nombre": "El gran tarot esotérico", "archivo": "mazos/tarot-esoterico.json" },
+  { "id": "lost-hollow-tarot", "nombre": "Lost Hollow Tarot", "archivo": "mazos/lost-hollow-tarot.json" },
+  { "id": "maravilla-tarot", "nombre": "Maravilla Tarot", "archivo": "mazos/maravilla-tarot.json" },
+  { "id": "night-sun-tarot", "nombre": "Night Sun Tarot", "archivo": "mazos/night-sun-tarot.json" },
+  { "id": "pagan-otherworlds", "nombre": "Pagan Otherworlds", "archivo": "mazos/pagan-otherworlds.json" },
+  { "id": "tarot-del-toro", "nombre": "Tarot del Toro", "archivo": "mazos/tarot-del-toro.json" }
 ]

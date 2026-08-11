@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "11.08.2026",
+      carta: "III de bastos",
+      nota: "La intención es la que abre el camino. Hoy es un buen momento para plantear estrategias o lanzar iniciativas. Hay que confiar en el instinto."
+    },
+    {
       fecha: "10.08.2026",
       carta: "IV de pentáculos",
       nota: "Estoy intentando crecer pero falta algo. Algo me está bloqueando, o bien inconscientemente no quiero soltar algo, pasar página."

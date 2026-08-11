@@ -44,11 +44,13 @@ const renderSuitChart = (suitCounts) => {
         const count = suitCounts[suit] || 0;
         const percent = total > 0 ? Math.round((count / total) * 100) : 0;
         const barWidth = percent === 0 ? '1px' : `${percent}%`;
-        const barColor = percent === 0 ? 'var(--border-chart)' : 'var(--purple)';
+        const barColor = percent === 0 ? 'var(--accent-glow)' : 'var(--accent)';
         chartHTML += `
             <div class="chart-bar">
                 <span class="chart-label">${suit}</span>
-                <div class="chart-bar-fill" style="width: ${barWidth}; background: ${barColor}"></div>
+                <div class="chart-bar-track">
+                    <div class="chart-bar-fill" style="width: ${barWidth}; background: ${barColor}"></div>
+                </div>
                 <span class="chart-percent">${percent}%</span>
             </div>
         `;
@@ -94,8 +96,9 @@ estadisticas.innerHTML = `
     <div class="stats-card"><span class="label">Cartas distintas</span><span class="stats-value">${cartasDistintas}</span></div>
     <div class="stats-card"><span class="label">Carta más repetida</span><span class="stats-value">${cartasFrecuentes.join(', ')} (${maxRepeticiones})</span></div>
     <div class="stats-card"><span class="label">Palo más repetido</span><span class="stats-value">${frequentSuit}</span></div>
-    ${renderSuitChart(suitCountMonth)}
 `;
+
+document.querySelector('#suit-month-chart').innerHTML = renderSuitChart(suitCountMonth);
 
 const today = new Date();
 const todayString = String(today.getDate()).padStart(2, '0') + '.' + String(today.getMonth() + 1).padStart(2, '0') + '.' + today.getFullYear();
@@ -152,7 +155,7 @@ registros.forEach((item, index) => {
     if (item.fecha === todayString) {
         div.classList.add('today');
         // El SPAN nace limpio, sin onclick conflictivos
-        botonHistorial = ` <span id="btn-historial" style="cursor:pointer; font-size:0.9rem; margin-left:6px;" title="Ver coincidencias pasadas">👁️</span>`;
+        botonHistorial = ` <span id="btn-historial" class="historial-button" title="Ver coincidencias pasadas">👁️</span>`;
     }
 
     div.innerHTML = `

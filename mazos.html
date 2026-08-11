@@ -4,243 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Mazos de Tarot</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        :root {
-            --bg: #0f111a;
-            --surface: #1e2235;
-            --surface-hover: #282e48;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --accent: #d4af37; /* Oro */
-            --font: system-ui, -apple-system, sans-serif;
-            
-            /* Colores de palos que ya usas */
-            --arcanos: #a855f7;
-            --bastos: #a34e36;
-            --pentaculos: #d4af37;
-            --espadas: #5f7d95;
-            --copas: #3a9fb7;
-        }
-
-        body {
-            margin: 0;
-            font-family: var(--font);
-            background-color: var(--bg);
-            color: var(--text);
-            -webkit-font-smoothing: antialiased;
-        }
-
-        #app {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            padding: 20px;
-            background-color: rgba(15, 17, 26, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        h1 {
-            font-size: 1.2rem;
-            margin: 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--accent);
-        }
-
-        .selector-mazo {
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: -webkit-fill-available;
-        }
-
-        .deck-info {
-            margin-bottom: 30px;
-            border-left: 3px solid var(--accent);
-            padding-left: 15px;
-        }
-
-        .deck-info p {
-            color: var(--text-muted);
-            margin: 5px 0 0 0;
-            font-size: 0.95rem;
-        }
-
-        .grid-cartas {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-        }
-
-        .card-item {
-            background: var(--surface);
-            border-radius: 8px;
-            padding: 16px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            border: 1px solid rgba(255,255,255,0.02);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-item:hover {
-            transform: translateY(-2px);
-            background-color: var(--surface-hover);
-        }
-
-        .card-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: bold;
-            align-self: flex-start;
-        }
-
-        /* Colores dinámicos para los badges */
-        .badge-arcanos { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #a855f7; }
-        .badge-bastos { background: rgba(163, 78, 54, 0.2); color: #e07a5f; border: 1px solid #a34e36; }
-        .badge-pentaculos { background: rgba(212, 175, 55, 0.2); color: #f4d35e; border: 1px solid #d4af37; }
-        .badge-espadas { background: rgba(95, 125, 149, 0.2); color: #94b1ca; border: 1px solid #5f7d95; }
-        .badge-copas { background: rgba(58, 159, 183, 0.2); color: #67e8f9; border: 1px solid #3a9fb7; }
-
-        .nota-preview {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 10px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Estilos del visor detalle (Modal) */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 11, 16, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--surface);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 100%;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-nota {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #e2e8f0;
-            white-space: pre-wrap; /* Mantiene saltos de línea */
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            white-space: pre-wrap;
-        }
-
-        .modal-nota strong {
-            color: var(--accent); /* Las negritas saldrán en tono dorado/acento */
-            font-weight: 600;
-        }
-
-        @media (max-width: 600px) {
-            header { flex-direction: column; gap: 10px; align-items: flex-start; }
-            .selector-mazo { width: 100%; }
-        }
-        .palabra-clave {
-            border-bottom: 1px dashed var(--accent);
-            color: var(--accent);
-            cursor: help;
-            position: relative;
-            font-weight: 600;
-        }
-        
-        .palabra-clave:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 130%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #0f111a;
-            color: #e2e8f0;
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.8rem;
-            font-weight: normal;
-            white-space: nowrap;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            pointer-events: none; /* Evita que el tooltip interfiera con el ratón */
-        }
-        
-        /* Pequeño triángulo apuntando hacia abajo para el tooltip */
-        .palabra-clave:hover::before {
-            content: '';
-            position: absolute;
-            bottom: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 6px;
-            border-style: solid;
-            border-color: #0f111a transparent transparent transparent;
-            z-index: 100;
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
 
-    <div id="app">
+    <div class="container">
+        <div id="app">
         <header>
             <h1>🔮 Compendio de Tarot</h1>
             <select class="selector-mazo" v-model="idMazoSeleccionado">
@@ -254,7 +24,7 @@
         
 
         <main v-if="mazoActual">
-            <a href="/tarotdailycard" class="link-block">Atrás</a>
+            <a href="index.html" class="link-block">Atrás</a>
             <div class="deck-info">
                 <h2>{{ mazoActual.nombre }}</h2>
                 <p>{{ mazoActual.descripcion }}</p>
@@ -278,22 +48,23 @@
             </div>
         </main>
 
-        <div class="modal-overlay" v-if="cartaActiva" @click.self="cerrarCarta">
-            <div class="modal-content">
-                <button class="close-btn" @click="cerrarCarta">&times;</button>
-                <span :class="['badge', obtenerClaseBadge(cartaActiva.tipo)]">
-                    {{ cartaActiva.tipo }}
-                </span>
-                <h2 style="margin: 10px 0 5px 0; color: var(--accent);">{{ cartaActiva.nombre }}</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 20px 0;">Notas de: {{ mazoActual.nombre }}</p>
-                
-                <div class="modal-nota" v-html="procesarNotaFinal(cartaActiva.nota_personal || 'No has escrito ninguna interpretación todavía.')"></div>
-            </div>
+    <div class="modal-overlay" v-if="cartaActiva" @click.self="cerrarCarta">
+        <div class="modal-content">
+            <button class="close-btn" @click="cerrarCarta">&times;</button>
+            <span :class="['badge', obtenerClaseBadge(cartaActiva.tipo)]">
+                {{ cartaActiva.tipo }}
+            </span>
+            <h2>{{ cartaActiva.nombre }}</h2>
+            <p class="modal-meta">Notas de: {{ mazoActual.nombre }}</p>
+            
+            <div class="modal-nota" v-html="procesarNotaFinal(cartaActiva.nota_personal || 'No has escrito ninguna interpretación todavía.')"></div>
         </div>
     </div>
 
+
+    </div>
     <script>
-        const { createApp, ref, watch, onMounted } = Vue;
+const { createApp, ref, watch, onMounted, onBeforeUnmount } = Vue;
     
         createApp({
             setup() {
@@ -301,6 +72,25 @@
                 const idMazoSeleccionado = ref(''); // ID del mazo activo en el select
                 const mazoActual = ref(null);       // Datos completos del mazo cargado dinámicamente
                 const cartaActiva = ref(null);      // Carta seleccionada en el modal
+
+                const bloquearScroll = (activar) => {
+                    const root = document.documentElement;
+                    const body = document.body;
+
+                    if (activar) {
+                        root.style.overflow = 'hidden';
+                        root.style.height = '100%';
+                        body.style.overflow = 'hidden';
+                        body.style.height = '100%';
+                        body.classList.add('modal-open');
+                    } else {
+                        root.style.overflow = '';
+                        root.style.height = '';
+                        body.style.overflow = '';
+                        body.style.height = '';
+                        body.classList.remove('modal-open');
+                    }
+                };
 
                 const glosario = [
                     // --- Elementos Básicos y Palos ---
@@ -334,7 +124,11 @@
                     { palabra: "luna", definicion: "Misterio, miedos, ciclos, energía femenina, ilusión" },
                     { palabra: "estrella", definicion: "Esperanza, guía cósmica, inspiración, sanación tras la tormenta" },
                     { palabra: "río", definicion: "El flujo de la vida, transición, el cauce del subconsciente" },
-                    { palabra: "castillo", definicion: "Civilización, metas alcanzadas, a veces aislamiento o defensas" }
+                    { palabra: "castillo", definicion: "Civilización, metas alcanzadas, a veces aislamiento o defensas" },
+
+                    { palabra: "3", definicion: "Creación y manifestación" },
+
+                    { palabra: "mercurio", definicion: "Comunicación, intelecto, movilidad, cambio, agilidad mental" }
                 ];
 
                 const formatearMarkdownLigero = (texto) => {
@@ -436,6 +230,14 @@
     
                 const abrirCarta = (carta) => { cartaActiva.value = carta; };
                 const cerrarCarta = () => { cartaActiva.value = null; };
+
+                watch(cartaActiva, (valor) => {
+                    bloquearScroll(Boolean(valor));
+                }, { flush: 'sync' });
+
+                onMounted(() => {
+                    bloquearScroll(Boolean(cartaActiva.value));
+                });
     
                 const obtenerClaseBadge = (tipo) => {
                     if (!tipo) return '';
