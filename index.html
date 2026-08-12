@@ -1,30 +1,206 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarot Log</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarot Log</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Diario Tarot</h1>
-        <div class="container">
-            <div class="special-grid" id="destacados"></div>
-            <details class="stats-panel">
-                <summary>Estadísticas</summary>
-                <div class="stats-grid" id="estadisticas"></div>
-                <div id="suit-month-chart"></div>
-                <div class="chart-container" id="grafica-anual"></div>
-            </details>
-            <div id="lista"></div>
-            <a class="link-block" href="mazos.html">Interpretaciones personales de cada mazo</a>
-            <a class="link-block" href="tiradas.html">Interpretaciones de tiradas</a>
-        </div>
-    </div>
 
-    <script src="cartas_2026.js"></script>
-    <script src="cartas.js"></script>
-    <script src="app.js"></script>
+<div class="container">
+  <div id="app">
+
+    <header class="topbar">
+      <div class="brand" @click="irA('dashboard')">🔮 <span>Tarot Log</span></div>
+
+      <nav class="nav-pills">
+        <button :class="{active: vista==='dashboard'}" @click="irA('dashboard')">Dashboard</button>
+        <button :class="{active: vista==='diario'}" @click="irA('diario')">Diario</button>
+        <button :class="{active: vista==='tiradas'}" @click="irA('tiradas')">Tiradas</button>
+        <button :class="{active: vista==='mazos'}" @click="irA('mazos')">Mazos</button>
+      </nav>
+
+      <div class="global-search">
+        <input v-model="busquedaGlobal" placeholder="Buscar carta, nota, tirada…" @focus="mostrarBusqueda=true" @blur="onBlurBusqueda" @keyup.enter="resultadosBusqueda[0] && irAResultado(resultadosBusqueda[0])">
+        <div class="search-results" v-if="mostrarBusqueda && busquedaGlobal.trim().length>=2">
+          <div class="search-empty" v-if="resultadosBusqueda.length===0">Sin resultados</div>
+          <div class="search-result" v-for="r in resultadosBusqueda" :key="r.key" @mousedown="irAResultado(r)">
+            <span class="search-tag">{{ r.tipo }}</span> {{ r.texto }}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- ================= DASHBOARD ================= -->
+      <section v-if="vista==='dashboard'" class="vista-dashboard">
+
+        <div class="special-grid">
+          <div class="special-card">
+            <span class="label">Año {{ anioActual }}</span>
+            <span class="special-name">{{ especiales.año.carta }}</span>
+            <span class="note">{{ especiales.año.nota }}</span>
+          </div>
+          <div class="special-card">
+            <span class="label">Semana actual</span>
+            <span class="special-name">{{ especiales.semana.carta }}</span>
+            <span class="note">{{ especiales.semana.nota }}</span>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stats-card"><span class="label">Entradas</span><span class="stats-value">{{ entradasTotales }}</span></div>
+          <div class="stats-card"><span class="label">Cartas distintas</span><span class="stats-value">{{ cartasDistintas }}</span></div>
+          <div class="stats-card"><span class="label">Racha actual</span><span class="stats-value">🔥 {{ racha }} {{ racha===1 ? 'día' : 'días' }}</span></div>
+          <div class="stats-card"><span class="label">Carta más repetida</span><span class="stats-value">{{ cartasFrecuentes.join(', ') }} ({{ maxRepeticiones }})</span></div>
+          <div class="stats-card"><span class="label">Palo más repetido</span><span class="stats-value">{{ paloFrecuente }}</span></div>
+        </div>
+
+        <div class="chart-container" v-html="graficaPalosMesHtml"></div>
+        <div class="chart-container" v-html="graficaAnualHtml"></div>
+
+        <div class="dashboard-cols">
+          <div class="mini-list">
+            <h3>Últimas entradas</h3>
+            <div class="mini-list-item" v-for="item in ultimasEntradas" :key="item.fecha" @click="verEnDiario(item.carta)">
+              <span>{{ item.carta }}</span>
+              <span class="fecha-mini">{{ item.fecha }}</span>
+            </div>
+          </div>
+          <div class="mini-list">
+            <h3>Últimas tiradas</h3>
+            <div class="mini-list-item" v-for="t in ultimasTiradasList" :key="t.fecha+t.pregunta" @click="verEnTiradas(t)">
+              <span>{{ t.pregunta }}</span>
+              <span class="fecha-mini">{{ formatearFecha(t.fecha) }}</span>
+            </div>
+            <div class="mini-list-item" v-if="ultimasTiradasList.length===0"><span class="fecha-mini">Sin tiradas aún</span></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= DIARIO ================= -->
+      <section v-else-if="vista==='diario'" class="vista-diario">
+
+        <div class="toolbar">
+          <input type="text" v-model="filtroDiarioTexto" placeholder="Buscar carta o nota…" :disabled="!!filtroCartaActiva">
+          <select v-model="filtroDiarioPalo" :disabled="!!filtroCartaActiva">
+            <option value="">Todos los palos</option>
+            <option v-for="p in palos" :key="p" :value="p">{{ p }}</option>
+          </select>
+          <span class="filtro-activo-chip" v-if="filtroCartaActiva" @click="filtroCartaActiva=null">✕ {{ filtroCartaActiva }}</span>
+        </div>
+
+        <div class="mini-calendar" v-if="!filtroDiarioTexto && !filtroDiarioPalo && !filtroCartaActiva">
+          <div class="mini-calendar-titulo">{{ nombresMeses[mesActualStr] }} {{ anioActual }}</div>
+          <div class="calendar-grid">
+            <div class="calendar-dow" v-for="d in ['L','M','X','J','V','S','D']" :key="d">{{ d }}</div>
+            <div v-for="(c, idx) in diasMesActual" :key="idx"
+                 class="calendar-cell"
+                 :class="{'vacio-celda': !c, 'con-carta': c && !c.vacio, 'hoy': c && c.esHoy}"
+                 :style="c && !c.vacio ? {background: colorPalo(c.palo)} : {}"
+                 :title="c && !c.vacio ? (c.carta + (c.nota ? ' · ' + c.nota : '')) : ''">
+              {{ c ? c.dia : '' }}
+            </div>
+          </div>
+        </div>
+
+        <details class="mes-log" v-for="grupo in registrosAgrupados" :key="grupo.clave" :open="grupo.esPrimero">
+          <summary class="month-divider">{{ grupo.nombre }} <span class="count-badge">{{ grupo.items.length }}</span></summary>
+          <div class="entry" v-for="item in grupo.items" :key="item.fecha" :class="{today: item.fecha===hoyString}">
+            <span class="date">{{ item.fecha }}</span>
+            <span class="card">{{ item.carta }} <span class="historial-button" title="Ver coincidencias pasadas" @click="toggleHistorial(item.carta)">👁</span></span>
+            <p class="note">{{ item.nota || 'Sin nota' }}</p>
+          </div>
+        </details>
+
+        <div class="fallback-message" v-if="registrosAgrupados.length===0">No hay entradas que coincidan con el filtro.</div>
+
+      </section>
+
+      <!-- ================= TIRADAS ================= -->
+      <section v-else-if="vista==='tiradas'" class="vista-tiradas">
+
+        <div class="toolbar">
+          <input type="text" v-model="filtroTiradaTexto" placeholder="Buscar en pregunta o interpretación…">
+          <input type="text" v-model="filtroTiradaConsultante" placeholder="Consultante…" list="lista-consultantes">
+          <datalist id="lista-consultantes">
+            <option v-for="c in consultantesDisponibles" :key="c" :value="c"></option>
+          </datalist>
+          <span class="count-badge">{{ tiradasFiltradas.length }} tirada(s)</span>
+        </div>
+
+        <div class="feed-tiradas">
+          <div class="tirada-card" v-for="tirada in tiradasFiltradas" :key="tirada.fecha+tirada.pregunta">
+            <div class="tirada-header">
+              <span class="fecha">{{ formatearFecha(tirada.fecha) }}</span>
+              <span class="anonimo-tag">Consultante: {{ tirada.consultante || 'Anónimo' }}</span>
+            </div>
+            <h2 class="pregunta">"{{ tirada.pregunta }}"</h2>
+            <div class="cartas-layout">
+              <div class="carta-item" v-for="(carta, index) in tirada.cartas" :key="index">
+                <div class="carta-posicion">{{ carta.posicion }}</div>
+                <div class="carta-nombre">{{ carta.nombre }}</div>
+                <span :class="['badge', obtenerClaseBadge(carta.palo)]">{{ carta.palo }}</span>
+              </div>
+            </div>
+            <div class="interpretacion">{{ tirada.interpretacion }}</div>
+          </div>
+
+          <div v-if="tiradasFiltradas.length===0" class="fallback-message">No hay tiradas que coincidan.</div>
+        </div>
+
+      </section>
+
+      <!-- ================= MAZOS ================= -->
+      <section v-else-if="vista==='mazos'" class="vista-mazos">
+
+        <div class="mazos-header">
+          <select class="selector-mazo" v-model="idMazoSeleccionado">
+            <option v-for="mazo in indiceMazos" :key="mazo.id" :value="mazo.id">{{ mazo.nombre }}</option>
+          </select>
+          <div class="deck-progress" v-if="mazoActual">
+            <span>{{ progresoMazo.completadas }}/{{ progresoMazo.total }} con notas</span>
+            <div class="progress-track"><div class="progress-fill" :style="{width: progresoMazo.porcentaje + '%'}"></div></div>
+            <span>{{ progresoMazo.porcentaje }}%</span>
+          </div>
+        </div>
+
+        <p class="deck-desc" v-if="mazoActual">{{ mazoActual.descripcion }}</p>
+
+        <div class="toolbar" v-if="mazoActual">
+          <input type="text" v-model="filtroMazoTexto" placeholder="Buscar carta…">
+          <div class="chip-filters">
+            <button :class="{active: filtroMazoTipo==='todos'}" @click="filtroMazoTipo='todos'">Todos</button>
+            <button v-for="t in tiposDisponibles" :key="t" :class="{active: filtroMazoTipo===t}" @click="filtroMazoTipo=t">{{ t }}</button>
+          </div>
+          <label class="toggle-pendientes"><input type="checkbox" v-model="soloPendientes"> Solo pendientes</label>
+        </div>
+
+        <div class="lista-cartas-mazo" v-if="mazoActual">
+          <div class="carta-mazo" v-for="carta in cartasMazoFiltradas" :key="carta.id" :class="{pendiente: !carta.nota_personal}">
+            <div class="carta-mazo-cabecera" @click="toggleCartaExpandida(carta.id)">
+              <span :class="['badge', obtenerClaseBadge(carta.tipo)]">{{ carta.tipo }}</span>
+              <span class="carta-mazo-nombre">{{ carta.nombre }}</span>
+              <span class="carta-mazo-flecha">{{ cartaExpandidaId===carta.id ? '▲' : '▼' }}</span>
+            </div>
+            <div class="carta-mazo-nota" v-if="cartaExpandidaId===carta.id" v-html="procesarNotaFinal(carta.nota_personal)"></div>
+          </div>
+
+          <div class="fallback-message" v-if="cartasMazoFiltradas.length===0">No hay cartas que coincidan con el filtro.</div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="cartas_2026.js"></script>
+<script src="cartas.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

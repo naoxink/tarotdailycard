@@ -1,495 +1,556 @@
-const container = document.getElementById('lista');
+const { createApp, ref, computed, watch, onMounted } = Vue;
 
-// Renderizar Especiales
-const destacados = document.getElementById('destacados');
-destacados.innerHTML = `
-    <div class="special-card"><span class="label">Año 2026</span><span class="special-name">${especiales.año.carta}</span><span class="note">${especiales.año.nota}</span></div>
-    <div class="special-card"><span class="label">Semana Actual</span><span class="special-name">${especiales.semana.carta}</span><span class="note">${especiales.semana.nota}</span></div>
-`;
+createApp({
+  setup() {
 
-const estadisticas = document.getElementById('estadisticas');
-const fechas = registros
-    .map(r => r.fecha.split('.').reverse().join('-'))
-    .sort();
+    // ============================================================
+    // Navegación (secciones tipo dashboard, sincronizadas con el hash)
+    // ============================================================
+    const vista = ref(location.hash.replace('#', '') || 'dashboard');
+    window.addEventListener('hashchange', () => {
+      vista.value = location.hash.replace('#', '') || 'dashboard';
+    });
+    const irA = (v) => {
+      vista.value = v;
+      location.hash = v;
+    };
 
-const contadorCartas = registros.reduce((acc, item) => {
-    acc[item.carta] = (acc[item.carta] || 0) + 1;
-    return acc;
-}, {});
+    // ============================================================
+    // Utilidades compartidas
+    // ============================================================
+    const nombresMeses = {
+      "01": "Enero", "02": "Febrero", "03": "Marzo", "04": "Abril",
+      "05": "Mayo", "06": "Junio", "07": "Julio", "08": "Agosto",
+      "09": "Septiembre", "10": "Octubre", "11": "Noviembre", "12": "Diciembre"
+    };
 
-const cartasDistintas = Object.keys(contadorCartas).length;
-const maxRepeticiones = registros.length ? Math.max(...Object.values(contadorCartas)) : 0;
-const cartasFrecuentes = registros.length
-    ? Object.entries(contadorCartas)
-        .filter(([, count]) => count === maxRepeticiones)
-        .map(([carta]) => carta)
-    : ['N/A'];
+    const palos = ['Espadas', 'Bastos', 'Copas', 'Pentáculos', 'Arcanos mayores'];
 
-const getSuit = carta => {
-    const lower = carta.toLowerCase();
-    if (lower.includes('espadas')) return 'Espadas';
-    if (lower.includes('bastos')) return 'Bastos';
-    if (lower.includes('copas')) return 'Copas';
-    if (lower.includes('pentáculos') || lower.includes('pentaculos')) return 'Pentáculos';
-    return 'Arcanos mayores';
-};
+    const getSuitFromCarta = (carta) => {
+      const l = carta.toLowerCase();
+      if (l.includes('espadas')) return 'Espadas';
+      if (l.includes('bastos')) return 'Bastos';
+      if (l.includes('copas')) return 'Copas';
+      if (l.includes('pentáculos') || l.includes('pentaculos')) return 'Pentáculos';
+      return 'Arcanos mayores';
+    };
 
-const renderSuitChart = (suitCounts) => {
-    const total = Object.values(suitCounts).reduce((sum, count) => sum + count, 0);
-    if (total === 0) return '<div class="chart-container">No hay datos para este mes.</div>';
+    const obtenerClaseBadge = (tipoOPalo) => {
+      if (!tipoOPalo) return '';
+      const t = tipoOPalo.toLowerCase();
+      if (t.includes('mayor')) return 'badge-arcanos';
+      if (t.includes('basto')) return 'badge-bastos';
+      if (t.includes('pentáculo') || t.includes('oro')) return 'badge-pentaculos';
+      if (t.includes('espada')) return 'badge-espadas';
+      if (t.includes('copa')) return 'badge-copas';
+      return '';
+    };
 
-    const suits = ['Espadas', 'Bastos', 'Copas', 'Pentáculos', 'Arcanos mayores'];
-    let chartHTML = '<div class="chart-container"><div class="chart-title">Distribución de palos este mes</div>';
-    suits.forEach(suit => {
-        const count = suitCounts[suit] || 0;
+    const colorPalo = (palo) => ({
+      'Espadas': '#5f7d95',
+      'Bastos': '#a34e36',
+      'Copas': '#3a9fb7',
+      'Pentáculos': '#d4af37',
+      'Arcanos mayores': '#a855f7'
+    }[palo] || 'var(--text-muted)');
+
+    const hoy = new Date();
+    const anioActual = hoy.getFullYear();
+    const mesActualStr = String(hoy.getMonth() + 1).padStart(2, '0');
+    const hoyString = String(hoy.getDate()).padStart(2, '0') + '.' + mesActualStr + '.' + anioActual;
+
+    // `registros` y `especiales` vienen de cartas.js / cartas_2026.js (scope global, no cambian tras cargar)
+    const entradasTotales = registros.length;
+
+    const contadorCartas = registros.reduce((acc, item) => {
+      acc[item.carta] = (acc[item.carta] || 0) + 1;
+      return acc;
+    }, {});
+    const cartasDistintas = Object.keys(contadorCartas).length;
+    const maxRepeticiones = registros.length ? Math.max(...Object.values(contadorCartas)) : 0;
+    const cartasFrecuentes = registros.length
+      ? Object.entries(contadorCartas).filter(([, c]) => c === maxRepeticiones).map(([c]) => c)
+      : ['N/A'];
+
+    const getMostRepeated = (counts) => {
+      const entries = Object.entries(counts);
+      if (!entries.length) return 'N/A';
+      const max = Math.max(...entries.map(([, c]) => c));
+      return entries.filter(([, c]) => c === max).map(([s]) => s).join(', ') + ` (${max})`;
+    };
+
+    const suitCount = registros.reduce((acc, item) => {
+      const s = getSuitFromCarta(item.carta);
+      acc[s] = (acc[s] || 0) + 1;
+      return acc;
+    }, {});
+    const paloFrecuente = getMostRepeated(suitCount);
+
+    const racha = (() => {
+      const fmt = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const fechas = new Set(registros.map(r => {
+        const [d, m, y] = r.fecha.split('.');
+        return `${y}-${m}-${d}`;
+      }));
+      let cursor = new Date();
+      if (!fechas.has(fmt(cursor))) cursor.setDate(cursor.getDate() - 1);
+      let n = 0;
+      while (fechas.has(fmt(cursor))) {
+        n++;
+        cursor.setDate(cursor.getDate() - 1);
+      }
+      return n;
+    })();
+
+    const ultimasEntradas = registros.slice(0, 5);
+
+    // ---------- Gráfica de palos del mes (barra horizontal) ----------
+    const graficaPalosMesHtml = (() => {
+      const registrosMes = registros.filter(item => {
+        const [, m, y] = item.fecha.split('.').map(Number);
+        return y === anioActual && m === hoy.getMonth() + 1;
+      });
+      const counts = registrosMes.reduce((acc, item) => {
+        const s = getSuitFromCarta(item.carta);
+        acc[s] = (acc[s] || 0) + 1;
+        return acc;
+      }, {});
+      const total = Object.values(counts).reduce((s, c) => s + c, 0);
+      let html = '<div class="chart-title">Distribución de palos este mes</div>';
+      if (!total) {
+        html += '<p class="fallback-message">No hay datos para este mes.</p>';
+        return html;
+      }
+      palos.forEach(suit => {
+        const count = counts[suit] || 0;
         const percent = total > 0 ? Math.round((count / total) * 100) : 0;
         const barWidth = percent === 0 ? '1px' : `${percent}%`;
         const barColor = percent === 0 ? 'var(--accent-glow)' : 'var(--accent)';
-        chartHTML += `
-            <div class="chart-bar">
-                <span class="chart-label">${suit}</span>
-                <div class="chart-bar-track">
-                    <div class="chart-bar-fill" style="width: ${barWidth}; background: ${barColor}"></div>
-                </div>
-                <span class="chart-percent">${percent}%</span>
-            </div>
-        `;
-    });
-    chartHTML += '</div>';
-    return chartHTML;
-};
+        html += `
+          <div class="chart-bar">
+            <span class="chart-label">${suit}</span>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${barWidth};background:${barColor}"></div></div>
+            <span class="chart-percent">${percent}%</span>
+          </div>`;
+      });
+      return html;
+    })();
 
-const suitCount = registros.reduce((acc, item) => {
-    const suit = getSuit(item.carta);
-    acc[suit] = (acc[suit] || 0) + 1;
-    return acc;
-}, {});
+    // ---------- Gráfica de tendencia anual (SVG) ----------
+    const graficaAnualHtml = (() => {
+      const registrosAnio = registros.filter(item => {
+        const [, , y] = item.fecha.split('.').map(Number);
+        return y === anioActual;
+      });
+      if (registrosAnio.length === 0) {
+        return '<div class="chart-title">Tendencia anual (% mensual)</div><p class="fallback-message">Aún no hay registros este año.</p>';
+      }
 
-const currentDate = new Date();
-const currentYear = currentDate.getFullYear();
-const currentMonth = currentDate.getMonth() + 1;
-const registrosMesActual = registros.filter(item => {
-    const [day, month, year] = item.fecha.split('.').map(Number);
-    return year === currentYear && month === currentMonth;
-});
+      const mesActual = hoy.getMonth();
+      const mesesDelAnio = Array.from({ length: 12 }, () => ({
+        Espadas: 0, Bastos: 0, Copas: 0, "Pentáculos": 0, "Arcanos mayores": 0, total: 0
+      }));
 
-const suitCountMonth = registrosMesActual.reduce((acc, item) => {
-    const suit = getSuit(item.carta);
-    acc[suit] = (acc[suit] || 0) + 1;
-    return acc;
-}, {});
-
-const getMostRepeated = counts => {
-    const entries = Object.entries(counts);
-    if (!entries.length) return 'N/A';
-    const maxCount = Math.max(...entries.map(([, count]) => count));
-    return entries
-        .filter(([, count]) => count === maxCount)
-        .map(([suit]) => suit)
-        .join(', ') + ` (${maxCount})`;
-};
-
-const frequentSuit = getMostRepeated(suitCount);
-
-estadisticas.innerHTML = `
-    <div class="stats-card"><span class="label">Entradas</span><span class="stats-value">${registros.length}</span></div>
-    <div class="stats-card"><span class="label">Cartas distintas</span><span class="stats-value">${cartasDistintas}</span></div>
-    <div class="stats-card"><span class="label">Carta más repetida</span><span class="stats-value">${cartasFrecuentes.join(', ')} (${maxRepeticiones})</span></div>
-    <div class="stats-card"><span class="label">Palo más repetido</span><span class="stats-value">${frequentSuit}</span></div>
-`;
-
-document.querySelector('#suit-month-chart').innerHTML = renderSuitChart(suitCountMonth);
-
-const today = new Date();
-const todayString = String(today.getDate()).padStart(2, '0') + '.' + String(today.getMonth() + 1).padStart(2, '0') + '.' + today.getFullYear();
-
-// 1. Averiguamos la carta de hoy
-const registroHoy = registros.find(r => r.fecha === todayString);
-const cartaDeHoy = registroHoy ? registroHoy.carta.trim() : null;
-
-let seccionMes = null;
-let cuerpoMes = null;
-let esPrimerMes = true;
-
-const nombresMeses = {
-    "01": "Enero", "02": "Febrero", "03": "Marzo", "04": "Abril",
-    "05": "Mayo", "06": "Junio", "07": "Julio", "08": "Agosto",
-    "09": "Septiembre", "10": "Octubre", "11": "Noviembre", "12": "Diciembre"
-};
-
-registros.forEach((item, index) => {
-    const partes = item.fecha.split('.');
-    const mesAnioActual = `${partes[1]}.${partes[2]}`;
-
-    if (!seccionMes || !cuerpoMes || !container.innerHTML.includes(`${nombresMeses[partes[1]]} ${partes[2]}`)) {
-        const nombreMes = nombresMeses[partes[1]] || "Mes";
-        seccionMes = document.createElement('details');
-        
-        // Asignamos la clase única para no confundirlo con las estadísticas
-        seccionMes.className = 'mes-log';
-        
-        if (esPrimerMes) {
-            seccionMes.open = true;
-            esPrimerMes = false;
-        }
-
-        seccionMes.style.marginTop = "10px";
-        seccionMes.style.outline = "none";
-
-        const cabeceraMes = document.createElement('summary');
-        cabeceraMes.className = 'month-divider';
-        cabeceraMes.style.cursor = 'pointer';
-        cabeceraMes.innerText = `${nombreMes} ${partes[2]}`;
-        
-        cuerpoMes = document.createElement('div');
-        seccionMes.appendChild(cabeceraMes);
-        seccionMes.appendChild(cuerpoMes);
-        container.appendChild(seccionMes);
-    }
-
-    const div = document.createElement('div');
-    div.className = 'entry';
-    div.setAttribute('data-carta', item.carta.trim());
-
-    let botonHistorial = "";
-    if (item.fecha === todayString) {
-        div.classList.add('today');
-        // El SPAN nace limpio, sin onclick conflictivos
-        botonHistorial = ` <span id="btn-historial" class="historial-button" title="Ver coincidencias pasadas">👁️</span>`;
-    }
-
-    div.innerHTML = `
-        <span class="date">${item.fecha}</span>
-        <span class="card">${item.carta}${botonHistorial}</span>
-        <p class="note">${item.nota}</p>
-    `;
-    
-    cuerpoMes.appendChild(div);
-});
-
-// 2. LÓGICA DEL FILTRO (Escuchador de eventos nativo y seguro)
-if (cartaDeHoy) {
-    const btnHistorial = document.getElementById('btn-historial');
-    let filtradoActivo = false;
-
-    if (btnHistorial) {
-        btnHistorial.addEventListener('click', (event) => {
-            // Frenamos completamente al acordeón nativo <details>
-            event.stopPropagation();
-            event.preventDefault();
-
-            filtradoActivo = !filtradoActivo;
-            
-            // Cambiamos el icono del botón
-            btnHistorial.innerText = filtradoActivo ? "❌" : "👁️";
-            btnHistorial.title = filtradoActivo ? "Quitar filtro" : "Ver coincidencias pasadas";
-
-            // Buscamos SÓLO los bloques de meses reales
-            const bloquesMesesReales = document.querySelectorAll('details.mes-log');
-
-            bloquesMesesReales.forEach((details, idx) => {
-                let mesTieneCoincidencia = false;
-                const entries = details.querySelectorAll('.entry');
-                
-                entries.forEach(entry => {
-                    const nombreCartaOculta = entry.getAttribute('data-carta');
-                    
-                    if (!filtradoActivo) {
-                        entry.style.display = 'grid';
-                    } else {
-                        if (nombreCartaOculta.toLocaleLowerCase() === cartaDeHoy.toLocaleLowerCase()) {
-                            entry.style.display = 'grid';
-                            mesTieneCoincidencia = true;
-                        } else {
-                            entry.style.display = 'none';
-                        }
-                    }
-                });
-
-                // Control estricto de aperturas/cierres tras el click
-                if (!filtradoActivo) {
-                    details.style.display = 'block';
-                    if (idx === 0) {
-                        // Forzamos apertura del mes actual de forma segura
-                        setTimeout(() => { details.open = true; }, 20);
-                    } else {
-                        details.open = false;
-                    }
-                } else {
-                    if (mesTieneCoincidencia) {
-                        details.style.display = 'block';
-                        details.open = true;
-                    } else {
-                        details.style.display = 'none';
-                        details.open = false;
-                    }
-                }
-            });
-        });
-    }
-}
-
-
-
-
-// ====== GRÁFICA SEMANAL EN SVG ENCAPSULADA (SOLO MES ACTUAL) ======
-function renderGraficaAnual() {
-    const contenedorGrafica = document.getElementById('grafica-anual');
-    if (!contenedorGrafica || registros.length === 0) return;
-
-    // Año y mes actual
-    const hoy = new Date();
-    const anioActual = hoy.getFullYear();
-    const mesActual = hoy.getMonth(); // 0-11
-
-    // Registros del año actual
-    const registrosAnio = registros.filter(item => {
-        const [, , year] = item.fecha.split('.').map(Number);
-        return year === anioActual;
-    });
-
-    if (registrosAnio.length === 0) {
-        contenedorGrafica.innerHTML =
-            '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:10px;">Aún no hay registros este año para generar la tendencia.</p>';
-        return;
-    }
-
-    // Datos por mes
-    const mesesDelAnio = Array.from({ length: 12 }, () => ({
-        Espadas: 0,
-        Bastos: 0,
-        Copas: 0,
-        Pentáculos: 0,
-        "Arcanos mayores": 0,
-        total: 0
-    }));
-
-    registrosAnio.forEach(item => {
+      registrosAnio.forEach(item => {
         const [, mes] = item.fecha.split('.').map(Number);
-        const indiceMes = mes - 1;
+        const idx = mes - 1;
+        const suit = getSuitFromCarta(item.carta);
+        mesesDelAnio[idx][suit]++;
+        mesesDelAnio[idx].total++;
+      });
 
-        const suit = getSuit(item.carta);
+      const width = 700, height = 240;
+      const paddingLeft = 42, paddingRight = 16, paddingTop = 16, paddingBottom = 32;
+      const chartWidth = width - paddingLeft - paddingRight;
+      const chartHeight = height - paddingTop - paddingBottom;
 
-        if (mesesDelAnio[indiceMes][suit] !== undefined) {
-            mesesDelAnio[indiceMes][suit]++;
-            mesesDelAnio[indiceMes].total++;
-        }
-    });
+      const coloresPalos = {
+        Bastos: "#a34e36", "Pentáculos": "#d4af37", Espadas: "#5f7d95",
+        Copas: "#3a9fb7", "Arcanos mayores": "#a855f7"
+      };
 
-    // SVG
-    const width = 700;
-    const height = 260;
+      const lineasPuntos = { Espadas: [], Bastos: [], Copas: [], "Pentáculos": [], "Arcanos mayores": [] };
 
-    const paddingLeft = 45;
-    const paddingRight = 20;
-    const paddingTop = 20;
-    const paddingBottom = 40;
-
-    const chartWidth = width - paddingLeft - paddingRight;
-    const chartHeight = height - paddingTop - paddingBottom;
-
-    const coloresPalos = {
-        Bastos: "#a34e36",
-        Pentáculos: "#d4af37",
-        Espadas: "#5f7d95",
-        Copas: "#3a9fb7",
-        "Arcanos mayores": "var(--purple, #53006a)"
-    };
-
-    const lineasPuntos = {
-        Espadas: [],
-        Bastos: [],
-        Copas: [],
-        Pentáculos: [],
-        "Arcanos mayores": []
-    };
-
-    // Calcular puntos
-    mesesDelAnio.forEach((mes, idx) => {
-
-        // Los meses futuros no existen aún
+      mesesDelAnio.forEach((mes, idx) => {
         if (idx > mesActual) {
-
-            for (const palo in lineasPuntos)
-                lineasPuntos[palo].push(null);
-
-            return;
+          for (const p in lineasPuntos) lineasPuntos[p].push(null);
+          return;
         }
-
         const x = paddingLeft + (idx / 11) * chartWidth;
-
         for (const palo in lineasPuntos) {
-
-            // Mes sin registros -> hueco
-            if (mes.total === 0) {
-                lineasPuntos[palo].push(null);
-                continue;
-            }
-
-            const porcentaje = (mes[palo] / mes.total) * 100;
-
-            const y =
-                paddingTop +
-                chartHeight -
-                (porcentaje / 100) * chartHeight;
-
-            lineasPuntos[palo].push({ x, y });
+          if (mes.total === 0) { lineasPuntos[palo].push(null); continue; }
+          const porcentaje = (mes[palo] / mes.total) * 100;
+          const y = paddingTop + chartHeight - (porcentaje / 100) * chartHeight;
+          lineasPuntos[palo].push({ x, y });
         }
+      });
+
+      function crearPathSuave(puntos) {
+        let d = '', segmento = [];
+        function dibujarSegmento(seg) {
+          if (seg.length === 0) return;
+          if (seg.length === 1) { d += `M ${seg[0].x} ${seg[0].y}`; return; }
+          d += `M ${seg[0].x} ${seg[0].y}`;
+          for (let i = 1; i < seg.length; i++) {
+            const p0 = seg[i - 1], p1 = seg[i];
+            const cx = (p0.x + p1.x) / 2;
+            d += ` C ${cx} ${p0.y}, ${cx} ${p1.y}, ${p1.x} ${p1.y}`;
+          }
+        }
+        puntos.forEach(p => { if (p) segmento.push(p); else { dibujarSegmento(segmento); segmento = []; } });
+        dibujarSegmento(segmento);
+        return d;
+      }
+
+      let svg = `<svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;display:block;">`;
+
+      for (let i = 0; i <= 4; i++) {
+        const porcentaje = i * 25;
+        const y = paddingTop + chartHeight - (porcentaje / 100) * chartHeight;
+        svg += `<line x1="${paddingLeft}" y1="${y}" x2="${width - paddingRight}" y2="${y}" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,4"/>
+          <text x="${paddingLeft - 8}" y="${y + 4}" font-size="10" text-anchor="end" fill="#9aa5c0">${porcentaje}%</text>`;
+      }
+
+      for (const palo in lineasPuntos) {
+        const d = crearPathSuave(lineasPuntos[palo]);
+        if (!d) continue;
+        svg += `<path d="${d}" fill="none" stroke="${coloresPalos[palo]}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+        lineasPuntos[palo].forEach(p => {
+          if (!p) return;
+          svg += `<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="${coloresPalos[palo]}"/>`;
+        });
+      }
+
+      const nombresCortos = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+      nombresCortos.forEach((nombre, idx) => {
+        const x = paddingLeft + (idx / 11) * chartWidth;
+        svg += `<text x="${x}" y="${height - paddingBottom + 18}" font-size="10" text-anchor="middle" fill="#9aa5c0">${nombre}</text>`;
+      });
+      svg += `</svg>`;
+
+      let leyenda = '<div class="chart-legend">';
+      for (const palo in coloresPalos) {
+        leyenda += `<div class="legend-item"><span class="legend-color" style="background:${coloresPalos[palo]}"></span><span class="legend-text">${palo}</span></div>`;
+      }
+      leyenda += '</div>';
+
+      return `<div class="chart-title">Tendencia anual (% mensual)</div>${svg}${leyenda}`;
+    })();
+
+    // ============================================================
+    // DIARIO
+    // ============================================================
+    const filtroDiarioTexto = ref('');
+    const filtroDiarioPalo = ref('');
+    const filtroCartaActiva = ref(null);
+
+    const registrosFiltrados = computed(() => {
+      if (filtroCartaActiva.value) {
+        const objetivo = filtroCartaActiva.value.toLowerCase();
+        return registros.filter(r => r.carta.trim().toLowerCase() === objetivo);
+      }
+      return registros.filter(r => {
+        const texto = (r.carta + ' ' + r.nota).toLowerCase();
+        const coincideTexto = !filtroDiarioTexto.value || texto.includes(filtroDiarioTexto.value.toLowerCase());
+        const coincidePalo = !filtroDiarioPalo.value || getSuitFromCarta(r.carta) === filtroDiarioPalo.value;
+        return coincideTexto && coincidePalo;
+      });
     });
 
-    // Genera un path suave respetando huecos
-    function crearPathSuave(puntos) {
-
-        let d = "";
-        let segmento = [];
-
-        function dibujarSegmento(seg) {
-
-            if (seg.length === 0) return;
-
-            if (seg.length === 1) {
-                d += `M ${seg[0].x} ${seg[0].y}`;
-                return;
-            }
-
-            d += `M ${seg[0].x} ${seg[0].y}`;
-
-            for (let i = 1; i < seg.length; i++) {
-
-                const p0 = seg[i - 1];
-                const p1 = seg[i];
-
-                const cx = (p0.x + p1.x) / 2;
-
-                d += ` C ${cx} ${p0.y}, ${cx} ${p1.y}, ${p1.x} ${p1.y}`;
-            }
+    const registrosAgrupados = computed(() => {
+      const grupos = [];
+      const mapa = new Map();
+      registrosFiltrados.value.forEach(item => {
+        const [, mes, anio] = item.fecha.split('.');
+        const clave = `${mes}.${anio}`;
+        if (!mapa.has(clave)) {
+          const grupo = { clave, nombre: `${nombresMeses[mes]} ${anio}`, items: [] };
+          mapa.set(clave, grupo);
+          grupos.push(grupo);
         }
+        mapa.get(clave).items.push(item);
+      });
+      grupos.forEach((g, i) => { g.esPrimero = i === 0; });
+      return grupos;
+    });
 
-        puntos.forEach(p => {
+    const toggleHistorial = (carta) => {
+      const limpio = carta.trim();
+      filtroCartaActiva.value = (filtroCartaActiva.value && filtroCartaActiva.value.toLowerCase() === limpio.toLowerCase())
+        ? null : limpio;
+    };
 
-            if (p) {
-                segmento.push(p);
-            } else {
-                dibujarSegmento(segmento);
-                segmento = [];
-            }
+    const verEnDiario = (carta) => {
+      irA('diario');
+      filtroCartaActiva.value = carta.trim();
+    };
 
-        });
+    // Mini calendario del mes actual
+    const diasMesActual = computed(() => {
+      const diasEnMes = new Date(anioActual, hoy.getMonth() + 1, 0).getDate();
+      const primerDiaSemana = (new Date(anioActual, hoy.getMonth(), 1).getDay() + 6) % 7; // lunes=0
+      const mapaPorDia = {};
+      registros.forEach(r => {
+        const [d, m, y] = r.fecha.split('.').map(Number);
+        if (y === anioActual && m === hoy.getMonth() + 1) mapaPorDia[d] = r;
+      });
+      const celdas = [];
+      for (let i = 0; i < primerDiaSemana; i++) celdas.push(null);
+      for (let d = 1; d <= diasEnMes; d++) {
+        const reg = mapaPorDia[d];
+        celdas.push(reg
+          ? { dia: d, carta: reg.carta, nota: reg.nota, palo: getSuitFromCarta(reg.carta), esHoy: d === hoy.getDate() }
+          : { dia: d, vacio: true, esHoy: d === hoy.getDate() });
+      }
+      return celdas;
+    });
 
-        dibujarSegmento(segmento);
+    // ============================================================
+    // TIRADAS
+    // ============================================================
+    const tiradas = ref([]);
+    const filtroTiradaTexto = ref('');
+    const filtroTiradaConsultante = ref('');
 
-        return d;
-    }
+    onMounted(async () => {
+      try {
+        const res = await fetch('tiradas.json');
+        tiradas.value = await res.json();
+      } catch (e) {
+        console.error('Error cargando tiradas.json', e);
+      }
+    });
 
-    let svgHTML = `<svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;display:block;">`;
+    const tiradasFiltradas = computed(() => {
+      return [...tiradas.value]
+        .filter(t => {
+          const texto = (t.pregunta + ' ' + t.interpretacion).toLowerCase();
+          const coincideTexto = !filtroTiradaTexto.value || texto.includes(filtroTiradaTexto.value.toLowerCase());
+          const coincideConsultante = !filtroTiradaConsultante.value ||
+            (t.consultante || 'Anónimo').toLowerCase().includes(filtroTiradaConsultante.value.toLowerCase());
+          return coincideTexto && coincideConsultante;
+        })
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    });
 
-    // Líneas horizontales
-    for (let i = 0; i <= 4; i++) {
+    const ultimasTiradasList = computed(() => {
+      return [...tiradas.value].sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, 5);
+    });
 
-        const porcentaje = i * 25;
+    const consultantesDisponibles = computed(() => {
+      return [...new Set(tiradas.value.map(t => t.consultante || 'Anónimo'))];
+    });
 
-        const y =
-            paddingTop +
-            chartHeight -
-            (porcentaje / 100) * chartHeight;
+    const formatearFecha = (fechaString) => {
+      const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(fechaString).toLocaleDateString('es-ES', opciones);
+    };
 
-        svgHTML += `
-            <line
-                x1="${paddingLeft}"
-                y1="${y}"
-                x2="${width - paddingRight}"
-                y2="${y}"
-                stroke="var(--border-light,#eee)"
-                stroke-width="1"
-                stroke-dasharray="4,4"/>
+    const verEnTiradas = (tirada) => {
+      irA('tiradas');
+      filtroTiradaTexto.value = '';
+      filtroTiradaConsultante.value = '';
+    };
 
-            <text
-                x="${paddingLeft - 8}"
-                y="${y + 4}"
-                font-size="10"
-                text-anchor="end"
-                fill="var(--text-muted,#888)">
-                ${porcentaje}%
-            </text>
-        `;
-    }
+    // ============================================================
+    // MAZOS
+    // ============================================================
+    const indiceMazos = ref([]);
+    const idMazoSeleccionado = ref('');
+    const mazoActual = ref(null);
+    const cartaExpandidaId = ref(null);
+    const filtroMazoTexto = ref('');
+    const filtroMazoTipo = ref('todos');
+    const soloPendientes = ref(false);
 
-    // Dibujar líneas
-    for (const palo in lineasPuntos) {
+    onMounted(async () => {
+      try {
+        const res = await fetch('mazos.json');
+        indiceMazos.value = await res.json();
+        if (indiceMazos.value.length > 0) idMazoSeleccionado.value = indiceMazos.value[0].id;
+      } catch (e) {
+        console.error('Error cargando el índice de mazos.', e);
+      }
+    });
 
-        const d = crearPathSuave(lineasPuntos[palo]);
+    watch(idMazoSeleccionado, async (nuevoId) => {
+      cartaExpandidaId.value = null;
+      filtroMazoTexto.value = '';
+      filtroMazoTipo.value = 'todos';
+      soloPendientes.value = false;
+      if (!nuevoId) return;
+      const info = indiceMazos.value.find(m => m.id === nuevoId);
+      if (info && info.archivo) {
+        try {
+          const res = await fetch(info.archivo);
+          mazoActual.value = await res.json();
+        } catch (e) {
+          console.error(`Error cargando el mazo: ${info.archivo}`, e);
+        }
+      }
+    });
 
-        if (!d) continue;
+    const tiposDisponibles = computed(() => {
+      if (!mazoActual.value) return [];
+      return [...new Set(mazoActual.value.cartas.map(c => c.tipo))];
+    });
 
-        svgHTML += `
-            <path
-                d="${d}"
-                fill="none"
-                stroke="${coloresPalos[palo]}"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        `;
+    const cartasMazoFiltradas = computed(() => {
+      if (!mazoActual.value) return [];
+      return mazoActual.value.cartas.filter(c => {
+        const coincideTexto = !filtroMazoTexto.value || c.nombre.toLowerCase().includes(filtroMazoTexto.value.toLowerCase());
+        const coincideTipo = filtroMazoTipo.value === 'todos' || c.tipo === filtroMazoTipo.value;
+        const coincidePendiente = !soloPendientes.value || !c.nota_personal;
+        return coincideTexto && coincideTipo && coincidePendiente;
+      });
+    });
 
-        // Puntos
-        lineasPuntos[palo].forEach(p => {
+    const progresoMazo = computed(() => {
+      if (!mazoActual.value) return { total: 0, completadas: 0, porcentaje: 0 };
+      const total = mazoActual.value.cartas.length;
+      const completadas = mazoActual.value.cartas.filter(c => c.nota_personal && c.nota_personal.trim()).length;
+      return { total, completadas, porcentaje: total ? Math.round((completadas / total) * 100) : 0 };
+    });
 
-            if (!p) return;
+    const toggleCartaExpandida = (id) => {
+      cartaExpandidaId.value = cartaExpandidaId.value === id ? null : id;
+    };
 
-            svgHTML += `
-                <circle
-                    cx="${p.x}"
-                    cy="${p.y}"
-                    r="3.5"
-                    fill="${coloresPalos[palo]}"/>
-            `;
-        });
-    }
-
-    // Meses
-    const nombresMeses = [
-        "Ene", "Feb", "Mar", "Abr",
-        "May", "Jun", "Jul", "Ago",
-        "Sep", "Oct", "Nov", "Dic"
+    // ---------- Glosario y tooltips de palabras clave ----------
+    const glosario = [
+      { palabra: "agua", definicion: "Emociones, intuición, el reino del subconsciente (Copas)" },
+      { palabra: "fuego", definicion: "Voluntad, acción, pasiones, chispa vital (Bastos)" },
+      { palabra: "tierra", definicion: "Mundo material, cuerpo físico, recursos, estabilidad (Oros)" },
+      { palabra: "aire", definicion: "Intelecto, mente, comunicación, conflicto (Espadas)" },
+      { palabra: "blanco", definicion: "Pureza, inocencia, limpieza espiritual, la luz antes de refractarse" },
+      { palabra: "negro", definicion: "Misterio, el vacío fértil, el final de un ciclo, lo oculto" },
+      { palabra: "amarillo", definicion: "Consciencia, luz solar, intelecto activo, divinidad" },
+      { palabra: "rojo", definicion: "Pasión, acción, sangre, vitalidad, el mundo terrenal" },
+      { palabra: "azul", definicion: "Subconsciente, fluidez, espiritualidad, reflexión" },
+      { palabra: "gris", definicion: "Sabiduría, neutralidad, tristeza o apatía" },
+      { palabra: "león", definicion: "Fuego, impulsos, fuerza vital salvaje, coraje" },
+      { palabra: "perro", definicion: "Instinto domesticado, lealtad, la mente consciente protectora" },
+      { palabra: "lobo", definicion: "Instinto salvaje, miedos primitivos, lo indómito" },
+      { palabra: "caballo", definicion: "Vehículo de la voluntad, energía de avance, instinto dirigido" },
+      { palabra: "pájaro", definicion: "Pensamientos, mensajes del espíritu, libertad mental" },
+      { palabra: "infinito", definicion: "Lemniscata: equilibrio perfecto, dominio espiritual sobre la materia" },
+      { palabra: "corona", definicion: "Autoridad, dominio mental, conexión con la mente superior (Kether)" },
+      { palabra: "montaña", definicion: "Desafíos, conocimiento abstracto, la morada de la divinidad" },
+      { palabra: "nube", definicion: "Intervención divina, pensamientos que ocultan la verdad, lo efímero" },
+      { palabra: "torre", definicion: "Estructuras falsas del ego, revelación brusca, liberación forzada" },
+      { palabra: "sol", definicion: "Claridad absoluta, éxito, energía masculina, consciencia" },
+      { palabra: "luna", definicion: "Misterio, miedos, ciclos, energía femenina, ilusión" },
+      { palabra: "estrella", definicion: "Esperanza, guía cósmica, inspiración, sanación tras la tormenta" },
+      { palabra: "río", definicion: "El flujo de la vida, transición, el cauce del subconsciente" },
+      { palabra: "castillo", definicion: "Civilización, metas alcanzadas, a veces aislamiento o defensas" },
+      { palabra: "3", definicion: "Creación y manifestación" },
+      { palabra: "mercurio", definicion: "Comunicación, intelecto, movilidad, cambio, agilidad mental" }
     ];
 
-    nombresMeses.forEach((nombre, idx) => {
+    const formatearMarkdownLigero = (texto) => {
+      if (!texto) return '';
+      let procesado = texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      procesado = procesado.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      procesado = procesado.replace(/\n/g, '<br>');
+      return procesado;
+    };
 
-        const x = paddingLeft + (idx / 11) * chartWidth;
+    const procesarAnotaciones = (texto) => {
+      if (!texto) return '';
+      let textoProcesado = texto;
+      const flexibilizarAcentos = (palabra) => palabra
+        .replace(/[aá]/gi, '[aá]')
+        .replace(/[eé]/gi, '[eé]')
+        .replace(/[ií]/gi, '[ií]')
+        .replace(/[oó]/gi, '[oó]')
+        .replace(/[uúü]/gi, '[uúü]');
 
-        svgHTML += `
-            <text
-                x="${x}"
-                y="${height - paddingBottom + 18}"
-                font-size="10"
-                text-anchor="middle"
-                fill="var(--text-muted,#888)">
-                ${nombre}
-            </text>
-        `;
+      glosario.forEach(item => {
+        const baseRegex = flexibilizarAcentos(item.palabra);
+        const regexStr = `(?<=^|\\s|[.,;:!¡¿?\\n])(${baseRegex}(?:s|es)?)(?=\\s|[.,;:!¡¿?\\n]|$)`;
+        const regex = new RegExp(regexStr, 'gi');
+        textoProcesado = textoProcesado.replace(regex, `<span class="palabra-clave" data-tooltip="${item.definicion}">$1</span>`);
+      });
+      return textoProcesado;
+    };
+
+    const procesarNotaFinal = (texto) => {
+      if (!texto) return 'No has escrito ninguna interpretación para esta carta todavía.';
+      const paso1 = procesarAnotaciones(texto);
+      return formatearMarkdownLigero(paso1);
+    };
+
+    // ============================================================
+    // BÚSQUEDA GLOBAL
+    // ============================================================
+    const busquedaGlobal = ref('');
+    const mostrarBusqueda = ref(false);
+    const onBlurBusqueda = () => setTimeout(() => { mostrarBusqueda.value = false; }, 150);
+
+    const resultadosBusqueda = computed(() => {
+      const q = busquedaGlobal.value.trim().toLowerCase();
+      if (q.length < 2) return [];
+      const resultados = [];
+
+      registros.forEach(r => {
+        if ((r.carta + ' ' + r.nota).toLowerCase().includes(q)) {
+          resultados.push({ key: 'd-' + r.fecha, tipo: 'Diario', texto: `${r.fecha} · ${r.carta}`, vista: 'diario', carta: r.carta });
+        }
+      });
+
+      tiradas.value.forEach((t, i) => {
+        if ((t.pregunta + ' ' + t.interpretacion).toLowerCase().includes(q)) {
+          resultados.push({ key: 't-' + i, tipo: 'Tirada', texto: t.pregunta, vista: 'tiradas' });
+        }
+      });
+
+      if (mazoActual.value) {
+        mazoActual.value.cartas.forEach(c => {
+          if ((c.nombre + ' ' + (c.nota_personal || '')).toLowerCase().includes(q)) {
+            resultados.push({ key: 'm-' + c.id, tipo: 'Mazo', texto: c.nombre, vista: 'mazos', cartaId: c.id });
+          }
+        });
+      }
+
+      return resultados.slice(0, 8);
     });
 
-    svgHTML += `</svg>`;
+    const irAResultado = (r) => {
+      irA(r.vista);
+      if (r.vista === 'diario') {
+        filtroDiarioTexto.value = '';
+        filtroCartaActiva.value = r.carta ? r.carta.trim() : null;
+      }
+      if (r.vista === 'tiradas') {
+        filtroTiradaTexto.value = busquedaGlobal.value;
+        filtroTiradaConsultante.value = '';
+      }
+      if (r.vista === 'mazos' && r.cartaId) {
+        cartaExpandidaId.value = r.cartaId;
+      }
+      busquedaGlobal.value = '';
+      mostrarBusqueda.value = false;
+    };
 
-    // Leyenda
-    let leyendaHTML = `<div class="chart-legend">`;
+    return {
+      vista, irA,
+      anioActual, mesActualStr, nombresMeses, hoyString, palos, colorPalo, obtenerClaseBadge,
 
-    for (const palo in coloresPalos) {
+      especiales, entradasTotales, cartasDistintas, cartasFrecuentes, maxRepeticiones,
+      paloFrecuente, racha, ultimasEntradas,
+      graficaPalosMesHtml, graficaAnualHtml,
 
-        leyendaHTML += `
-            <div class="legend-item">
-                <span class="legend-color" style="background:${coloresPalos[palo]}"></span>
-                <span class="legend-text">${palo}</span>
-            </div>
-        `;
-    }
+      filtroDiarioTexto, filtroDiarioPalo, filtroCartaActiva,
+      registrosAgrupados, toggleHistorial, verEnDiario, diasMesActual,
 
-    leyendaHTML += `</div>`;
+      tiradas, filtroTiradaTexto, filtroTiradaConsultante, tiradasFiltradas,
+      ultimasTiradasList, consultantesDisponibles, formatearFecha, verEnTiradas,
 
-    contenedorGrafica.innerHTML =
-        `<div class="chart-title">Tendencia anual (% mensual)</div>` +
-        svgHTML +
-        leyendaHTML;
-}
+      indiceMazos, idMazoSeleccionado, mazoActual, cartaExpandidaId,
+      filtroMazoTexto, filtroMazoTipo, soloPendientes, tiposDisponibles,
+      cartasMazoFiltradas, progresoMazo, toggleCartaExpandida, procesarNotaFinal,
 
-renderGraficaAnual();
+      busquedaGlobal, mostrarBusqueda, onBlurBusqueda, resultadosBusqueda, irAResultado
+    };
+  }
+}).mount('#app');
