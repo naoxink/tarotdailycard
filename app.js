@@ -285,24 +285,44 @@ createApp({
       filtroCartaActiva.value = carta.trim();
     };
 
-    // Mini calendario del mes actual
-    const diasMesActual = computed(() => {
-      const diasEnMes = new Date(anioActual, hoy.getMonth() + 1, 0).getDate();
-      const primerDiaSemana = (new Date(anioActual, hoy.getMonth(), 1).getDay() + 6) % 7; // lunes=0
+    // Mini calendario: últimos 3 meses (el actual queda el último del array = más a la derecha)
+    const generarMesCalendario = (anio, mesIdx) => {
+      const diasEnMes = new Date(anio, mesIdx + 1, 0).getDate();
+      const primerDiaSemana = (new Date(anio, mesIdx, 1).getDay() + 6) % 7; // lunes=0
       const mapaPorDia = {};
+
       registros.forEach(r => {
         const [d, m, y] = r.fecha.split('.').map(Number);
-        if (y === anioActual && m === hoy.getMonth() + 1) mapaPorDia[d] = r;
+        if (y === anio && m === mesIdx + 1) mapaPorDia[d] = r;
       });
+
       const celdas = [];
       for (let i = 0; i < primerDiaSemana; i++) celdas.push(null);
+
       for (let d = 1; d <= diasEnMes; d++) {
         const reg = mapaPorDia[d];
+        const esHoy = anio === hoy.getFullYear() && mesIdx === hoy.getMonth() && d === hoy.getDate();
         celdas.push(reg
-          ? { dia: d, carta: reg.carta, nota: reg.nota, palo: getSuitFromCarta(reg.carta), esHoy: d === hoy.getDate() }
-          : { dia: d, vacio: true, esHoy: d === hoy.getDate() });
+          ? { dia: d, carta: reg.carta, nota: reg.nota, palo: getSuitFromCarta(reg.carta), esHoy }
+          : { dia: d, vacio: true, esHoy });
       }
-      return celdas;
+
+      // Obtenemos el nombre nativo del mes a partir de la fecha de referencia
+      const fechaRef = new Date(anio, mesIdx, 1);
+      const nombreMes = fechaRef.toLocaleDateString('es-ES', { month: 'long' });
+      // Capitalizamos la primera letra (ej. "agosto" -> "Agosto")
+      const nombreCapitalizado = nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
+
+      return { clave: `${anio}-${mesIdx}`, nombre: nombreCapitalizado, anio, dias: celdas };
+    };
+
+    const ultimosTresMeses = computed(() => {
+      const meses = [];
+      for (let i = 2; i >= 0; i--) {
+        const ref = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
+        meses.push(generarMesCalendario(ref.getFullYear(), ref.getMonth()));
+      }
+      return meses;
     });
 
     // ============================================================
@@ -541,7 +561,7 @@ createApp({
       graficaPalosMesHtml, graficaAnualHtml,
 
       filtroDiarioTexto, filtroDiarioPalo, filtroCartaActiva,
-      registrosAgrupados, toggleHistorial, verEnDiario, diasMesActual,
+      registrosAgrupados, toggleHistorial, verEnDiario, ultimosTresMeses,
 
       tiradas, filtroTiradaTexto, filtroTiradaConsultante, tiradasFiltradas,
       ultimasTiradasList, consultantesDisponibles, formatearFecha, verEnTiradas,

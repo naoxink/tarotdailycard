@@ -94,16 +94,18 @@
           <span class="filtro-activo-chip" v-if="filtroCartaActiva" @click="filtroCartaActiva=null">✕ {{ filtroCartaActiva }}</span>
         </div>
 
-        <div class="mini-calendar" v-if="!filtroDiarioTexto && !filtroDiarioPalo && !filtroCartaActiva">
-          <div class="mini-calendar-titulo">{{ nombresMeses[mesActualStr] }} {{ anioActual }}</div>
-          <div class="calendar-grid">
-            <div class="calendar-dow" v-for="d in ['L','M','X','J','V','S','D']" :key="d">{{ d }}</div>
-            <div v-for="(c, idx) in diasMesActual" :key="idx"
-                 class="calendar-cell"
-                 :class="{'vacio-celda': !c, 'con-carta': c && !c.vacio, 'hoy': c && c.esHoy}"
-                 :style="c && !c.vacio ? {background: colorPalo(c.palo)} : {}"
-                 :title="c && !c.vacio ? (c.carta + (c.nota ? ' · ' + c.nota : '')) : ''">
-              {{ c ? c.dia : '' }}
+        <div class="grid-mini-calendars">
+          <div class="mini-calendar" v-for="mes in ultimosTresMeses" :key="mes">
+            <div class="mini-calendar-titulo">{{ mes.nombre }} {{ mes.anio }}</div>
+            <div class="calendar-grid">
+              <div class="calendar-dow" v-for="d in ['L','M','X','J','V','S','D']" :key="d">{{ d }}</div>
+              <div v-for="(c, idx) in mes.dias" :key="idx"
+                   class="calendar-cell"
+                   :class="{'vacio-celda': !c, 'con-carta': c && !c.vacio, 'hoy': c && c.esHoy}"
+                   :style="c && !c.vacio ? {background: colorPalo(c.palo)} : {}"
+                   :title="c && !c.vacio ? (c.carta + (c.nota ? ' · ' + c.nota : '')) : ''">
+                {{ c ? c.dia : '' }}
+              </div>
             </div>
           </div>
         </div>

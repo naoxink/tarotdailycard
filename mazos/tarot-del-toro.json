@@ -1,0 +1,474 @@
+{
+  "nombre": "Tarot del Toro",
+  "descripcion": "",
+  "cartas": [
+    {
+      "id": "0-loco",
+      "nombre": "El Loco (0)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "1-mago",
+      "nombre": "El Mago (I) - El consultante",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-sacerdotisa",
+      "nombre": "La Sacerdotisa (II) - La consultante",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-emperatriz",
+      "nombre": "La Emperatriz (III)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-emperador",
+      "nombre": "El Emperador (IV)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-hierofante",
+      "nombre": "El Hierofante (V) - El maestro",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-enamorados",
+      "nombre": "Los Enamorados (VI) - Los dos caminos",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-carro",
+      "nombre": "El Carro (VII) - El carro de Hermes",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-justicia",
+      "nombre": "La Justicia (VIII)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-ermitano",
+      "nombre": "El Ermitaño (IX)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-rueda",
+      "nombre": "La Rueda de la Fortuna (X)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "11-fuerza",
+      "nombre": "La Fuerza (XI)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "12-colgado",
+      "nombre": "El Colgado (XII)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "13-muerte",
+      "nombre": "La Muerte (XIII)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "14-templanza",
+      "nombre": "La Templanza (XIV)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "15-diablo",
+      "nombre": "El Diablo (XV)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "16-torre",
+      "nombre": "La Torre (XVI)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "17-estrella",
+      "nombre": "La Estrella (XVII)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "18-luna",
+      "nombre": "La Luna (XVIII)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "19-sol",
+      "nombre": "El Sol (XIX)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "20-juicio",
+      "nombre": "El Juicio (XX)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "21-mundo",
+      "nombre": "El Mundo (XXI)",
+      "tipo": "Arcano Mayor",
+      "nota_personal": ""
+    },
+    {
+      "id": "as-bastos",
+      "nombre": "As de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-bastos",
+      "nombre": "2 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-bastos",
+      "nombre": "3 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-bastos",
+      "nombre": "4 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-bastos",
+      "nombre": "5 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-bastos",
+      "nombre": "6 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-bastos",
+      "nombre": "7 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-bastos",
+      "nombre": "8 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-bastos",
+      "nombre": "9 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-bastos",
+      "nombre": "10 de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "sota-bastos",
+      "nombre": "Sota de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "caballo-bastos",
+      "nombre": "Caballo de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "reina-bastos",
+      "nombre": "Reina de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "rey-bastos",
+      "nombre": "Rey de Bastos",
+      "tipo": "Bastos",
+      "nota_personal": ""
+    },
+    {
+      "id": "as-Espadas",
+      "nombre": "As de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-Espadas",
+      "nombre": "2 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-Espadas",
+      "nombre": "3 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-Espadas",
+      "nombre": "4 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-Espadas",
+      "nombre": "5 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-Espadas",
+      "nombre": "6 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-Espadas",
+      "nombre": "7 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-Espadas",
+      "nombre": "8 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-Espadas",
+      "nombre": "9 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-Espadas",
+      "nombre": "10 de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "sota-Espadas",
+      "nombre": "Sota de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "caballo-Espadas",
+      "nombre": "Caballo de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "reina-Espadas",
+      "nombre": "Reina de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "rey-Espadas",
+      "nombre": "Rey de Espadas",
+      "tipo": "Espadas",
+      "nota_personal": ""
+    },
+    {
+      "id": "as-oros",
+      "nombre": "As de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-oros",
+      "nombre": "2 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-oros",
+      "nombre": "3 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-oros",
+      "nombre": "4 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-oros",
+      "nombre": "5 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-oros",
+      "nombre": "6 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-oros",
+      "nombre": "7 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-oros",
+      "nombre": "8 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-oros",
+      "nombre": "9 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-oros",
+      "nombre": "10 de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "sota-oros",
+      "nombre": "Sota de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "caballo-oros",
+      "nombre": "Caballo de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "reina-oros",
+      "nombre": "Reina de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "rey-oros",
+      "nombre": "Rey de Oros",
+      "tipo": "Oros",
+      "nota_personal": ""
+    },
+    {
+      "id": "as-Copas",
+      "nombre": "As de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "2-Copas",
+      "nombre": "2 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "3-Copas",
+      "nombre": "3 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "4-Copas",
+      "nombre": "4 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "5-Copas",
+      "nombre": "5 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "6-Copas",
+      "nombre": "6 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "7-Copas",
+      "nombre": "7 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "8-Copas",
+      "nombre": "8 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "9-Copas",
+      "nombre": "9 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "10-Copas",
+      "nombre": "10 de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "sota-Copas",
+      "nombre": "Sota de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "caballo-Copas",
+      "nombre": "Caballo de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "reina-Copas",
+      "nombre": "Reina de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    },
+    {
+      "id": "rey-Copas",
+      "nombre": "Rey de Copas",
+      "tipo": "Copas",
+      "nota_personal": ""
+    }
+  ]
+}
