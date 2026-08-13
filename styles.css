@@ -385,7 +385,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
   .brand { order: 1; }
   .grid-mini-calendars { grid-template-columns: repeat(1, 1fr); }
   .calendar-grid { grid-template-columns: repeat(7, 1fr); }
-  .grid-mini-calendars > .mini-calendar:not(:first-child) { display: none; }
+  .grid-mini-calendars > .mini-calendar:not(:last-child) { display: none; }
 }
 
 @media (max-width: 600px) {

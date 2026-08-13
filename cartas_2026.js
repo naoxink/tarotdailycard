@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "13.08.2026",
+      carta: "La sacerdotisa (II)",
+      nota: "Introspección y reflexión. Hoy es un buen día para escuchar la voz interior y confiar en la intuición. Utilizar el conocimiento que tengo es lo mejor para tomar decisiones. También puede indicar que hay algo oculto que debo descubrir."
+    },
+    {
       fecha: "12.08.2026",
       carta: "I de pentáculos",
       nota: "Hoy parece un buen día para iniciar algún proyecto."
