@@ -227,7 +227,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 }
 .mini-list-item:last-child { border-bottom: none; }
 .mini-list-item:hover { color: var(--accent); }
-.mini-list-item span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.mini-list-item span:first-child { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 .fecha-mini { color: var(--text-muted); font-size: 0.74rem; }
 
 /* --------------------------------------------------------
