@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "14.08.2026",
+      carta: "X de espadas",
+      nota: "Hay que tener equilibrados los pensamientos y los sentimientos. El inconsciente puede estar alterando la percepción de la realidad y generando pensamientos que no ayudan a afrontar la situación."
+    },
+    {
       fecha: "13.08.2026",
       carta: "La sacerdotisa (II)",
       nota: "Introspección y reflexión. Hoy es un buen día para escuchar la voz interior y confiar en la intuición. Utilizar el conocimiento que tengo es lo mejor para tomar decisiones. También puede indicar que hay algo oculto que debo descubrir."
