@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "15.08.2026",
+      carta: "III de copas",
+      nota: "Celebra hasta los detalles más pequeños."
+    },
+    {
       fecha: "14.08.2026",
       carta: "X de espadas",
       nota: "Hay que tener equilibrados los pensamientos y los sentimientos. El inconsciente puede estar alterando la percepción de la realidad y generando pensamientos que no ayudan a afrontar la situación."
