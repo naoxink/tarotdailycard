@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "Rey de copas",
-      "nota": "Esta semana hay que trabajar en las relaciones personales. Sé cómo hacerlo pero mi consciente no ayuda."
+      "carta": "El Loco (0)",
+      "nota": "Podría ir un poco a la aventura, sin pensar demasiado en las consecuencias. Alegría y entusiasmo para afrontar lo que venga esta semana."
     }
   },
 
   "registros": [
+    {
+      fecha: "17.08.2026",
+      carta: "El Hierofante (V)",
+      nota: "Mantenerse en la estructura y en la rutina, pero sin estancarse. Mantenerse firme y constante."
+    },
+    {
+      fecha: "16.08.2026",
+      carta: "III de copas",
+      nota: "Parece que me está insistiendo en que celebre los pequeños detalles."
+    },
     {
       fecha: "15.08.2026",
       carta: "III de copas",
