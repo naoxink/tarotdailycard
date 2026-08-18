@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "18.08.2026",
+      carta: "La fortaleza (VI)",
+      nota: "Tengo que mantenerme firme en mis acciones. Sólo necesito mi intención para ello. Puedo conseguir el equilibrio de mis emociones manteniendo quién soy."
+    },
+    {
       fecha: "17.08.2026",
       carta: "El Hierofante (V)",
       nota: "Mantenerse en la estructura y en la rutina, pero sin estancarse. Mantenerse firme y constante."
