@@ -14,6 +14,16 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "20.08.2026",
+      carta: "Reina de copas",
+      nota: "Hoy no es día de entrar en guerras, yo decido qué tomo y qué no. Ser dueño de mi espacio emocional. No tengo que dar explicaciones de más ni justificarme."
+    },
+    {
+      fecha: "19.08.2026",
+      carta: "Caballero de copas",
+      nota: "Dejar de aparentar en el sentido emocional y tenerlo más en cuenta. Centrarme en las relaciones personales más profundamente"
+    },
+    {
       fecha: "18.08.2026",
       carta: "La fortaleza (VI)",
       nota: "Tengo que mantenerme firme en mis acciones. Sólo necesito mi intención para ello. Puedo conseguir el equilibrio de mis emociones manteniendo quién soy."
