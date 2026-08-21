@@ -3,31 +3,67 @@
     "fecha": "2026-08-18",
     "pregunta": "Siento que abarco demasiado: intento ser la mejor en el trabajo, estar para mis amigos, cuidar a mi familia y llevar mil proyectos a la vez. Al final del día siento que no llego a nada y estoy al límite del agotamiento. ¿De qué debería liberarme o qué hábito necesito soltar ya para recuperar el equilibrio?",
     "cartas": [
-      {},
-      {},
-      {}
+      {
+        "posicion": "#1",
+        "nombre": "VIII de espadas",
+        "palo": "Espadas"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "IV de bastos",
+        "palo": "Bastos"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "II de pentáculos",
+        "palo": "Pentáculos"
+      }
     ],
-    "interpretación": ""
+    "interpretación": "La propia idea de estar para todo y para todos te está bloqueando. Analizas demasiado todos tus planes y acciones. Debes liberarte de esa parte analítica y darle más rienda suelta a tus acciones, a tu instinto natural, a tu subconsciente. No tienes que demostrar nada a nadie, haz lo que tu cuerpo te pida en cada momento; ahí está el verdadero fruto diario. El equilibrio llegará sin duda alguna, pero recuerda que debes mantener tu posición en este sentido para evitar recaer en el ciclo absorbente de tu autoexigencia."
   },
   {
     "fecha": "2026-08-18",
     "pregunta": "Mi hermano y yo llevamos meses distanciados por una discusión absurda sobre una herencia familiar. Echo de menos la relación que teníamos, pero los dos somos bastante orgullosos y nadie da el primer paso. Quiero romper este hielo hoy mismo. ¿Cómo debo abordar la conversación con él para que no se ponga a la defensiva?",
     "cartas": [
-      {},
-      {},
-      {}
+      {
+        "posicion": "#1",
+        "nombre": "III de copas",
+        "palo": "Copas"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "II de bastos",
+        "palo": "Bastos"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "IV de pentáculos",
+        "palo": "Pentáculos"
+      }
     ],
-    "interpretación": ""
+    "interpretación": "Definitivamente deberías abordar la conversación desde un punto de vista más neutro en cuanto a extremos, tirando de tu relación profunda que aún tenéis pero tenéis que desempolvar, de esos recuerdos juntos, esas celebraciones y buenos momentos. Evita las confrontaciones directas que son las que bloquearán el progreso."
   },
   {
     "fecha": "2026-08-18",
     "pregunta": "Llevo un tiempo en un trabajo que me da mucha estabilidad económica, pero me siento totalmente estancada y vacía. Me ha salido una oportunidad para lanzarme como autónoma en un proyecto propio, pero me da pánico perder la seguridad que tengo ahora. ¿Qué energía debo activar en mí para tomar la decisión correcta sin dejarme llevar por el miedo?",
     "cartas": [
-      {},
-      {},
-      {}
+      {
+        "posicion": "#1",
+        "nombre": "Reina de copas",
+        "palo": "Copas"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "V de copas",
+        "palo": "Copas"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "IX de copas",
+        "palo": "Copas"
+      }
     ],
-    "interpretación": ""
+    "interpretación": "Sin duda alguna la respuesta está en tus emociones. Quizás no están permitiendo a tu mente dilucidar el problema sin interferencias. No quiero decir que las ignores, sino que las uses en conjunto a tu consciente para decidir desde lo más profundo. Quizás deberías tomarte un descanso y disfrutar para poder descubrir el camino que realmente quieres sin la presión (y el miedo) que tienes actualmente en la consciencia."
   },
   {
     "fecha": "2026-08-09",
@@ -67,8 +103,8 @@
       },
       {
         "posicion": "#3",
-        "nombre": "Reina de Oros",
-        "palo": "Oros"
+        "nombre": "Reina de pentáculos",
+        "palo": "Pentáculos"
       }
     ],
     "interpretacion": "Deberías ir con una actitud nueva, romper con el ambiente actual y comenzar de cero. Te lo pasarás genial obviando lo pasado y disfrutando lo presente, estarás en armonía contigo mismo y no necesitarás a los demás (ni aguantar sus tonterías). Ganando esta actitud te valorarás mucho más y serás impasible a los demás y serás superior a los malos rollos que vengan. Aprenderás a manejarlos y te será un camino mucho más fácil."
