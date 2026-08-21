@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "21.08.2026",
+      carta: "III de pentáculos",
+      nota: "Hoy es día de aplicar la agudeza mental. También de celebrar las cosas bien hechas y disfrutarlas. Trabajo bien aplicado y colaboración."
+    },
+    {
       fecha: "20.08.2026",
       carta: "Reina de copas",
       nota: "Hoy no es día de entrar en guerras, yo decido qué tomo y qué no. Ser dueño de mi espacio emocional. No tengo que dar explicaciones de más ni justificarme."
