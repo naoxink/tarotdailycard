@@ -13,7 +13,12 @@ window.TAROT_YEAR_DATA[2026] = {
   },
 
   "registros": [
-    {
+   {
+      fecha: "22.08.2026",
+      carta: "Sota de copas",
+      nota: "Sigo necesitando trabajar desde el sentimiento, la relación social desde lo interno. Cuidar las relaciones con cuidado y amor, de esta forma florecerán"
+   },
+   {
       fecha: "21.08.2026",
       carta: "III de pentáculos",
       nota: "Hoy es día de aplicar la agudeza mental. También de celebrar las cosas bien hechas y disfrutarlas. Trabajo bien aplicado y colaboración."
