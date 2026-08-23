@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
    {
+      fecha: "23.08.2026",
+      carta: "III de copas",
+      nota: "Disfrutar las cositas buenas del día."
+   },
+   {
       fecha: "22.08.2026",
       carta: "Sota de copas",
       nota: "Sigo necesitando trabajar desde el sentimiento, la relación social desde lo interno. Cuidar las relaciones con cuidado y amor, de esta forma florecerán"
