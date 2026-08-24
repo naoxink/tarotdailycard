@@ -7,12 +7,17 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "El Loco (0)",
-      "nota": "Podría ir un poco a la aventura, sin pensar demasiado en las consecuencias. Alegría y entusiasmo para afrontar lo que venga esta semana."
+      "carta": "II de copas",
+      "nota": "Podría consolidar por fin mi relación conmigo mismo o bien mejorar la que tenga regular con alguien."
     }
   },
 
   "registros": [
+    {
+      fecha: "24.08.2026",
+      carta: "El sol (XIX)",
+      nota: "Hoy estoy fino, todo bien (excepto el cansancio) y es día de disfrutar, tomarse un descansito, darse un gusto."
+    },
    {
       fecha: "23.08.2026",
       carta: "III de copas",
