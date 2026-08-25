@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "25.08.2026",
+      carta: "IX de bastos",
+      nota: "Yo diría que mis impulsos están dominando y frenando a mis pensamientos. Toman la iniciativa antes de pensar (muy yo, sí). Necesito pensar las cosas antes de hablar, dejar a la gente terminar de decir lo que tengan que decir. Intentar memorizar lo que quiero decir y devolverlo con una estructura cohesionada."
+    },
+    {
       fecha: "24.08.2026",
       carta: "El sol (XIX)",
       nota: "Hoy estoy fino, todo bien (excepto el cansancio) y es día de disfrutar, tomarse un descansito, darse un gusto."
