@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "26.08.2026",
+      carta: "La luna (XVIII)",
+      nota: "Hoy hay que confiar en la intuición, puede que me ayude con alguna decisión."
+    },
+    {
       fecha: "25.08.2026",
       carta: "IX de bastos",
       nota: "Yo diría que mis impulsos están dominando y frenando a mis pensamientos. Toman la iniciativa antes de pensar (muy yo, sí). Necesito pensar las cosas antes de hablar, dejar a la gente terminar de decir lo que tengan que decir. Intentar memorizar lo que quiero decir y devolverlo con una estructura cohesionada."
