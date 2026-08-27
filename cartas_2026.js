@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "27.08.2026",
+      carta: "El sol (XIX)",
+      nota: "Hay que disfrutar el día, preocupaciones las mínimas y necesarias."
+    },
+    {
       fecha: "26.08.2026",
       carta: "La luna (XVIII)",
       nota: "Hoy hay que confiar en la intuición, puede que me ayude con alguna decisión."
