@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "28.08.2026",
+      carta: "II de espadas",
+      nota: "Si tengo que elegir algo, si estoy dividido, aunque la situación sea un caos y difícil, tengo que elegir pensando bien. Masticar bien la duda y elegir con cabeza."
+    },
+    {
       fecha: "27.08.2026",
       carta: "El sol (XIX)",
       nota: "Hay que disfrutar el día, preocupaciones las mínimas y necesarias."
