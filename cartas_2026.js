@@ -7,12 +7,27 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "II de copas",
-      "nota": "Podría consolidar por fin mi relación conmigo mismo o bien mejorar la que tenga regular con alguien."
+      "carta": "Reina de bastos",
+      "nota": "Tengo el poder de superar los obstaculos y ataques recibidos. Siempre controlando y dominando mis acciones y mi intención."
     }
   },
 
   "registros": [
+    {
+      fecha: "31.08.2026",
+      carta: "VII de espadas",
+      nota: "Me estoy dejando guiar por mi inconsciente, se ve que está interfiriendo con lo que pienso durante el día. Tengo que liberar y utilizar más mi consciente. Centrar mi atención en las cosas que hago y pienso."
+    },
+    {
+      fecha: "30.08.2026",
+      carta: "VIII de espadas",
+      nota: "No se puede estar a la defensiva mentalmente aunque el entorno no esté modo hostil. Relajar la mente, dejarse llevar un poco por el día; no analizar todo desde el punto de vista crítico."
+    },
+    {
+      fecha: "29.08.2026",
+      carta: "II de pentáculos",
+      nota: "Intentar balancear el día, un poquito de cal y otra de arena. No todo puede ser disfrute o tareas."
+    },
     {
       fecha: "28.08.2026",
       carta: "II de espadas",
