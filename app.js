@@ -6,13 +6,48 @@ createApp({
     // ============================================================
     // Navegación (secciones tipo dashboard, sincronizadas con el hash)
     // ============================================================
-    const vista = ref(location.hash.replace('#', '') || 'dashboard');
-    window.addEventListener('hashchange', () => {
-      vista.value = location.hash.replace('#', '') || 'dashboard';
-    });
+    const vista = ref('dashboard');
+    const idTiradaSeleccionada = ref(null);
+
+    const parseHash = () => {
+      const hash = location.hash.replace('#', '');
+      if (hash.startsWith('tirada/')) {
+        vista.value = 'tirada-detalle';
+        idTiradaSeleccionada.value = hash.slice('tirada/'.length);
+      } else {
+        vista.value = hash || 'dashboard';
+        idTiradaSeleccionada.value = null;
+      }
+    };
+    parseHash();
+    window.addEventListener('hashchange', parseHash);
+
     const irA = (v) => {
       vista.value = v;
       location.hash = v;
+    };
+
+    const verDetalleTirada = (tirada) => {
+      location.hash = `tirada/${tirada.id}`;
+    };
+
+    const compartirTirada = async (tirada) => {
+      const url = `${location.origin}${location.pathname}#tirada/${tirada.id}`;
+      const textoResumen = `🔮 ${tirada.pregunta}\n${url}`;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: 'Tarot Log', text: textoResumen, url });
+          return;
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+        alert('Enlace copiado al portapapeles.');
+      } catch (e) {
+        prompt('Copia este enlace:', url);
+      }
     };
 
     // ============================================================
@@ -59,6 +94,25 @@ createApp({
     const mesActualStr = String(hoy.getMonth() + 1).padStart(2, '0');
     const hoyString = String(hoy.getDate()).padStart(2, '0') + '.' + mesActualStr + '.' + anioActual;
 
+    // ---------- Fusionar pendientes guardados en localStorage ----------
+    const CLAVE_PENDIENTES_REGISTROS = 'tarotlog_pendientes_registros';
+    const CLAVE_PENDIENTES_TIRADAS = 'tarotlog_pendientes_tiradas';
+
+    const leerPendientesRegistros = () => {
+      try { return JSON.parse(localStorage.getItem(CLAVE_PENDIENTES_REGISTROS) || '[]'); }
+      catch (e) { return []; }
+    };
+    const leerPendientesTiradas = () => {
+      try { return JSON.parse(localStorage.getItem(CLAVE_PENDIENTES_TIRADAS) || '[]'); }
+      catch (e) { return []; }
+    };
+
+    const pendientesRegistrosIniciales = leerPendientesRegistros();
+    if (pendientesRegistrosIniciales.length) {
+      registros.push(...pendientesRegistrosIniciales);
+      registros.sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
+    }
+
     // `registros` y `especiales` vienen de cartas.js / cartas_2026.js (scope global, no cambian tras cargar)
     const entradasTotales = registros.length;
 
@@ -101,6 +155,8 @@ createApp({
       }
       return n;
     })();
+
+    const registradoHoy = registros.some(r => r.fecha === hoyString);
 
     const ultimasEntradas = registros.slice(0, 5);
 
@@ -335,10 +391,15 @@ createApp({
     onMounted(async () => {
       try {
         const res = await fetch('tiradas.json');
-        tiradas.value = await res.json();
+        const originales = await res.json();
+        tiradas.value = [...originales, ...leerPendientesTiradas()];
       } catch (e) {
         console.error('Error cargando tiradas.json', e);
       }
+    });
+
+    const tiradaSeleccionada = computed(() => {
+      return tiradas.value.find(t => t.id === idTiradaSeleccionada.value) || null;
     });
 
     const tiradasFiltradas = computed(() => {
@@ -501,6 +562,99 @@ createApp({
     };
 
     // ============================================================
+    // AÑADIR (formulario + localStorage + exportación)
+    // ============================================================
+    const pendientesRegistros = ref(pendientesRegistrosIniciales);
+    const pendientesTiradas = ref(leerPendientesTiradas());
+    const palosOpcionesTirada = ['Arcanos Mayores', 'Bastos', 'Espadas', 'Pentáculos', 'Copas'];
+
+    const hoyISO = `${hoy.getFullYear()}-${mesActualStr}-${String(hoy.getDate()).padStart(2, '0')}`;
+    const tabAñadir = ref('tirada');
+
+    // --- Registro diario ---
+    const formRegistro = ref({ fecha: hoyISO, carta: '', nota: '' });
+
+    const guardarRegistro = () => {
+      if (!formRegistro.value.carta.trim()) { alert('Indica la carta.'); return; }
+      const [y, m, d] = formRegistro.value.fecha.split('-');
+      const nuevo = { fecha: `${d}.${m}.${y}`, carta: formRegistro.value.carta.trim(), nota: formRegistro.value.nota.trim() };
+      const actuales = leerPendientesRegistros();
+      actuales.push(nuevo);
+      localStorage.setItem(CLAVE_PENDIENTES_REGISTROS, JSON.stringify(actuales));
+      location.reload();
+    };
+
+    // --- Tirada ---
+    const nuevaCartaTirada = () => ({ posicion: '', nombre: '', palo: 'Arcanos Mayores' });
+    const formTirada = ref({ pregunta: '', consultante: '', interpretacion: '', cartas: [nuevaCartaTirada()] });
+
+    const añadirCartaFormTirada = () => formTirada.value.cartas.push(nuevaCartaTirada());
+    const quitarCartaFormTirada = (idx) => {
+      if (formTirada.value.cartas.length > 1) formTirada.value.cartas.splice(idx, 1);
+    };
+
+    const generarIdTirada = (fechaISO) => {
+      const clave = fechaISO.replaceAll('-', '');
+      const todas = [...tiradas.value, ...leerPendientesTiradas()];
+      const usados = todas.filter(t => t.id && t.id.startsWith(`t-${clave}-`)).length;
+      return `t-${clave}-${String(usados + 1).padStart(2, '0')}`;
+    };
+
+    const guardarTirada = () => {
+      if (!formTirada.value.pregunta.trim() || !formTirada.value.interpretacion.trim()) {
+        alert('Rellena al menos la pregunta y la interpretación.');
+        return;
+      }
+      const nueva = {
+        id: generarIdTirada(hoyISO),
+        fecha: hoyISO,
+        consultante: formTirada.value.consultante.trim() || undefined,
+        pregunta: formTirada.value.pregunta.trim(),
+        cartas: formTirada.value.cartas.filter(c => c.nombre.trim()),
+        interpretacion: formTirada.value.interpretacion.trim()
+      };
+      const actuales = leerPendientesTiradas();
+      actuales.push(nueva);
+      localStorage.setItem(CLAVE_PENDIENTES_TIRADAS, JSON.stringify(actuales));
+      location.reload();
+    };
+
+    // --- Borrar pendientes ---
+    const borrarPendienteRegistro = (idx) => {
+      const actuales = leerPendientesRegistros();
+      actuales.splice(idx, 1);
+      localStorage.setItem(CLAVE_PENDIENTES_REGISTROS, JSON.stringify(actuales));
+      location.reload();
+    };
+    const borrarPendienteTirada = (idx) => {
+      const actuales = leerPendientesTiradas();
+      actuales.splice(idx, 1);
+      localStorage.setItem(CLAVE_PENDIENTES_TIRADAS, JSON.stringify(actuales));
+      location.reload();
+    };
+
+    // --- Exportar ---
+    const descargarJSON = (nombreArchivo, datos) => {
+      const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = nombreArchivo;
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    const exportarTiradas = () => {
+      const combinado = [...tiradas.value].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      descargarJSON('tiradas.json', combinado);
+    };
+
+    const exportarRegistros = () => {
+      if (!pendientesRegistros.value.length) { alert('No hay registros pendientes.'); return; }
+      descargarJSON('registros-nuevos.json', pendientesRegistros.value);
+      alert('Pega el contenido de este archivo dentro del array "registros" de cartas_2026.js.');
+    };
+
+    // ============================================================
     // BÚSQUEDA GLOBAL
     // ============================================================
     const busquedaGlobal = ref('');
@@ -557,7 +711,7 @@ createApp({
       anioActual, mesActualStr, nombresMeses, hoyString, palos, colorPalo, obtenerClaseBadge,
 
       especiales, entradasTotales, cartasDistintas, cartasFrecuentes, maxRepeticiones,
-      paloFrecuente, racha, ultimasEntradas,
+      paloFrecuente, racha, registradoHoy, ultimasEntradas,
       graficaPalosMesHtml, graficaAnualHtml,
 
       filtroDiarioTexto, filtroDiarioPalo, filtroCartaActiva,
@@ -565,12 +719,18 @@ createApp({
 
       tiradas, filtroTiradaTexto, filtroTiradaConsultante, tiradasFiltradas,
       ultimasTiradasList, consultantesDisponibles, formatearFecha, verEnTiradas,
+      idTiradaSeleccionada, tiradaSeleccionada, verDetalleTirada, compartirTirada,
 
       indiceMazos, idMazoSeleccionado, mazoActual, cartaExpandidaId,
       filtroMazoTexto, filtroMazoTipo, soloPendientes, tiposDisponibles,
       cartasMazoFiltradas, progresoMazo, toggleCartaExpandida, procesarNotaFinal,
 
-      busquedaGlobal, mostrarBusqueda, onBlurBusqueda, resultadosBusqueda, irAResultado
+      busquedaGlobal, mostrarBusqueda, onBlurBusqueda, resultadosBusqueda, irAResultado,
+
+      tabAñadir, formRegistro, guardarRegistro,
+      formTirada, añadirCartaFormTirada, quitarCartaFormTirada, guardarTirada,
+      pendientesRegistros, pendientesTiradas, borrarPendienteRegistro, borrarPendienteTirada,
+      exportarTiradas, exportarRegistros, palosOpcionesTirada,
     };
   }
 }).mount('#app');

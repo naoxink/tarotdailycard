@@ -397,3 +397,49 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+.stats-card--alerta {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2) inset;
+}
+.stats-alerta {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.74rem;
+  color: var(--accent-soft);
+}
+
+.volver-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted);
+  padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; margin-bottom: 14px;
+}
+.volver-btn:hover { color: var(--text); border-color: var(--accent); }
+
+.tirada-header-acciones { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);
+  border-radius: 8px; padding: 4px 8px; cursor: pointer; font-size: 0.82rem;
+}
+.icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+.compartir-btn {
+  margin-top: 14px; background: var(--accent); color: var(--bg-deep); border: none;
+  padding: 8px 16px; border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 0.82rem;
+}
+.compartir-btn:hover { background: var(--accent-soft); }
+
+.form-anadir { display: flex; flex-direction: column; gap: 14px; max-width: 640px; margin-bottom: 24px; }
+.form-anadir label { display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; color: var(--text-muted); }
+.form-anadir input, .form-anadir textarea, .form-anadir select {
+  background: var(--surface); border: 1px solid rgba(255,255,255,0.1); color: var(--text);
+  padding: 8px 12px; border-radius: 8px; font-size: 0.88rem; font-family: inherit;
+}
+.cartas-form-lista { display: flex; flex-direction: column; gap: 8px; }
+.carta-form-fila { display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: 8px; }
+
+.pendientes-box { border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px; }
+.pendiente-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 12px; background: var(--surface); border-radius: 8px; margin-bottom: 6px; font-size: 0.85rem; }
+
+@media (max-width: 600px) {
+  .carta-form-fila { grid-template-columns: 1fr; }
+}

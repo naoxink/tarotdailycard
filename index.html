@@ -20,6 +20,7 @@
         <button :class="{active: vista==='diario'}" @click="irA('diario')">Diario</button>
         <button :class="{active: vista==='tiradas'}" @click="irA('tiradas')">Tiradas</button>
         <button :class="{active: vista==='mazos'}" @click="irA('mazos')">Mazos</button>
+        <button :class="{active: vista==='anadir'}" @click="irA('anadir')">Añadir ✚</button>
       </nav>
 
       <div class="global-search">
@@ -54,7 +55,11 @@
         <div class="stats-grid">
           <div class="stats-card"><span class="label">Entradas</span><span class="stats-value">{{ entradasTotales }}</span></div>
           <div class="stats-card"><span class="label">Cartas distintas</span><span class="stats-value">{{ cartasDistintas }}</span></div>
-          <div class="stats-card"><span class="label">Racha actual</span><span class="stats-value">🔥 {{ racha }} {{ racha===1 ? 'día' : 'días' }}</span></div>
+          <div class="stats-card" :class="{'stats-card--alerta': !registradoHoy}">
+            <span class="label">Racha actual</span>
+            <span class="stats-value">🔥 {{ racha }} {{ racha===1 ? 'día' : 'días' }}</span>
+            <span class="stats-alerta" v-if="!registradoHoy">⚠️ Aún no has registrado hoy</span>
+          </div>
           <div class="stats-card"><span class="label">Carta más repetida</span><span class="stats-value">{{ cartasFrecuentes.join(', ') }} ({{ maxRepeticiones }})</span></div>
           <div class="stats-card"><span class="label">Palo más repetido</span><span class="stats-value">{{ paloFrecuente }}</span></div>
         </div>
@@ -72,7 +77,7 @@
           </div>
           <div class="mini-list">
             <h3>Últimas tiradas</h3>
-            <div class="mini-list-item" v-for="t in ultimasTiradasList" :key="t.fecha+t.pregunta" @click="verEnTiradas(t)">
+            <div class="mini-list-item" v-for="t in ultimasTiradasList" :key="t.id" @click="verDetalleTirada(t)">
               <span>{{ t.pregunta }}</span>
               <span class="fecha-mini">{{ formatearFecha(t.fecha) }}</span>
             </div>
@@ -136,10 +141,13 @@
         </div>
 
         <div class="feed-tiradas">
-          <div class="tirada-card" v-for="tirada in tiradasFiltradas" :key="tirada.fecha+tirada.pregunta">
+          <div class="tirada-card" v-for="tirada in tiradasFiltradas" :key="tirada.id">
             <div class="tirada-header">
               <span class="fecha">{{ formatearFecha(tirada.fecha) }}</span>
-              <span class="anonimo-tag">Consultante: {{ tirada.consultante || 'Anónimo' }}</span>
+              <div class="tirada-header-acciones">
+                <span class="anonimo-tag">Consultante: {{ tirada.consultante || 'Anónimo' }}</span>
+                <button class="icon-btn" title="Ver detalle / compartir" @click="verDetalleTirada(tirada)">🔗</button>
+              </div>
             </div>
             <h2 class="pregunta">"{{ tirada.pregunta }}"</h2>
             <div class="cartas-layout">
@@ -155,6 +163,30 @@
           <div v-if="tiradasFiltradas.length===0" class="fallback-message">No hay tiradas que coincidan.</div>
         </div>
 
+      </section>
+
+      <!-- ================= DETALLE DE TIRADA ================= -->
+      <section v-else-if="vista==='tirada-detalle'" class="vista-detalle-tirada">
+        <button class="volver-btn" @click="irA('tiradas')">← Volver a tiradas</button>
+
+        <div class="tirada-card" v-if="tiradaSeleccionada">
+          <div class="tirada-header">
+            <span class="fecha">{{ formatearFecha(tiradaSeleccionada.fecha) }}</span>
+            <span class="anonimo-tag">Consultante: {{ tiradaSeleccionada.consultante || 'Anónimo' }}</span>
+          </div>
+          <h2 class="pregunta">"{{ tiradaSeleccionada.pregunta }}"</h2>
+          <div class="cartas-layout">
+            <div class="carta-item" v-for="(carta, index) in tiradaSeleccionada.cartas" :key="index">
+              <div class="carta-posicion">{{ carta.posicion }}</div>
+              <div class="carta-nombre">{{ carta.nombre }}</div>
+              <span :class="['badge', obtenerClaseBadge(carta.palo)]">{{ carta.palo }}</span>
+            </div>
+          </div>
+          <div class="interpretacion">{{ tiradaSeleccionada.interpretacion }}</div>
+          <button class="compartir-btn" @click="compartirTirada(tiradaSeleccionada)">🔗 Compartir esta tirada</button>
+        </div>
+
+        <div class="fallback-message" v-else>No se ha encontrado esa tirada.</div>
       </section>
 
       <!-- ================= MAZOS ================= -->
@@ -193,6 +225,76 @@
           </div>
 
           <div class="fallback-message" v-if="cartasMazoFiltradas.length===0">No hay cartas que coincidan con el filtro.</div>
+        </div>
+
+      </section>
+
+      <!-- ================= AÑADIR ================= -->
+      <section v-else-if="vista==='anadir'" class="vista-anadir">
+
+        <div class="chip-filters" style="margin-bottom:16px;">
+          <button :class="{active: tabAñadir==='tirada'}" @click="tabAñadir='tirada'">Nueva tirada</button>
+          <button :class="{active: tabAñadir==='registro'}" @click="tabAñadir='registro'">Registro diario</button>
+        </div>
+
+        <form v-if="tabAñadir==='tirada'" class="form-anadir" @submit.prevent="guardarTirada">
+          <label>Consultante (opcional)
+            <input type="text" v-model="formTirada.consultante" placeholder="Anónimo">
+          </label>
+          <label>Pregunta
+            <textarea v-model="formTirada.pregunta" rows="3" required></textarea>
+          </label>
+
+          <div class="cartas-form-lista">
+            <div class="carta-form-fila" v-for="(c, idx) in formTirada.cartas" :key="idx">
+              <input type="text" v-model="c.posicion" placeholder="Posición (#1, Bloqueo...)">
+              <input type="text" v-model="c.nombre" placeholder="Nombre de la carta">
+              <select v-model="c.palo">
+                <option v-for="p in palosOpcionesTirada" :key="p" :value="p">{{ p }}</option>
+              </select>
+              <button type="button" class="icon-btn" @click="quitarCartaFormTirada(idx)" v-if="formTirada.cartas.length>1">✕</button>
+            </div>
+          </div>
+          <button type="button" class="volver-btn" @click="añadirCartaFormTirada">+ Añadir carta</button>
+
+          <label>Interpretación
+            <textarea v-model="formTirada.interpretacion" rows="5" required></textarea>
+          </label>
+
+          <button type="submit" class="compartir-btn">Guardar tirada</button>
+        </form>
+
+        <form v-else class="form-anadir" @submit.prevent="guardarRegistro">
+          <label>Fecha
+            <input type="date" v-model="formRegistro.fecha" required>
+          </label>
+          <label>Carta
+            <input type="text" v-model="formRegistro.carta" placeholder="Ej: El sol (XIX)" required>
+          </label>
+          <label>Nota
+            <textarea v-model="formRegistro.nota" rows="4"></textarea>
+          </label>
+          <button type="submit" class="compartir-btn">Guardar registro</button>
+        </form>
+
+        <div class="pendientes-box" v-if="pendientesTiradas.length || pendientesRegistros.length">
+          <h3>Pendientes de subir al repositorio</h3>
+
+          <div v-if="pendientesTiradas.length">
+            <div class="pendiente-item" v-for="(t, idx) in pendientesTiradas" :key="t.id">
+              <span>🔮 {{ t.pregunta }}</span>
+              <button class="icon-btn" @click="borrarPendienteTirada(idx)">🗑</button>
+            </div>
+            <button class="volver-btn" @click="exportarTiradas">⬇ Exportar tiradas.json</button>
+          </div>
+
+          <div v-if="pendientesRegistros.length">
+            <div class="pendiente-item" v-for="(r, idx) in pendientesRegistros" :key="idx">
+              <span>📅 {{ r.fecha }} · {{ r.carta }}</span>
+              <button class="icon-btn" @click="borrarPendienteRegistro(idx)">🗑</button>
+            </div>
+            <button class="volver-btn" @click="exportarRegistros">⬇ Exportar registros nuevos</button>
+          </div>
         </div>
 
       </section>
