@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "01.08.2026",
+      carta: "El sol (XVII)",
+      nota: "Tranquilo, no habrá que preocuparse de gran cosa hoy."
+    },
+    {
       fecha: "31.08.2026",
       carta: "VII de espadas",
       nota: "Me estoy dejando guiar por mi inconsciente, se ve que está interfiriendo con lo que pienso durante el día. Tengo que liberar y utilizar más mi consciente. Centrar mi atención en las cosas que hago y pienso."
