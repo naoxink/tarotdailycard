@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "02.09.2026",
+      carta: "Sota de copas",
+      nota: "Día emocional; abrazar mis sentimientos y disfrutarlos. Lo que he avanzado con mis relaciones hay que protegerlo, mantenerlo como mínimo."
+    },
+    {
       fecha: "01.09.2026",
       carta: "El sol (XVII)",
       nota: "Tranquilo, no habrá que preocuparse de gran cosa hoy."
