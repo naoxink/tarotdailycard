@@ -1,5 +1,38 @@
 [
   {
+    "id": "t-20260902-01",
+    "fecha": "2026-09-02",
+    "pregunta": "Sobre mi compra de bola de bolos, como va a ir ¿cambiare? ¿me quedare esa? ¿me quedare allí jugando y enseñándome? ¿como serán esas presentaciones y cosas nuevas? ¿seguiré yendo y practicando o pasaré? si voy seguramente sea solo porque Roberto pasará ¿sera así?",
+    "cartas": [
+      {
+        "posicion": "#1",
+        "nombre": "Caballero de copas",
+        "palo": "Copas"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "La muerte (XIII)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "VIII de espadas",
+        "palo": "Espadas"
+      },
+      {
+        "posicion": "#4",
+        "nombre": "La rueda de la fortuna (X)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "#5",
+        "nombre": "El mundo (XXI)",
+        "palo": "Arcanos Mayores"
+      }
+    ],
+    "interpretacion": "En toda esta aventura te mueve y te da energías tu sentimiento de integración en el grupo, mejorar y ampliar tus relaciones sociales y sobre todo hacer nuevos amigos. Te costará dar el primer pasito pero esta acción marcará un antes y un después, a veces, para obtener algo bueno hay que pasar por algo difícil. También pasarás por algunos momentos que no te apetezcan nada y pensarás en que quieres abandonar y salir de ahí, pero debes aguantar ese tránsito porque cambiará de un momento a otro y lo que antes era malo traerá lo bueno. Con esta actitud llegarás a conseguir lo que te propones, un nuevo grupo de amigos con el que compartir tu hobbie, aprender, mejorar y quién sabe, quizás haya una \"selección natural\" de amigos en tu grupo de bolos. Lo que queda claro es que finalmente la situación te gustará y disfrutarás con ella."
+  },
+  {
     "id": "t-20260828-01",
     "fecha": "2026-08-28",
     "pregunta": "Cómo puedo mejorar la relacion con mi amigo Roberto, cuando quedamos no suelo contarle cosas porque cuando le he contado a veces algo he notado indeferencia y siempre salta con algo suyo, asi que paso normalmente de comentarle nada, normalmente siempre es alguna queja suya o tonterias que le pasan lo que se suele hablar. Tambien esta el tema oculto, que no se yo si abriria o cerraria las quedadas. Lo mismo el tambien es gay o a saber.",
