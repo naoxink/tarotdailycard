@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "03.09.2026",
+      carta: "III de pentáculos",
+      nota: "El trabajo invertido tendrá su resultado. No tengo que dudar en remangarme y pedir ayuda si es necesario para que el fruto llegue."
+    },
+    {
       fecha: "02.09.2026",
       carta: "Sota de copas",
       nota: "Día emocional; abrazar mis sentimientos y disfrutarlos. Lo que he avanzado con mis relaciones hay que protegerlo, mantenerlo como mínimo."
