@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "04.09.2026",
+      carta: "El mundo (XXI)",
+      nota: "Hoy parece que el día será genial, o al menos hay que intentar que lo sea. Actitud positiva donde las haya y energía. Acaba la semana laboral y hay un margen para el descanso."
+    },
+    {
       fecha: "03.09.2026",
       carta: "III de pentáculos",
       nota: "El trabajo invertido tendrá su resultado. No tengo que dudar en remangarme y pedir ayuda si es necesario para que el fruto llegue."
