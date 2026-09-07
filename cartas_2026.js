@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "Reina de bastos",
-      "nota": "Tengo el poder de superar los obstaculos y ataques recibidos. Siempre controlando y dominando mis acciones y mi intención."
+      "carta": "",
+      "nota": ""
     }
   },
 
   "registros": [
+    {
+      fecha: "06.09.2026",
+      carta: "Rey de copas",
+      nota: ""
+    },
+    {
+      fecha: "05.09.2026",
+      carta: "Reina de espadas",
+      nota: ""
+    },
     {
       fecha: "04.09.2026",
       carta: "El mundo (XXI)",

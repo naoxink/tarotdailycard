@@ -493,3 +493,6 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
   text-overflow: ellipsis;
 }
 .glosario-fila-definicion { color: var(--text-muted); }
+
+.interpretacion-pendiente { background: rgba(212,175,55,0.08); border: 1px dashed var(--accent); padding: 12px 14px; border-radius: 10px; color: var(--text-muted); font-style: italic; font-size: 0.88rem; }
+.badge-pendiente { background: rgba(212,175,55,0.2); color: var(--accent-soft); border: 1px solid var(--accent); }

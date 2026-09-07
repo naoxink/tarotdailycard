@@ -147,6 +147,7 @@
               <span class="fecha">{{ formatearFecha(tirada.fecha) }}</span>
               <div class="tirada-header-acciones">
                 <span class="anonimo-tag">Consultante: {{ tirada.consultante || 'Anónimo' }}</span>
+                <span class="badge badge-pendiente" v-if="tirada.pendiente">Práctica pendiente</span>
                 <button class="icon-btn" title="Ver detalle / compartir" @click="verDetalleTirada(tirada)">🔗</button>
               </div>
             </div>
@@ -158,7 +159,8 @@
                 <span :class="['badge', obtenerClaseBadge(carta.palo)]">{{ carta.palo }}</span>
               </div>
             </div>
-            <div class="interpretacion">{{ tirada.interpretacion }}</div>
+            <div class="interpretacion" v-if="tirada.interpretacion">{{ tirada.interpretacion }}</div>
+            <div class="interpretacion-pendiente" v-else>✍️ Pendiente de completar</div>
           </div>
 
           <div v-if="tiradasFiltradas.length===0" class="fallback-message">No hay tiradas que coincidan.</div>
