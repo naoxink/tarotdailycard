@@ -20,6 +20,7 @@
         <button :class="{active: vista==='diario'}" @click="irA('diario')">Diario</button>
         <button :class="{active: vista==='tiradas'}" @click="irA('tiradas')">Tiradas</button>
         <button :class="{active: vista==='mazos'}" @click="irA('mazos')">Mazos</button>
+        <button :class="{active: vista==='glosario'}" @click="irA('glosario')">Glosario</button>
         <button :class="{active: vista==='anadir'}" @click="irA('anadir')">Añadir ✚</button>
       </nav>
 
@@ -229,6 +230,36 @@
 
       </section>
 
+      <!-- ================= GLOSARIO ================= -->
+      <section v-else-if="vista==='glosario'" class="vista-glosario">
+
+        <div class="toolbar toolbar-glosario">
+          <input type="text" v-model="filtroGlosarioTexto" placeholder="Buscar término…" autofocus>
+          <div class="chip-filters">
+            <button :class="{active: filtroGlosarioCategoria==='todas'}" @click="filtroGlosarioCategoria='todas'">Todas</button>
+            <button v-for="cat in categoriasGlosario" :key="cat" :class="{active: filtroGlosarioCategoria===cat}" @click="filtroGlosarioCategoria=cat">{{ cat }}</button>
+          </div>
+          <span class="count-badge">{{ glosarioFiltrado.length }}</span>
+        </div>
+
+        <div class="glosario-az" v-if="!filtroGlosarioTexto && letrasDisponibles.length > 1">
+          <button v-for="l in letrasDisponibles" :key="l" @click="irALetra(l)">{{ l }}</button>
+        </div>
+
+        <div class="glosario-compacto">
+          <div class="glosario-letra-grupo" v-for="grupo in glosarioAgrupadoPorLetra" :key="grupo.letra" :id="'gloss-letra-' + grupo.letra">
+            <div class="glosario-letra-titulo">{{ grupo.letra }}</div>
+            <div class="glosario-fila" v-for="item in grupo.items" :key="item.palabra">
+              <span class="glosario-fila-palabra">{{ item.palabra.charAt(0).toUpperCase() + item.palabra.slice(1) }}</span>
+              <span class="glosario-fila-definicion">{{ item.definicion }}</span>
+            </div>
+          </div>
+
+          <div class="fallback-message" v-if="glosarioFiltrado.length===0">No hay términos que coincidan con la búsqueda.</div>
+        </div>
+
+      </section>
+
       <!-- ================= AÑADIR ================= -->
       <section v-else-if="vista==='anadir'" class="vista-anadir">
 
@@ -305,6 +336,7 @@
 
 <script src="cartas_2026.js"></script>
 <script src="cartas.js"></script>
+<script src="glosario.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

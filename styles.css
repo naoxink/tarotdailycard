@@ -443,3 +443,53 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 @media (max-width: 600px) {
   .carta-form-fila { grid-template-columns: 1fr; }
 }
+
+/* --------------------------------------------------------
+   Glosario (vista compacta de consulta rápida)
+   -------------------------------------------------------- */
+.toolbar-glosario input[type="text"] { min-width: 220px; }
+
+.glosario-az {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  margin-bottom: 14px; padding: 8px 10px;
+  background: var(--surface); border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  position: sticky; top: 8px; z-index: 5;
+}
+.glosario-az button {
+  border: none; background: transparent; color: var(--text-muted);
+  width: 26px; height: 26px; border-radius: 6px; font-size: 0.76rem;
+  font-family: var(--font-titulo); cursor: pointer;
+}
+.glosario-az button:hover { background: var(--accent); color: var(--bg-deep); }
+
+.glosario-compacto { columns: 1; column-gap: 24px; }
+@media (min-width: 700px)  { .glosario-compacto { columns: 2; } }
+@media (min-width: 1000px) { .glosario-compacto { columns: 3; } }
+
+.glosario-letra-grupo { break-inside: avoid-column; margin-bottom: 10px; }
+.glosario-letra-titulo {
+  font-family: var(--font-titulo); color: var(--accent);
+  font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
+  border-bottom: 1px solid rgba(212,175,55,0.25);
+  padding-bottom: 3px; margin-bottom: 4px;
+}
+
+.glosario-fila {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  column-gap: 10px;
+  padding: 5px 2px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
+}
+.glosario-fila:hover { background: rgba(255,255,255,0.03); }
+.glosario-fila-palabra {
+  font-weight: 700;
+  color: var(--accent-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.glosario-fila-definicion { color: var(--text-muted); }

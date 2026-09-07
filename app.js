@@ -497,36 +497,9 @@ createApp({
       cartaExpandidaId.value = cartaExpandidaId.value === id ? null : id;
     };
 
-    // ---------- Glosario y tooltips de palabras clave ----------
-    const glosario = [
-      { palabra: "agua", definicion: "Emociones, intuición, el reino del subconsciente (Copas)" },
-      { palabra: "fuego", definicion: "Voluntad, acción, pasiones, chispa vital (Bastos)" },
-      { palabra: "tierra", definicion: "Mundo material, cuerpo físico, recursos, estabilidad (Oros)" },
-      { palabra: "aire", definicion: "Intelecto, mente, comunicación, conflicto (Espadas)" },
-      { palabra: "blanco", definicion: "Pureza, inocencia, limpieza espiritual, la luz antes de refractarse" },
-      { palabra: "negro", definicion: "Misterio, el vacío fértil, el final de un ciclo, lo oculto" },
-      { palabra: "amarillo", definicion: "Consciencia, luz solar, intelecto activo, divinidad" },
-      { palabra: "rojo", definicion: "Pasión, acción, sangre, vitalidad, el mundo terrenal" },
-      { palabra: "azul", definicion: "Subconsciente, fluidez, espiritualidad, reflexión" },
-      { palabra: "gris", definicion: "Sabiduría, neutralidad, tristeza o apatía" },
-      { palabra: "león", definicion: "Fuego, impulsos, fuerza vital salvaje, coraje" },
-      { palabra: "perro", definicion: "Instinto domesticado, lealtad, la mente consciente protectora" },
-      { palabra: "lobo", definicion: "Instinto salvaje, miedos primitivos, lo indómito" },
-      { palabra: "caballo", definicion: "Vehículo de la voluntad, energía de avance, instinto dirigido" },
-      { palabra: "pájaro", definicion: "Pensamientos, mensajes del espíritu, libertad mental" },
-      { palabra: "infinito", definicion: "Lemniscata: equilibrio perfecto, dominio espiritual sobre la materia" },
-      { palabra: "corona", definicion: "Autoridad, dominio mental, conexión con la mente superior (Kether)" },
-      { palabra: "montaña", definicion: "Desafíos, conocimiento abstracto, la morada de la divinidad" },
-      { palabra: "nube", definicion: "Intervención divina, pensamientos que ocultan la verdad, lo efímero" },
-      { palabra: "torre", definicion: "Estructuras falsas del ego, revelación brusca, liberación forzada" },
-      { palabra: "sol", definicion: "Claridad absoluta, éxito, energía masculina, consciencia" },
-      { palabra: "luna", definicion: "Misterio, miedos, ciclos, energía femenina, ilusión" },
-      { palabra: "estrella", definicion: "Esperanza, guía cósmica, inspiración, sanación tras la tormenta" },
-      { palabra: "río", definicion: "El flujo de la vida, transición, el cauce del subconsciente" },
-      { palabra: "castillo", definicion: "Civilización, metas alcanzadas, a veces aislamiento o defensas" },
-      { palabra: "3", definicion: "Creación y manifestación" },
-      { palabra: "mercurio", definicion: "Comunicación, intelecto, movilidad, cambio, agilidad mental" }
-    ];
+    // ---------- Glosario (fuente compartida en glosario.js) ----------
+    const glosarioCompleto = window.GLOSARIO_DATA || [];
+    const glosarioTooltip = glosarioCompleto.filter(item => item.tooltip !== false);
 
     const formatearMarkdownLigero = (texto) => {
       if (!texto) return '';
@@ -546,7 +519,7 @@ createApp({
         .replace(/[oó]/gi, '[oó]')
         .replace(/[uúü]/gi, '[uúü]');
 
-      glosario.forEach(item => {
+      glosarioTooltip.forEach(item => {
         const baseRegex = flexibilizarAcentos(item.palabra);
         const regexStr = `(?<=^|\\s|[.,;:!¡¿?\\n])(${baseRegex}(?:s|es)?)(?=\\s|[.,;:!¡¿?\\n]|$)`;
         const regex = new RegExp(regexStr, 'gi');
@@ -560,6 +533,59 @@ createApp({
       const paso1 = procesarAnotaciones(texto);
       return formatearMarkdownLigero(paso1);
     };
+
+    // ---------- Página Glosario (vista compacta) ----------
+    const filtroGlosarioTexto = ref('');
+    const filtroGlosarioCategoria = ref('todas');
+
+    const categoriasGlosario = computed(() => {
+      const orden = ['Elementos', 'Numerología', 'Astrología', 'Símbolos', 'Colores', 'Animales'];
+      const presentes = new Set(glosarioCompleto.map(item => item.categoria));
+      return orden.filter(c => presentes.has(c));
+    });
+
+    const glosarioFiltrado = computed(() => {
+      const q = filtroGlosarioTexto.value.trim().toLowerCase();
+      return glosarioCompleto
+        .filter(item => {
+          const coincideTexto = !q || (item.palabra + ' ' + item.definicion).toLowerCase().includes(q);
+          const coincideCategoria = filtroGlosarioCategoria.value === 'todas' || item.categoria === filtroGlosarioCategoria.value;
+          return coincideTexto && coincideCategoria;
+        })
+        .sort((a, b) => a.palabra.localeCompare(b.palabra, 'es'));
+    });
+
+    // Agrupado por letra inicial, para la vista compacta con salto alfabético
+    const glosarioAgrupadoPorLetra = computed(() => {
+      const grupos = [];
+      const mapa = new Map();
+      glosarioFiltrado.value.forEach(item => {
+        const letra = item.palabra.charAt(0).toUpperCase();
+        if (!mapa.has(letra)) {
+          const grupo = { letra, items: [] };
+          mapa.set(letra, grupo);
+          grupos.push(grupo);
+        }
+        mapa.get(letra).items.push(item);
+      });
+      return grupos;
+    });
+
+    const letrasDisponibles = computed(() => glosarioAgrupadoPorLetra.value.map(g => g.letra));
+
+    const irALetra = (letra) => {
+      const el = document.getElementById('gloss-letra-' + letra);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const claseBadgeGlosario = (categoria) => ({
+      'Elementos': 'badge-gloss-elementos',
+      'Numerología': 'badge-gloss-numerologia',
+      'Astrología': 'badge-gloss-astrologia',
+      'Símbolos': 'badge-gloss-simbolos',
+      'Colores': 'badge-gloss-colores',
+      'Animales': 'badge-gloss-animales'
+    }[categoria] || '');
 
     // ============================================================
     // AÑADIR (formulario + localStorage + exportación)
@@ -686,6 +712,18 @@ createApp({
         });
       }
 
+      glosarioCompleto.forEach(item => {
+        if ((item.palabra + ' ' + item.definicion).toLowerCase().includes(q)) {
+          resultados.push({
+            key: 'g-' + item.palabra,
+            tipo: 'Glosario',
+            texto: item.palabra.charAt(0).toUpperCase() + item.palabra.slice(1),
+            vista: 'glosario',
+            termino: item.palabra
+          });
+        }
+      });
+
       return resultados.slice(0, 8);
     });
 
@@ -701,6 +739,10 @@ createApp({
       }
       if (r.vista === 'mazos' && r.cartaId) {
         cartaExpandidaId.value = r.cartaId;
+      }
+      if (r.vista === 'glosario') {
+        filtroGlosarioTexto.value = r.termino;
+        filtroGlosarioCategoria.value = 'todas';
       }
       busquedaGlobal.value = '';
       mostrarBusqueda.value = false;
@@ -731,6 +773,9 @@ createApp({
       formTirada, añadirCartaFormTirada, quitarCartaFormTirada, guardarTirada,
       pendientesRegistros, pendientesTiradas, borrarPendienteRegistro, borrarPendienteTirada,
       exportarTiradas, exportarRegistros, palosOpcionesTirada,
+
+      filtroGlosarioTexto, filtroGlosarioCategoria, categoriasGlosario,
+      glosarioFiltrado, glosarioAgrupadoPorLetra, letrasDisponibles, irALetra, claseBadgeGlosario,
     };
   }
 }).mount('#app');
