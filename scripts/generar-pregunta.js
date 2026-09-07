@@ -12,7 +12,45 @@ const path = require('path');
 
 const TIRADAS_PATH = path.join(__dirname, '..', 'tiradas.json');
 const DIAS_ENTRE_PREGUNTAS = 3;
-const MODELO_GEMINI = 'gemini-2.0-flash';
+
+// Los nombres de modelo de Gemini cambian con frecuencia (Google los va
+// descatalogando cada pocos meses). Para no depender de uno solo:
+// 1) si defines la variable de entorno GEMINI_MODEL, se prueba primero;
+// 2) si no, se prueba el alias oficial "gemini-flash-latest" (apunta siempre
+//    al flash más reciente, aunque a veces es inestable justo tras un cambio);
+// 3) si falla, se cae a un par de modelos estables conocidos como respaldo.
+const MODELOS_CANDIDATOS = [
+  process.env.GEMINI_MODEL,
+  'gemini-flash-latest',
+  'gemini-3.6-flash',
+  'gemini-2.5-flash'
+].filter(Boolean);
+
+async function llamarGemini(modelo, apiKey, prompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${apiKey}`;
+  const respuesta = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 1, maxOutputTokens: 120 }
+    })
+  });
+
+  if (!respuesta.ok) {
+    const detalle = await respuesta.text();
+    const error = new Error(`Error de la API de Gemini con "${modelo}" (${respuesta.status}): ${detalle}`);
+    error.status = respuesta.status;
+    throw error;
+  }
+
+  const datos = await respuesta.json();
+  const texto = datos.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+  if (!texto) {
+    throw new Error(`La API de Gemini ("${modelo}") no devolvió texto en la respuesta.`);
+  }
+  return texto.replace(/^["'“”]+|["'“”]+$/g, '');
+}
 
 async function generarPregunta() {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -28,28 +66,16 @@ Requisitos:
 - Longitud: una sola frase, natural, como si fuera una pregunta real que alguien haría antes de tirar las cartas.
 Devuelve SOLO el texto de la pregunta en español, sin comillas, sin explicaciones ni numeración.`;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODELO_GEMINI}:generateContent?key=${apiKey}`;
-
-  const respuesta = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 1, maxOutputTokens: 120 }
-    })
-  });
-
-  if (!respuesta.ok) {
-    const detalle = await respuesta.text();
-    throw new Error(`Error de la API de Gemini (${respuesta.status}): ${detalle}`);
+  let ultimoError;
+  for (const modelo of MODELOS_CANDIDATOS) {
+    try {
+      return await llamarGemini(modelo, apiKey, prompt);
+    } catch (err) {
+      console.warn(`Fallo con el modelo "${modelo}": ${err.message}`);
+      ultimoError = err;
+    }
   }
-
-  const datos = await respuesta.json();
-  const texto = datos.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-  if (!texto) {
-    throw new Error('La API de Gemini no devolvió texto en la respuesta.');
-  }
-  return texto.replace(/^["'“”]+|["'“”]+$/g, '');
+  throw new Error(`Ningún modelo candidato funcionó. Último error: ${ultimoError?.message}`);
 }
 
 function generarId(fechaISO, tiradas) {
