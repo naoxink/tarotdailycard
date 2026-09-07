@@ -197,8 +197,23 @@
     "id": "t-20260907-01",
     "fecha": "2026-09-07",
     "pregunta": "¿Qué actitud interna necesito transformar para tomar decisiones con mayor seguridad y calma?",
-    "cartas": [],
-    "interpretacion": "",
-    "pendiente": true
+    "cartas": [
+      {
+        "posicion": "Bloqueo",
+        "nombre": "El Carro (VII)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "Herramienta",
+        "nombre": "III de espadas",
+        "palo": "Espadas"
+      },
+      {
+        "posicion": "Resultado",
+        "nombre": "III de copas",
+        "palo": "Copas"
+      }
+    ],
+    "interpretacion": "Sientes la urgencia de tomar las riendas y avanzar con determinación, pero tu subconsciente está interfiriendo sobre tus elecciones, te está inundando la mente y por lo tanto matando la seguridad que se requiere para tomar decisiones claras y sin agobiarse. Estos pensamientos están constantemente atacando y son los que evitan que florezca esa naturalidad al afrontar las decisiones. Tienes que \"bucear\" en tu mente y detectar los pensamientos que entran en conflicto con tu razonamiento consciente. Si te atreves a buscar en el mar de tu subconsciente podrás liberar tu mente y alcanzar esa paz, seguridad y calma. Obtendrás una ligereza emocional que evitará que afecte a tus decisiones."
   }
 ]

@@ -7,8 +7,8 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "",
-      "nota": ""
+      "carta": "IV de pentáculos",
+      "nota": "No se puede hacer todo a la vez o uno se bloquea. Hay que marcar unas pautas e ir de una en una."
     }
   },
 
