@@ -14,14 +14,19 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      fecha: "07.09.2026",
+      carta: "Sota de pentáculos",
+      nota: "Cuidado con no perder lo que he conseguido hasta el momento, es fácil caerse desde este punto. No hacer el tonto y no dejarse llevar por la efusividad. Hay que mantener un equilibrio."
+    },
+    {
       fecha: "06.09.2026",
       carta: "Rey de copas",
-      nota: ""
+      nota: "Tengo mi lado sentimental bastante mejor. He conseguido estar donde quería, ahora hay que mantener el trabajo pero también disfrutar lo conseguido."
     },
     {
       fecha: "05.09.2026",
       carta: "Reina de espadas",
-      nota: ""
+      nota: "Mantener la mente clara y firme. Mantener la tranquilidad en momentos alterados. Tomar deciciones con cabeza pero sin abandonar por completo el lado sentimental; pensar no es contrario a sentir."
     },
     {
       fecha: "04.09.2026",
