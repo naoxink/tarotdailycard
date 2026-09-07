@@ -33,7 +33,15 @@ async function llamarGemini(modelo, apiKey, prompt) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 1, maxOutputTokens: 120 }
+      generationConfig: {
+        temperature: 1,
+        maxOutputTokens: 300,
+        // Los modelos Gemini 3 "piensan" por defecto y esos tokens de
+        // razonamiento restan del mismo maxOutputTokens que el texto final.
+        // Para una tarea tan simple lo desactivamos; si el modelo de turno
+        // no soporta este campo, simplemente lo ignora.
+        thinkingConfig: { thinkingBudget: 0 }
+      }
     })
   });
 
