@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "08.09.2026",
+      "carta": "La Sacerdotisa (II)",
+      "nota": "Hoy tendría que buscar al menos un momento de introspección. Bucear en el conocimiento que tengo de mí mismo y quizás descubra algo de lo que no soy completamente consciente."
+    },
+    {
       fecha: "07.09.2026",
       carta: "Sota de pentáculos",
       nota: "Cuidado con no perder lo que he conseguido hasta el momento, es fácil caerse desde este punto. No hacer el tonto y no dejarse llevar por la efusividad. Hay que mantener un equilibrio."
