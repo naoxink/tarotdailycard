@@ -427,6 +427,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
   padding: 8px 16px; border-radius: 999px; font-weight: 700; cursor: pointer; font-size: 0.82rem;
 }
 .compartir-btn:hover { background: var(--accent-soft); }
+.compartir-btn:disabled { opacity: 0.6; cursor: default; }
 
 .form-anadir { display: flex; flex-direction: column; gap: 14px; max-width: 640px; margin-bottom: 24px; }
 .form-anadir label { display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; color: var(--text-muted); }
@@ -496,3 +497,66 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 
 .interpretacion-pendiente { background: rgba(212,175,55,0.08); border: 1px dashed var(--accent); padding: 12px 14px; border-radius: 10px; color: var(--text-muted); font-style: italic; font-size: 0.88rem; }
 .badge-pendiente { background: rgba(212,175,55,0.2); color: var(--accent-soft); border: 1px solid var(--accent); }
+
+/* --------------------------------------------------------
+   Test de Glosario
+   -------------------------------------------------------- */
+.vista-test { max-width: 640px; margin: 0 auto; }
+
+.test-titulo { text-align: center; margin: 0 0 6px 0; }
+.test-subtitulo { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin: 0 0 22px 0; }
+
+.test-dificultades { display: flex; flex-direction: column; gap: 10px; }
+.test-dificultad-btn {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  background: var(--surface); border: var(--border-oro); color: var(--text);
+  padding: 16px 18px; border-radius: 12px; cursor: pointer; font-size: 0.95rem;
+  min-height: 48px; width: 100%; text-align: left;
+  transition: background 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+}
+.test-dificultad-btn:hover { background: var(--surface-hover); border-color: var(--accent); transform: translateY(-1px); }
+.test-dificultad-nombre { font-family: var(--font-titulo); color: var(--accent-soft); letter-spacing: 0.6px; }
+.test-dificultad-preguntas { color: var(--text-muted); font-size: 0.82rem; white-space: nowrap; }
+
+.test-progreso-header { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px; }
+.test-progress-track { margin-bottom: 18px; }
+
+.test-pregunta-card { background: var(--surface); border: var(--border-oro); border-radius: 14px; padding: 18px; }
+.test-badge-categoria { margin-bottom: 10px; background: rgba(212,175,55,0.15); color: var(--accent-soft); border: 1px solid var(--accent); }
+.test-pregunta-texto { margin: 10px 0 18px 0; font-size: 1.15rem; line-height: 1.4; }
+.test-pregunta-texto em { color: var(--accent-soft); font-style: normal; }
+
+.test-opciones { display: flex; flex-direction: column; gap: 10px; }
+.test-opcion-btn {
+  text-align: left; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text); padding: 14px 16px; border-radius: 10px; cursor: pointer;
+  font-size: 0.9rem; line-height: 1.45; min-height: 48px; width: 100%;
+  transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+.test-opcion-btn:hover:not(:disabled) { background: rgba(255,255,255,0.08); border-color: var(--accent); }
+.test-opcion-btn:disabled { cursor: default; }
+.test-opcion-btn.correcta { background: rgba(74, 222, 128, 0.15); border-color: #4ade80; color: #bbf7d0; }
+.test-opcion-btn.incorrecta { background: rgba(248, 113, 113, 0.15); border-color: #f87171; color: #fecaca; }
+.test-opcion-btn.deshabilitada { opacity: 0.5; }
+
+.test-siguiente-btn { margin-top: 18px; width: 100%; }
+
+.test-resultado-card { background: var(--surface); border: var(--border-oro); border-radius: 14px; padding: 28px 20px; text-align: center; }
+.test-resultado-puntuacion { display: block; font-family: var(--font-titulo); font-size: 2.4rem; color: var(--accent); }
+.test-resultado-porcentaje { display: block; font-size: 1.1rem; color: var(--accent-soft); margin: 4px 0 14px 0; }
+.test-resultado-mensaje { color: var(--text-muted); margin: 0 0 18px 0; }
+.test-resultado-acciones { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.test-resultado-acciones .compartir-btn, .test-resultado-acciones .volver-btn { margin: 0; }
+
+.test-repaso { margin-top: 18px; }
+.test-repaso-item { padding: 10px 4px; border-bottom: 1px dashed rgba(255,255,255,0.06); font-size: 0.85rem; }
+.test-repaso-item.fallo .test-repaso-palabra { color: #f87171; }
+.test-repaso-palabra { font-weight: 700; margin-bottom: 4px; }
+.test-repaso-definicion { color: var(--text-muted); line-height: 1.4; }
+.test-repaso-definicion strong { color: var(--text); }
+
+@media (max-width: 600px) {
+  .test-dificultad-btn { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .test-resultado-acciones { flex-direction: column; }
+  .test-resultado-acciones .compartir-btn, .test-resultado-acciones .volver-btn { width: 100%; }
+}

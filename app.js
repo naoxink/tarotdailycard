@@ -588,6 +588,206 @@ createApp({
     }[categoria] || '');
 
     // ============================================================
+    // TEST DE GLOSARIO
+    // ============================================================
+
+    // Dificultades base; el número de preguntas se ajustará al tamaño real
+    // del glosario disponible (por si algún día el glosario fuera pequeño).
+    const testDificultadesBase = [
+      { id: 'facil', nombre: 'Fácil', preguntas: 5 },
+      { id: 'media', nombre: 'Media', preguntas: 10 },
+      { id: 'dificil', nombre: 'Difícil', preguntas: 20 }
+    ];
+
+    const testDificultadesDisponibles = computed(() => {
+      const maxDisponibles = glosarioCompleto.length;
+      const ajustadas = testDificultadesBase.map(d => ({ ...d, preguntas: Math.min(d.preguntas, maxDisponibles) }));
+      // Evita mostrar dificultades duplicadas si el glosario es muy pequeño
+      return ajustadas.filter((d, idx) => idx === 0 || d.preguntas !== ajustadas[idx - 1].preguntas);
+    });
+
+    const testEstado = ref('seleccion'); // 'seleccion' | 'jugando' | 'resultado'
+    const testDificultadSeleccionada = ref(null);
+    const testPreguntas = ref([]);
+    const testIndiceActual = ref(0);
+    const testPuntuacion = ref(0);
+    const compartiendoTest = ref(false);
+
+    const barajar = (array) => {
+      const copia = [...array];
+      for (let i = copia.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+      }
+      return copia;
+    };
+
+    const iniciarTest = (dificultadId) => {
+      const dificultad = testDificultadesDisponibles.value.find(d => d.id === dificultadId);
+      if (!dificultad || glosarioCompleto.length < 4) return;
+
+      const itemsElegidos = barajar(glosarioCompleto).slice(0, dificultad.preguntas);
+
+      testPreguntas.value = itemsElegidos.map(item => {
+        const distractores = barajar(glosarioCompleto.filter(i => i.palabra !== item.palabra)).slice(0, 3);
+        const opciones = barajar([
+          { texto: item.definicion, esCorrecta: true },
+          ...distractores.map(d => ({ texto: d.definicion, esCorrecta: false }))
+        ]);
+        return {
+          palabra: item.palabra,
+          categoria: item.categoria,
+          definicionCorrecta: item.definicion,
+          opciones,
+          respondida: false,
+          opcionElegida: null
+        };
+      });
+
+      testDificultadSeleccionada.value = dificultad;
+      testIndiceActual.value = 0;
+      testPuntuacion.value = 0;
+      testEstado.value = 'jugando';
+    };
+
+    const preguntaActualTest = computed(() => testPreguntas.value[testIndiceActual.value] || null);
+
+    const responderTest = (opcion) => {
+      const pregunta = preguntaActualTest.value;
+      if (!pregunta || pregunta.respondida) return;
+      pregunta.respondida = true;
+      pregunta.opcionElegida = opcion;
+      if (opcion.esCorrecta) testPuntuacion.value++;
+    };
+
+    const siguientePreguntaTest = () => {
+      if (testIndiceActual.value < testPreguntas.value.length - 1) {
+        testIndiceActual.value++;
+      } else {
+        testEstado.value = 'resultado';
+      }
+    };
+
+    const reiniciarTest = () => {
+      testEstado.value = 'seleccion';
+      testDificultadSeleccionada.value = null;
+      testPreguntas.value = [];
+      testIndiceActual.value = 0;
+      testPuntuacion.value = 0;
+    };
+
+    const porcentajeAciertosTest = computed(() => {
+      if (!testPreguntas.value.length) return 0;
+      return Math.round((testPuntuacion.value / testPreguntas.value.length) * 100);
+    });
+
+    const mensajeResultadoTest = computed(() => {
+      const pct = porcentajeAciertosTest.value;
+      if (pct === 100) return '¡Perfecto! Dominas el glosario del tarot por completo.';
+      if (pct >= 80) return '¡Muy bien! Tienes un conocimiento sólido del glosario.';
+      if (pct >= 50) return 'Vas por buen camino, sigue repasando el glosario.';
+      return 'Te vendría bien repasar más el glosario. ¡Sigue practicando!';
+    });
+
+    // Genera una imagen PNG (vía canvas) con el resultado del test, lista para compartir o descargar.
+    const generarImagenResultadoTest = () => new Promise((resolve) => {
+      const width = 900, height = 600;
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      const gradiente = ctx.createLinearGradient(0, 0, width, height);
+      gradiente.addColorStop(0, '#05060b');
+      gradiente.addColorStop(0.5, '#0b0d16');
+      gradiente.addColorStop(1, '#05060b');
+      ctx.fillStyle = gradiente;
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.5)';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(12, 12, width - 24, height - 24);
+
+      ctx.textAlign = 'center';
+
+      ctx.fillStyle = '#d4af37';
+      ctx.font = '700 34px Georgia, serif';
+      ctx.fillText('🔮 TAROT LOG', width / 2, 95);
+
+      ctx.fillStyle = '#f4d35e';
+      ctx.font = '600 26px Georgia, serif';
+      ctx.fillText('Test de Glosario', width / 2, 138);
+
+      ctx.fillStyle = '#9aa5c0';
+      ctx.font = '400 18px sans-serif';
+      ctx.fillText(`Dificultad: ${testDificultadSeleccionada.value?.nombre || ''}`, width / 2, 172);
+
+      ctx.fillStyle = '#f1f5f9';
+      ctx.font = '700 96px Georgia, serif';
+      ctx.fillText(`${testPuntuacion.value} / ${testPreguntas.value.length}`, width / 2, 310);
+
+      ctx.fillStyle = '#d4af37';
+      ctx.font = '600 40px Georgia, serif';
+      ctx.fillText(`${porcentajeAciertosTest.value}% de aciertos`, width / 2, 368);
+
+      // Mensaje final con ajuste simple de línea, por si es largo
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '400 20px sans-serif';
+      const palabras = mensajeResultadoTest.value.split(' ');
+      let linea = '', y = 420;
+      const maxAncho = width - 120;
+      palabras.forEach(palabra => {
+        const pruebaLinea = linea ? `${linea} ${palabra}` : palabra;
+        if (ctx.measureText(pruebaLinea).width > maxAncho) {
+          ctx.fillText(linea, width / 2, y);
+          linea = palabra;
+          y += 28;
+        } else {
+          linea = pruebaLinea;
+        }
+      });
+      if (linea) ctx.fillText(linea, width / 2, y);
+
+      ctx.fillStyle = '#9aa5c0';
+      ctx.font = '400 14px sans-serif';
+      ctx.fillText(new Date().toLocaleDateString('es-ES'), width / 2, height - 30);
+
+      canvas.toBlob(blob => resolve(blob), 'image/png');
+    });
+
+    const compartirResultadoTest = async () => {
+      compartiendoTest.value = true;
+      try {
+        const blob = await generarImagenResultadoTest();
+        const textoCompartir = `🔮 He sacado ${testPuntuacion.value}/${testPreguntas.value.length} (${porcentajeAciertosTest.value}%) en el Test de Glosario de Tarot Log`;
+        const archivo = new File([blob], 'tarot-log-test-glosario.png', { type: 'image/png' });
+
+        if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+          // Compartir nativo con imagen (móvil sobre todo)
+          await navigator.share({ title: 'Test de Glosario - Tarot Log', text: textoCompartir, files: [archivo] });
+        } else if (navigator.share) {
+          // Algunos navegadores tienen share pero no soportan archivos
+          await navigator.share({ title: 'Test de Glosario - Tarot Log', text: textoCompartir });
+        } else {
+          // Sin Web Share API: se descarga la imagen directamente
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'tarot-log-test-glosario.png';
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      } catch (e) {
+        if (e.name !== 'AbortError') {
+          console.error('Error al compartir el resultado del test', e);
+          alert('No se pudo compartir el resultado.');
+        }
+      } finally {
+        compartiendoTest.value = false;
+      }
+    };
+
+    // ============================================================
     // AÑADIR (formulario + localStorage + exportación)
     // ============================================================
     const pendientesRegistros = ref(pendientesRegistrosIniciales);
@@ -776,6 +976,11 @@ createApp({
 
       filtroGlosarioTexto, filtroGlosarioCategoria, categoriasGlosario,
       glosarioFiltrado, glosarioAgrupadoPorLetra, letrasDisponibles, irALetra, claseBadgeGlosario,
+
+      testDificultadesDisponibles, testEstado, testDificultadSeleccionada,
+      testPreguntas, testIndiceActual, testPuntuacion, preguntaActualTest,
+      iniciarTest, responderTest, siguientePreguntaTest, reiniciarTest,
+      porcentajeAciertosTest, mensajeResultadoTest, compartirResultadoTest, compartiendoTest,
     };
   }
 }).mount('#app');

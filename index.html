@@ -21,6 +21,7 @@
         <button :class="{active: vista==='tiradas'}" @click="irA('tiradas')">Tiradas</button>
         <button :class="{active: vista==='mazos'}" @click="irA('mazos')">Mazos</button>
         <button :class="{active: vista==='glosario'}" @click="irA('glosario')">Glosario</button>
+        <button :class="{active: vista==='test'}" @click="irA('test')">Test 🧠</button>
         <button :class="{active: vista==='anadir'}" @click="irA('anadir')">Añadir ✚</button>
       </nav>
 
@@ -258,6 +259,95 @@
           </div>
 
           <div class="fallback-message" v-if="glosarioFiltrado.length===0">No hay términos que coincidan con la búsqueda.</div>
+        </div>
+
+      </section>
+
+      <!-- ================= TEST DE GLOSARIO ================= -->
+      <section v-else-if="vista==='test'" class="vista-test">
+
+        <!-- Selección de dificultad -->
+        <div v-if="testEstado==='seleccion'" class="test-seleccion">
+          <h2 class="test-titulo">🧠 Test de Glosario</h2>
+          <p class="test-subtitulo">Pon a prueba lo que sabes sobre los símbolos, elementos y significados del tarot.</p>
+          <div class="test-dificultades">
+            <button
+              v-for="d in testDificultadesDisponibles"
+              :key="d.id"
+              class="test-dificultad-btn"
+              @click="iniciarTest(d.id)">
+              <span class="test-dificultad-nombre">{{ d.nombre }}</span>
+              <span class="test-dificultad-preguntas">{{ d.preguntas }} preguntas</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pregunta activa -->
+        <div v-else-if="testEstado==='jugando' && preguntaActualTest" class="test-jugando">
+          <div class="test-progreso-header">
+            <span>Pregunta {{ testIndiceActual + 1 }} de {{ testPreguntas.length }}</span>
+            <span class="test-puntuacion-parcial">Aciertos: {{ testPuntuacion }}</span>
+          </div>
+          <div class="progress-track test-progress-track">
+            <div class="progress-fill" :style="{width: ((testIndiceActual / testPreguntas.length) * 100) + '%'}"></div>
+          </div>
+
+          <div class="test-pregunta-card">
+            <span class="badge test-badge-categoria">{{ preguntaActualTest.categoria }}</span>
+            <h3 class="test-pregunta-texto">¿Qué significa <em>"{{ preguntaActualTest.palabra }}"</em>?</h3>
+
+            <div class="test-opciones">
+              <button
+                v-for="(opcion, idx) in preguntaActualTest.opciones"
+                :key="idx"
+                class="test-opcion-btn"
+                :class="{
+                  correcta: preguntaActualTest.respondida && opcion.esCorrecta,
+                  incorrecta: preguntaActualTest.respondida && opcion===preguntaActualTest.opcionElegida && !opcion.esCorrecta,
+                  deshabilitada: preguntaActualTest.respondida && opcion!==preguntaActualTest.opcionElegida && !opcion.esCorrecta
+                }"
+                :disabled="preguntaActualTest.respondida"
+                @click="responderTest(opcion)">
+                {{ opcion.texto }}
+              </button>
+            </div>
+
+            <button v-if="preguntaActualTest.respondida" class="compartir-btn test-siguiente-btn" @click="siguientePreguntaTest">
+              {{ testIndiceActual < testPreguntas.length - 1 ? 'Siguiente pregunta →' : 'Ver resultado 🔮' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Resultado -->
+        <div v-else-if="testEstado==='resultado'" class="test-resultado">
+          <h2 class="test-titulo">Resultado</h2>
+          <div class="test-resultado-card">
+            <span class="test-resultado-puntuacion">{{ testPuntuacion }} / {{ testPreguntas.length }}</span>
+            <span class="test-resultado-porcentaje">{{ porcentajeAciertosTest }}% de aciertos</span>
+            <p class="test-resultado-mensaje">{{ mensajeResultadoTest }}</p>
+
+            <div class="test-resultado-acciones">
+              <button class="compartir-btn" @click="compartirResultadoTest" :disabled="compartiendoTest">
+                {{ compartiendoTest ? 'Generando…' : '🔗 Compartir resultado' }}
+              </button>
+              <button class="volver-btn" @click="reiniciarTest">🔁 Intentar otro test</button>
+            </div>
+          </div>
+
+          <details class="test-repaso">
+            <summary class="month-divider">Ver repaso de las preguntas</summary>
+            <div
+              class="test-repaso-item"
+              v-for="(p, idx) in testPreguntas"
+              :key="idx"
+              :class="{fallo: p.opcionElegida && !p.opcionElegida.esCorrecta}">
+              <div class="test-repaso-palabra">{{ idx + 1 }}. {{ p.palabra.charAt(0).toUpperCase() + p.palabra.slice(1) }}</div>
+              <div class="test-repaso-definicion"><strong>Correcta:</strong> {{ p.definicionCorrecta }}</div>
+              <div class="test-repaso-definicion" v-if="p.opcionElegida && !p.opcionElegida.esCorrecta">
+                <strong>Tu respuesta:</strong> {{ p.opcionElegida.texto }}
+              </div>
+            </div>
+          </details>
         </div>
 
       </section>
