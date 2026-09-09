@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "09.09.2026",
+      "carta": "IX de bastos",
+      "nota": "Se vienen obstaculos. Sé que no son muy importantes y que puedo superarlos sin problemas. Siempre hay un camino para sortearlos."
+    },
+    {
       "fecha": "08.09.2026",
       "carta": "La Sacerdotisa (II)",
       "nota": "Hoy tendría que buscar al menos un momento de introspección. Bucear en el conocimiento que tengo de mí mismo y quizás descubra algo de lo que no soy completamente consciente."
