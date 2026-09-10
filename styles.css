@@ -129,6 +129,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
   flex-shrink: 0;
   white-space: nowrap;
   transition: background 0.2s ease, color 0.2s ease;
+  position: relative;
 }
 .nav-pills button.active { background: var(--accent); color: var(--bg-deep); }
 .nav-pills button:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.07); }
@@ -559,4 +560,40 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
   .test-dificultad-btn { flex-direction: column; align-items: flex-start; gap: 4px; }
   .test-resultado-acciones { flex-direction: column; }
   .test-resultado-acciones .compartir-btn, .test-resultado-acciones .volver-btn { width: 100%; }
+}
+
+.nav-badge {
+  position: absolute;
+  top: -2px;
+  right: 2px;
+  background: #f87171;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  line-height: 1;
+}
+
+.pending-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px dashed var(--accent);
+  color: var(--accent-soft);
+  padding: 10px 16px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.pending-banner:hover {
+  background: rgba(212, 175, 55, 0.2);
 }

@@ -422,6 +422,9 @@ createApp({
       return [...new Set(tiradas.value.map(t => t.consultante || 'Anónimo'))];
     });
 
+    const tiradasPendientesCount = computed(() => tiradas.value.filter(t => t.pendiente).length);
+    const tiradasPendientesList = computed(() => tiradas.value.filter(t => t.pendiente));
+
     const formatearFecha = (fechaString) => {
       const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(fechaString).toLocaleDateString('es-ES', opciones);
@@ -960,7 +963,8 @@ createApp({
       registrosAgrupados, toggleHistorial, verEnDiario, ultimosTresMeses,
 
       tiradas, filtroTiradaTexto, filtroTiradaConsultante, tiradasFiltradas,
-      ultimasTiradasList, consultantesDisponibles, formatearFecha, verEnTiradas,
+      ultimasTiradasList, consultantesDisponibles, tiradasPendientesCount,
+      tiradasPendientesList, formatearFecha, verEnTiradas,
       idTiradaSeleccionada, tiradaSeleccionada, verDetalleTirada, compartirTirada,
 
       indiceMazos, idMazoSeleccionado, mazoActual, cartaExpandidaId,

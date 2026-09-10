@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "10.09.2026",
+      "carta": "VII de pentáculos",
+      "nota": "La mayor parte del trabajo está hecho, ahora hay que esperar un poco para poder afinar los detalles y recibir el fruto de todo el esfuerzo invertido."
+    },
+    {
       "fecha": "09.09.2026",
       "carta": "IX de bastos",
       "nota": "Se vienen obstaculos. Sé que no son muy importantes y que puedo superarlos sin problemas. Siempre hay un camino para sortearlos."

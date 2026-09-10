@@ -18,7 +18,10 @@
       <nav class="nav-pills">
         <button :class="{active: vista==='dashboard'}" @click="irA('dashboard')">Dashboard</button>
         <button :class="{active: vista==='diario'}" @click="irA('diario')">Diario</button>
-        <button :class="{active: vista==='tiradas'}" @click="irA('tiradas')">Tiradas</button>
+        <button :class="{active: vista==='tiradas'}" @click="irA('tiradas')">
+          Tiradas
+          <span class="nav-badge" v-if="tiradasPendientesCount>0">{{ tiradasPendientesCount }}</span>
+        </button>
         <button :class="{active: vista==='mazos'}" @click="irA('mazos')">Mazos</button>
         <button :class="{active: vista==='glosario'}" @click="irA('glosario')">Glosario</button>
         <button :class="{active: vista==='test'}" @click="irA('test')">Test 🧠</button>
@@ -40,6 +43,10 @@
 
       <!-- ================= DASHBOARD ================= -->
       <section v-if="vista==='dashboard'" class="vista-dashboard">
+
+        <div class="pending-banner" v-if="tiradasPendientesCount>0" @click="verDetalleTirada(tiradasPendientesList[0])">
+          ✍️ Tienes {{ tiradasPendientesCount }} tirada{{ tiradasPendientesCount>1 ? 's' : '' }} pendiente{{ tiradasPendientesCount>1 ? 's' : '' }} de interpretar
+        </div>
 
         <div class="special-grid">
           <div class="special-card">
