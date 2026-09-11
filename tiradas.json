@@ -243,8 +243,23 @@
     "id": "t-20260910-01",
     "fecha": "2026-09-10",
     "pregunta": "¿Qué actitud interna necesito cultivar para desbloquear mi creatividad",
-    "cartas": [],
-    "interpretacion": "",
-    "pendiente": true
+    "cartas": [
+      {
+        "posicion": "#1",
+        "nombre": "II de espadas",
+        "palo": "Espadas"
+      },
+      {
+        "posicion": "#2",
+        "nombre": "El Juicio (XX)",
+        "palo": "Arcanos Mayores"
+      },
+      {
+        "posicion": "#3",
+        "nombre": "II de pentáculos",
+        "palo": "Pentáculos"
+      }
+    ],
+    "interpretacion": "Tu creatividad está paralizada porque te has puesto en una postura defensiva y ciega, bloqueando el paso a las ideas por miedo a fallar (II de Espadas). Para desbloquearte, necesitas responder a la llamada de El Juicio: perdona tus fracasos creativos pasados, suelta la exigencia y permite que tu voz auténtica renazca sin juicio. Al liberarte de esa losa, recuperarás la ligereza del II de Pentáculos, volviendo a crear desde el juego, el ensayo y la flexibilidad diaria."
   }
 ]
