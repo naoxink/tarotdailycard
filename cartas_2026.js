@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "11.09.2026",
+      "carta": "Sota de pentáculos",
+      "nota": "Puedo estar orgulloso de lo que estoy consiguiendo. Tengo que actuar con cuidado ahora para no tropezar, aunque sería capaz de mantenerlo."
+    },
+    {
       "fecha": "10.09.2026",
       "carta": "VII de pentáculos",
       "nota": "La mayor parte del trabajo está hecho, ahora hay que esperar un poco para poder afinar los detalles y recibir el fruto de todo el esfuerzo invertido."
