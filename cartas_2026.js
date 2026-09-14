@@ -14,6 +14,21 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "14.09.2026",
+      "carta": "II de espadas",
+      "nota": "Hoy quizás tengo algún conflicto interno, necesito buscar un equilibrio si no quiero que el día se tuerza."
+    },
+    {
+      "fecha": "13.09.2026",
+      "carta": "Rey de bastos",
+      "nota": "Hoy es un día de acción y determinación. Tengo que tomar decisiones firmes y actuar con confianza."
+    },
+    {
+      "fecha": "12.09.2026",
+      "carta": "La estrella (XVII)",
+      "nota": "Esperanza y un poco de fe, hay que confiar en el proceso."
+    },
+    {
       "fecha": "11.09.2026",
       "carta": "Sota de pentáculos",
       "nota": "Puedo estar orgulloso de lo que estoy consiguiendo. Tengo que actuar con cuidado ahora para no tropezar, aunque sería capaz de mantenerlo."
