@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "15.09.2026",
+      "carta": "VIII de espadas",
+      "nota": "Hoy hay que tener cuidado con los obstáculos que puedan surgir. No dejarse llevar por la impulsividad y pensar bien antes de actuar."
+    },
+    {
       "fecha": "14.09.2026",
       "carta": "II de espadas",
       "nota": "Hoy quizás tengo algún conflicto interno, necesito buscar un equilibrio si no quiero que el día se tuerza."
