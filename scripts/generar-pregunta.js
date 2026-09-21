@@ -66,13 +66,14 @@ async function generarPregunta() {
     throw new Error('Falta la variable de entorno GEMINI_API_KEY.');
   }
 
-  const prompt = `Genera UNA sola pregunta genérica de práctica para una tirada de tarot de aprendizaje.
-Requisitos:
-- Debe ser una pregunta de reflexión personal en primera persona ("yo"), de tipo introspectivo.
-- NO debe inventar nombres, personas concretas ni situaciones hiperespecíficas; debe servir para practicar la lectura, no para adivinar sobre la vida real de nadie.
-- Temas válidos (elige uno al azar): trabajo, relaciones en general, crecimiento personal, toma de decisiones, hábitos, emociones, creatividad, descanso.
-- Longitud: una sola frase, natural, como si fuera una pregunta real que alguien haría antes de tirar las cartas.
-Devuelve SOLO el texto de la pregunta en español, sin comillas, sin explicaciones ni numeración.`;
+  const prompt = `Genera UNA sola pregunta de práctica para una tirada de tarot de aprendizaje, con el mismo estilo con el que alguien escribiría una pregunta real antes de tirarse las cartas a sí mismo.
+Requisitos de estilo:
+- Escribe en primera persona ("yo", "me", "mi"), tono natural y personal, como una nota de diario.
+- Da algo de CONTEXTO antes de la pregunta final: 2-4 frases en total. Por ejemplo, describe brevemente una situación, un sentimiento o un dilema, y termina con la pregunta concreta que le harías a las cartas.
+- El contexto debe ser genérico e inventado, NO debe basarse en datos reales de nadie: no uses nombres propios, ni empresas, ni relaciones concretas (di "un amigo", "mi trabajo", "una decisión" en abstracto, nunca detalles hiperespecíficos que parezcan reales).
+- Temas válidos (elige uno al azar y dale un pequeño matiz o conflicto interno): trabajo, relaciones en general, crecimiento personal, toma de decisiones, hábitos, emociones, creatividad, descanso, miedos, autoestima.
+- Que no sea una pregunta de sí/no plana; puede tener alguna duda o matiz añadido, como haría alguien reflexionando en voz alta.
+Devuelve SOLO el texto final (contexto + pregunta) en español, sin comillas, sin explicaciones ni numeración, sin encabezados.`;
 
   let ultimoError;
   for (const modelo of MODELOS_CANDIDATOS) {
