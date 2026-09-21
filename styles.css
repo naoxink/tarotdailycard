@@ -597,3 +597,16 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 .pending-banner:hover {
   background: rgba(212, 175, 55, 0.2);
 }
+
+.export-panel { background: var(--surface); border: var(--border-oro); border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+.export-panel-header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.export-estado { font-size: 0.8rem; color: var(--accent-soft); }
+.export-estado.ok { color: #4ade80; }
+.export-instrucciones { font-size: 0.82rem; color: var(--text-muted); margin: 0 0 10px 0; }
+.export-textarea {
+  width: 100%; background: var(--bg-deep); color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+  padding: 10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.78rem;
+}
+.export-acciones { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+.export-acciones .compartir-btn, .export-acciones .volver-btn { margin: 0; }
