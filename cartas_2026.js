@@ -7,12 +7,42 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "IV de pentáculos",
-      "nota": "No se puede hacer todo a la vez o uno se bloquea. Hay que marcar unas pautas e ir de una en una."
+      "carta": "II de pentáculos",
+      "nota": "Mantener el equilibro; intentar balancearme para evitar extremos. Siempre fluir con las situaciones y evitar mantenerme estático. La flexibilidad es la mejor postura."
     }
   },
 
   "registros": [
+    {
+      "fecha": "21.09.2026",
+      "carta": "El Juicio (XX)",
+      "nota": "Debo evitar juzgarme duramente; mejorar la confianza en mí mismo. Por supuesto evitar juzgar a los demás aunque a veces sea complicado."
+    },
+    {
+      "fecha": "20.09.2026",
+      "carta": "VI de copas",
+      "nota": ""
+    },
+    {
+      "fecha": "19.09.2026",
+      "carta": "II de espadas",
+      "nota": ""
+    },
+    {
+      "fecha": "18.09.2026",
+      "carta": "X de copas",
+      "nota": ""
+    },
+    {
+      "fecha": "17.09.2026",
+      "carta": "Reina de copas",
+      "nota": ""
+    },
+    {
+      "fecha": "16.09.2026",
+      "carta": "La Luna (XVIII)",
+      "nota": ""
+    },
     {
       "fecha": "15.09.2026",
       "carta": "VIII de espadas",
