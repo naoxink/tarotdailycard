@@ -862,25 +862,69 @@ createApp({
       location.reload();
     };
 
-    // --- Exportar ---
-    const descargarJSON = (nombreArchivo, datos) => {
-      const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = nombreArchivo;
-      a.click();
-      URL.revokeObjectURL(url);
+    // --- Exportar (copiar al portapapeles + mostrar texto) ---
+    const exportacion = ref(null); // { titulo, texto, instrucciones, copiado }
+    
+    const copiarAlPortapapeles = async (texto) => {
+      try {
+        await navigator.clipboard.writeText(texto);
+        return true;
+      } catch (e) {
+        // Fallback para contextos sin Clipboard API
+        const ta = document.createElement('textarea');
+        ta.value = texto;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (_) {}
+        ta.remove();
+        return ok;
+      }
     };
-
+    
+    const mostrarExportacion = async (titulo, texto, instrucciones) => {
+      const copiado = await copiarAlPortapapeles(texto);
+      exportacion.value = { titulo, texto, instrucciones, copiado };
+    };
+    
+    const recopiarExportacion = async () => {
+      if (!exportacion.value) return;
+      exportacion.value.copiado = await copiarAlPortapapeles(exportacion.value.texto);
+    };
+    
+    const cerrarExportacion = () => { exportacion.value = null; };
+    
     const exportarTiradas = () => {
       const combinado = [...tiradas.value].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-      descargarJSON('tiradas.json', combinado);
+      mostrarExportacion(
+        'tiradas.json',
+        JSON.stringify(combinado, null, 2) + '\n',
+        'Reemplaza todo el contenido de tiradas.json por este texto y haz commit.'
+      );
     };
-
+    
     const exportarRegistros = () => {
       if (!pendientesRegistros.value.length) { alert('No hay registros pendientes.'); return; }
-      descargarJSON('registros-nuevos.json', pendientesRegistros.value);
-      alert('Pega el contenido de este archivo dentro del array "registros" de cartas_2026.js.');
+    
+      // Más recientes primero, igual que en cartas_2026.js
+      const ordenados = [...pendientesRegistros.value]
+        .sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
+    
+      const texto = ordenados.map(r =>
+        `    {\n` +
+        `      "fecha": ${JSON.stringify(r.fecha)},\n` +
+        `      "carta": ${JSON.stringify(r.carta)},\n` +
+        `      "nota": ${JSON.stringify(r.nota || '')}\n` +
+        `    },`
+      ).join('\n');
+    
+      mostrarExportacion(
+        'Registros nuevos',
+        texto + '\n',
+        'Pega este texto justo debajo de la línea  "registros": [  en cartas_2026.js y haz commit.'
+      );
     };
 
     // ============================================================
@@ -977,6 +1021,7 @@ createApp({
       formTirada, añadirCartaFormTirada, quitarCartaFormTirada, guardarTirada,
       pendientesRegistros, pendientesTiradas, borrarPendienteRegistro, borrarPendienteTirada,
       exportarTiradas, exportarRegistros, palosOpcionesTirada,
+      exportacion, recopiarExportacion, cerrarExportacion,
 
       filtroGlosarioTexto, filtroGlosarioCategoria, categoriasGlosario,
       glosarioFiltrado, glosarioAgrupadoPorLetra, letrasDisponibles, irALetra, claseBadgeGlosario,
