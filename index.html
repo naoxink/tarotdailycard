@@ -410,12 +410,27 @@
         <div class="pendientes-box" v-if="pendientesTiradas.length || pendientesRegistros.length">
           <h3>Pendientes de subir al repositorio</h3>
 
+          <div class="export-panel" v-if="exportacion">
+            <div class="export-panel-header">
+              <strong>{{ exportacion.titulo }}</strong>
+              <span class="export-estado" :class="{ok: exportacion.copiado}">
+                {{ exportacion.copiado ? '✅ Copiado al portapapeles' : '⚠️ No se pudo copiar automáticamente; usa el botón o copia el texto' }}
+              </span>
+            </div>
+            <p class="export-instrucciones">{{ exportacion.instrucciones }}</p>
+            <textarea class="export-textarea" readonly rows="10" :value="exportacion.texto" @focus="$event.target.select()"></textarea>
+            <div class="export-acciones">
+              <button class="compartir-btn" @click="recopiarExportacion">📋 Copiar de nuevo</button>
+              <button class="volver-btn" @click="cerrarExportacion">Cerrar</button>
+            </div>
+          </div>
+          
           <div v-if="pendientesTiradas.length">
             <div class="pendiente-item" v-for="(t, idx) in pendientesTiradas" :key="t.id">
               <span>🔮 {{ t.pregunta }}</span>
               <button class="icon-btn" @click="borrarPendienteTirada(idx)">🗑</button>
             </div>
-            <button class="volver-btn" @click="exportarTiradas">⬇ Exportar tiradas.json</button>
+            <button class="volver-btn" @click="exportarTiradas">📋 Copiar tiradas.json</button>
           </div>
 
           <div v-if="pendientesRegistros.length">
@@ -423,7 +438,7 @@
               <span>📅 {{ r.fecha }} · {{ r.carta }}</span>
               <button class="icon-btn" @click="borrarPendienteRegistro(idx)">🗑</button>
             </div>
-            <button class="volver-btn" @click="exportarRegistros">⬇ Exportar registros nuevos</button>
+            <button class="volver-btn" @click="exportarRegistros">📋 Copiar registros nuevos</button>
           </div>
         </div>
 
