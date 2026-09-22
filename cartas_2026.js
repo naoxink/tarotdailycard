@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "22.09.2026",
+      "carta": "III de pentáculos",
+      "nota": "Evitar ser egoísta y aportar a los demás."
+    },
+    {
       "fecha": "21.09.2026",
       "carta": "El Juicio (XX)",
       "nota": "Debo evitar juzgarme duramente; mejorar la confianza en mí mismo. Por supuesto evitar juzgar a los demás aunque a veces sea complicado."
