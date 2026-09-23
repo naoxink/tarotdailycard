@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "23.09.2026",
+      "carta": "VIII de bastos",
+      "nota": "Quemar viejas dudas y resistencias mentales para avanzar con un impulso renovado. La clave del día está en encauzar ese fuego interno con estructura, ejecutando con decisión y sin dispersar tu energía."
+    },
+    {
       "fecha": "22.09.2026",
       "carta": "III de pentáculos",
       "nota": "Evitar ser egoísta y aportar a los demás."
