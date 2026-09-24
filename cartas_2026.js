@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "24.09.2026",
+      "carta": "VIII de espadas",
+      "nota": "Estoy bloqueado por culpa de estar todo el rato a la defensiva. Debo dejar fluir más mi parte emocional y relajar la evaluación constante. Debo buscar un equilibrio."
+    },
+    {
       "fecha": "23.09.2026",
       "carta": "VIII de bastos",
       "nota": "Quemar viejas dudas y resistencias mentales para avanzar con un impulso renovado. La clave del día está en encauzar ese fuego interno con estructura, ejecutando con decisión y sin dispersar tu energía."
