@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "25.09.2026",
+      "carta": "As de copas",
+      "nota": "Hoy mejor tirar de emociones para tratar los temas que salgan. Podré transformar lo malo en bueno a través de ellas."
+    },
+    {
       "fecha": "24.09.2026",
       "carta": "VIII de espadas",
       "nota": "Estoy bloqueado por culpa de estar todo el rato a la defensiva. Debo dejar fluir más mi parte emocional y relajar la evaluación constante. Debo buscar un equilibrio."
