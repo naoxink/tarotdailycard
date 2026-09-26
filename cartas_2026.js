@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "26.09.2026",
+      "carta": "El Emperador (IV)",
+      "nota": "Mantener la calma y la confianza. Establecer las pautas y el control dentro de lo posible. La cabeza lo más clara posible."
+    },
+    {
       "fecha": "25.09.2026",
       "carta": "As de copas",
       "nota": "Hoy mejor tirar de emociones para tratar los temas que salgan. Podré transformar lo malo en bueno a través de ellas."
