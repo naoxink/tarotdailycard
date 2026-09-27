@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "27.09.2026",
+      "carta": "IV de bastos",
+      "nota": "La iniciativa es la que hay que mantener para obtener las metas. Un entorno mental tranquilo. Quizás llegue alguna oportunidad para alguna recompensa extra, hay que estar atento."
+    },
+    {
       "fecha": "26.09.2026",
       "carta": "El Emperador (IV)",
       "nota": "Mantener la calma y la confianza. Establecer las pautas y el control dentro de lo posible. La cabeza lo más clara posible."
