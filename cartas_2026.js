@@ -7,12 +7,17 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "II de pentáculos",
-      "nota": "Mantener el equilibro; intentar balancearme para evitar extremos. Siempre fluir con las situaciones y evitar mantenerme estático. La flexibilidad es la mejor postura."
+      "carta": "VII de copas",
+      "nota": "También hay que vivir de ilusiones y sueños, pero tampoco hay que centrarse en ello."
     }
   },
 
   "registros": [
+    {
+      "fecha": "28.09.2026",
+      "carta": "IV de pentáculos",
+      "nota": "Hay que permitir que las cosas sigan su curso. Hay que evitar agarrarse demasiado a las cosas."
+    },
     {
       "fecha": "27.09.2026",
       "carta": "IV de bastos",
