@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "29.09.2026",
+      "carta": "IV de espadas",
+      "nota": "Pausa. No debo dejar que mis ideas lleguen a ir en mi contra, debo usarlas no dejar que me usen."
+    },
+    {
       "fecha": "28.09.2026",
       "carta": "IV de pentáculos",
       "nota": "Hay que permitir que las cosas sigan su curso. Hay que evitar agarrarse demasiado a las cosas."
