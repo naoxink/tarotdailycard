@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "30.09.2026",
+      "carta": "Reina de copas",
+      "nota": "Obviamente tengo que volver a trabajar mis emociones. Ante momentos revueltos apelar a la tranquilidad y la paciencia. Abordar los problemas desde el cariño y los sentimientos más profundos."
+    },
+    {
       "fecha": "29.09.2026",
       "carta": "IV de espadas",
       "nota": "Pausa. No debo dejar que mis ideas lleguen a ir en mi contra, debo usarlas no dejar que me usen."
