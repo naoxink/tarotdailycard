@@ -7,12 +7,27 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "VII de copas",
-      "nota": "También hay que vivir de ilusiones y sueños, pero tampoco hay que centrarse en ello."
+      "carta": "El Colgado (XII)",
+      "nota": "Esta semana quizás tenga que cambiar la manera en la que abordo algunos problemas."
     }
   },
 
   "registros": [
+    {
+      "fecha": "05.10.2026",
+      "carta": "X de pentáculos",
+      "nota": "Hoy podría ver el resultado de algo en lo que haya estado trabajando. Quizás sienta que veo el final (o estabilidad) de un largo trabajar."
+    },
+    {
+      "fecha": "04.10.2026",
+      "carta": "IX de pentáculos",
+      "nota": ""
+    },
+    {
+      "fecha": "03.10.2026",
+      "carta": "El Emperador (IV)",
+      "nota": ""
+    },
     {
       "fecha": "02.10.2026",
       "carta": "X de copas",
