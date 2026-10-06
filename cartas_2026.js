@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "06.10.2026",
+      "carta": "XI de bastos",
+      "nota": "Aun siendo hoy el día difícil, tengo la capacidad de superarlos con ímpetu."
+    },
+    {
       "fecha": "05.10.2026",
       "carta": "X de pentáculos",
       "nota": "Hoy podría ver el resultado de algo en lo que haya estado trabajando. Quizás sienta que veo el final (o estabilidad) de un largo trabajar."
