@@ -15,7 +15,7 @@ window.TAROT_YEAR_DATA[2026] = {
   "registros": [
     {
       "fecha": "06.10.2026",
-      "carta": "XI de bastos",
+      "carta": "IX de bastos",
       "nota": "Aun siendo hoy el día difícil, tengo la capacidad de superarlos con ímpetu."
     },
     {
