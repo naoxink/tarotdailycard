@@ -6,7 +6,10 @@ createApp({
     // ============================================================
     // Navegación (secciones tipo dashboard, sincronizadas con el hash)
     // ============================================================
-    const vista = ref('dashboard');
+    const esMovil = window.matchMedia('(max-width: 700px)').matches;
+    const vistaInicial = esMovil ? 'diario' : 'dashboard';
+
+    const vista = ref(vistaInicial);
     const idTiradaSeleccionada = ref(null);
 
     const parseHash = () => {
@@ -15,7 +18,7 @@ createApp({
         vista.value = 'tirada-detalle';
         idTiradaSeleccionada.value = hash.slice('tirada/'.length);
       } else {
-        vista.value = hash || 'dashboard';
+        vista.value = hash || vistaInicial;
         idTiradaSeleccionada.value = null;
       }
     };
@@ -996,7 +999,7 @@ createApp({
     };
 
     return {
-      vista, irA,
+      vista, irA, vistaInicial,
       anioActual, mesActualStr, nombresMeses, hoyString, palos, colorPalo, obtenerClaseBadge,
 
       especiales, entradasTotales, cartasDistintas, cartasFrecuentes, maxRepeticiones,

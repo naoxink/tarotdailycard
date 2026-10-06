@@ -31,7 +31,10 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 
 body {
   margin: 0;
@@ -54,6 +57,8 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat, no-repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
   background-size: cover, cover, 220px 220px, 260px 260px, 300px 300px, 240px 240px, 280px 280px, cover;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* --------------------------------------------------------
@@ -61,7 +66,6 @@ body {
    -------------------------------------------------------- */
 .container {
   max-width: 1080px;
-  width: 100%;
   margin: 24px auto;
   padding: 20px clamp(14px, 3vw, 32px);
   background: rgba(30, 34, 53, 0.55);
@@ -219,6 +223,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 
 /* Dashboard: listas resumen */
 .dashboard-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.dashboard-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .mini-list { background: var(--surface); border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(255,255,255,0.06); }
 .mini-list h3 { margin: 0 0 8px 0; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
 .mini-list-item {
@@ -285,6 +290,8 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 
 @media (max-width: 700px) {
   .calendar-month.extra-mes { display: none; }
+  .dashboard-cols { grid-template-columns: minmax(0, 1fr); }
+  .grid-mini-calendars { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* --------------------------------------------------------
@@ -345,6 +352,8 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 @media (max-width: 600px) {
   .palabra-clave:hover::after { left: 0; transform: none; max-width: 75vw; }
   .palabra-clave:hover::before { left: 14px; transform: none; }
+  .container { margin: 12px; padding: 16px; }
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* --------------------------------------------------------
@@ -486,6 +495,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
   line-height: 1.4;
   border-bottom: 1px dashed rgba(255,255,255,0.05);
 }
+.glosario-fila  { grid-template-columns: 84px minmax(0, 1fr); }
 .glosario-fila:hover { background: rgba(255,255,255,0.03); }
 .glosario-fila-palabra {
   font-weight: 700;
@@ -610,3 +620,7 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 }
 .export-acciones { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
 .export-acciones .compartir-btn, .export-acciones .volver-btn { margin: 0; }
+
+.pregunta, .interpretacion, .entry .note, .carta-mazo-nota, .mini-list-item span {
+  overflow-wrap: anywhere;
+}
