@@ -545,7 +545,7 @@ createApp({
     const filtroGlosarioCategoria = ref('todas');
 
     const categoriasGlosario = computed(() => {
-      const orden = ['Elementos', 'Numerología', 'Astrología', 'Símbolos', 'Colores', 'Animales'];
+      const orden = ['Elementos', 'Numerología', 'Astrología', 'Símbolos', 'Colores', 'Animales', 'Cabalá'];
       const presentes = new Set(glosarioCompleto.map(item => item.categoria));
       return orden.filter(c => presentes.has(c));
     });
