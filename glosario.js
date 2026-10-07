@@ -26,22 +26,120 @@ window.GLOSARIO_DATA = [
   { palabra: "10", categoria: "Numerología", definicion: "El final de un ciclo completo, que da paso a un nuevo comienzo.", tooltip: false },
 
   // ---------------- Astrología ----------------
-  { palabra: "Aries", categoria: "Astrología", definicion: "Signo de fuego, impulsivo y pionero. Se asocia tradicionalmente con El Emperador.", tooltip: false },
-  { palabra: "Tauro", categoria: "Astrología", definicion: "Signo de tierra, estable y sensorial. Se asocia con El Hierofante.", tooltip: false },
-  { palabra: "Géminis", categoria: "Astrología", definicion: "Signo de aire, dual y comunicativo. Se asocia con Los Enamorados.", tooltip: false },
-  { palabra: "Cáncer", categoria: "Astrología", definicion: "Signo de agua, protector y emocional. Se asocia con El Carro.", tooltip: false },
-  { palabra: "Leo", categoria: "Astrología", definicion: "Signo de fuego, vital y expresivo. Se asocia con La Fuerza.", tooltip: false },
-  { palabra: "Virgo", categoria: "Astrología", definicion: "Signo de tierra, analítico y meticuloso. Se asocia con El Ermitaño.", tooltip: false },
-  { palabra: "Libra", categoria: "Astrología", definicion: "Signo de aire, buscador del equilibrio. Se asocia con La Justicia.", tooltip: false },
-  { palabra: "Escorpio", categoria: "Astrología", definicion: "Signo de agua, intenso y transformador. Se asocia con La Muerte.", tooltip: false },
-  { palabra: "Sagitario", categoria: "Astrología", definicion: "Signo de fuego, expansivo y filosófico. Se asocia con La Templanza.", tooltip: false },
-  { palabra: "Capricornio", categoria: "Astrología", definicion: "Signo de tierra, disciplinado y ambicioso. Se asocia con El Diablo.", tooltip: false },
-  { palabra: "Acuario", categoria: "Astrología", definicion: "Signo de aire, innovador e independiente. Se asocia con La Estrella.", tooltip: false },
-  { palabra: "Piscis", categoria: "Astrología", definicion: "Signo de agua, intuitivo y soñador. Se asocia con La Luna.", tooltip: false },
-  { palabra: "Venus", categoria: "Astrología", definicion: "Planeta de la belleza, el amor y el placer. Se asocia con La Emperatriz.", tooltip: false },
-  { palabra: "Marte", categoria: "Astrología", definicion: "Planeta de la acción, la fuerza y el conflicto. Se asocia con La Torre.", tooltip: false },
-  { palabra: "Júpiter", categoria: "Astrología", definicion: "Planeta de la expansión y la fortuna. Se asocia con La Rueda de la Fortuna.", tooltip: false },
-  { palabra: "Saturno", categoria: "Astrología", definicion: "Planeta de los límites, la disciplina y la estructura. Se asocia con El Mundo.", tooltip: false },
+  {
+    "palabra": "Aries",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♈. Signo de fuego, impulsivo y pionero, asociado al inicio, el impulso y la acción. Se asocia tradicionalmente con El Emperador.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Tauro",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♉. Signo de tierra, estable y sensorial, centrado en la materia, la estabilidad y la posesión. Se asocia con El Hierofante.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Géminis",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♊. Signo de aire, dual y comunicativo, enfocado en la dualidad, la comunicación y el intercambio. Se asocia con Los Enamorados.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Cáncer",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♋. Signo de agua, protector y emocional, orientado a la memoria, el hogar y la protección. Se asocia con El Carro.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Leo",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♌. Signo de fuego, vital y expresivo, centrado en la expresión, la voluntad y la vitalidad. Se asocia con La Fuerza.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Virgo",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♍. Signo de tierra, analítico y meticuloso, enfocado en el análisis, el detalle y el orden. Se asocia con El Ermitaño.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Libra",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♎. Signo de aire, buscador del equilibrio, las relaciones y la justicia. Se asocia con La Justicia.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Escorpio",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♏. Signo de agua, intenso y transformador, ligado a la transformación, la profundidad y las crisis. Se asocia con La Muerte.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Sagitario",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♐. Signo de fuego, expansivo y filosófico, orientado a la dirección, la expansión y la búsqueda. Se asocia con La Templanza.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Capricornio",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♑. Signo de tierra, disciplinado y ambicioso, enfocado en la estructura, la ambición y los límites. Se asocia con El Diablo.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Acuario",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♒. Signo de aire, innovador e independiente, enfocado en la visión, la renovación y la colectividad. Se asocia con La Estrella.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Piscis",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♓. Signo de agua, intuitivo y soñador, caracterizado por la sensibilidad, la disolución y la imaginación. Se asocia con La Luna.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Sol",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ☉. Luminaria del centro, vinculada a la identidad, la vitalidad y la conciencia. Se asocia con El Sol.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Luna",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ☽. Luminaria de las emociones, la memoria, la receptividad y los ciclos. Se asocia con La Sacerdotisa.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Mercurio",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ☿. Planeta de la mente, la comunicación, el análisis y el intercambio. Se asocia con El Mago.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Venus",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♀. Planeta de la belleza, el amor, el placer, la armonía, el deseo y los valores. Se asocia con La Emperatriz.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Marte",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♂. Planeta de la acción, la fuerza, el conflicto y la iniciativa. Se asocia con La Torre.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Júpiter",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♃. Planeta de la expansión, la confianza, el conocimiento y el crecimiento. Se asocia con La Rueda de la Fortuna.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Saturno",
+    "categoria": "Astrología",
+    "definicion": "Simbolizado por ♄. Planeta de los límites, el tiempo, la responsabilidad y la estructura. Se asocia con El Mundo.",
+    "tooltip": false
+  },
 
   // ---------------- Símbolos ----------------
   { palabra: "infinito", categoria: "Símbolos", definicion: "Lemniscata: equilibrio perfecto, dominio espiritual sobre la materia." },
@@ -98,5 +196,139 @@ window.GLOSARIO_DATA = [
   { palabra: "ángel", categoria: "Animales", definicion: "Guía espiritual, protección superior, mensaje divino." },
   { palabra: "mariposa", categoria: "Animales", definicion: "Transformación delicada, renacimiento tras un proceso interno." },
   { palabra: "abeja", categoria: "Animales", definicion: "Trabajo comunitario, dulzura ganada con esfuerzo colectivo." },
-  { palabra: "gato", categoria: "Animales", definicion: "Independencia, misterio, intuición felina." }
+  { palabra: "gato", categoria: "Animales", definicion: "Independencia, misterio, intuición felina." },
+
+  // -------------- Cábala ---------------
+  {
+    "palabra": "Aleph",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por א. Primera letra del alfabeto hebreo, con valor numérico 1. Representa el aire, el principio y el aliento vital. Se asocia tradicionalmente con El Loco.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Bet",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ב. Segunda letra del alfabeto hebreo, con valor numérico 2. Representa la casa, el interior y la capacidad de contener. Se asocia tradicionalmente con El Mago.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Gimel",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ג. Tercera letra del alfabeto hebreo, con valor numérico 3. Representa el movimiento y la función de puente o tránsito. Se asocia tradicionalmente con La Sacerdotisa.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Dalet",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ד. Cuarta letra del alfabeto hebreo, con valor numérico 4. Representa la puerta, la apertura y el acceso. Se asocia tradicionalmente con La Emperatriz.",
+    "tooltip": false
+  },
+  {
+    "palabra": "He",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ה. Quinta letra del alfabeto hebreo, con valor numérico 5. Representa el aliento y la revelación. Se asocia tradicionalmente con El Emperador.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Vav",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ו. Sexta letra del alfabeto hebreo, con valor numérico 6. Representa el gancho, el enlace y la unión. Se asocia tradicionalmente con El Hierofante.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Zayin",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ז. Séptima letra del alfabeto hebreo, con valor numérico 7. Representa el arma, el corte y el discernimiento. Se asocia tradicionalmente con Los Enamorados.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Chet",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ח. Octava letra del alfabeto hebreo, con valor numérico 8. Representa el recinto, la valla y el límite protector. Se asocia tradicionalmente con El Carro.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Tet",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ט. Novena letra del alfabeto hebreo, con valor numérico 9. Representa la interioridad, el refugio y la potencia latente. Se asocia tradicionalmente con La Fuerza.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Yod",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por י. Décima letra del alfabeto hebreo, con valor numérico 10. Representa la mano, la chispa divina y la semilla. Se asocia tradicionalmente con El Ermitaño.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Kaf",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por כ. Letra del alfabeto hebreo con valor numérico 20. Representa la palma de la mano y la capacidad de contener o moldear. Se asocia tradicionalmente con La Rueda de la Fortuna.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Lamed",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ל. Letra del alfabeto hebreo con valor numérico 30. Representa el aprendizaje, la enseñanza y el impulso hacia arriba. Se asocia tradicionalmente con La Justicia.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Mem",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por מ. Letra del alfabeto hebreo con valor numérico 40. Representa el elemento agua, el origen y la matriz. Se asocia tradicionalmente con El Colgado.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Nun",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por נ. Letra del alfabeto hebreo con valor numérico 50. Representa la vida en movimiento, la regeneración y la transformación. Se asocia tradicionalmente con La Muerte.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Samekh",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ס. Letra del alfabeto hebreo con valor numérico 60. Representa el soporte, la estructura circular y la protección. Se asocia tradicionalmente con La Templanza.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Ayin",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ע. Letra del alfabeto hebreo con valor numérico 70. Representa el ojo, la visión directa y la percepción de las apariencias. Se asocia tradicionalmente con El Diablo.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Pe",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por פ. Letra del alfabeto hebreo con valor numérico 80. Representa la boca, el poder de la palabra y la expresión. Se asocia tradicionalmente con La Torre.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Tsadi",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por צ. Letra del alfabeto hebreo con valor numérico 90. Representa la justicia, la rectitud y la búsqueda de la verdad. Se asocia tradicionalmente con La Estrella.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Qof",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ק. Letra del alfabeto hebreo con valor numérico 100. Representa la nuca o parte posterior de la cabeza, la ilusión y la profundidad. Se asocia tradicionalmente con La Luna.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Resh",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ר. Letra del alfabeto hebreo con valor numérico 200. Representa la cabeza, el rostro y la claridad de la conciencia. Se asocia tradicionalmente con El Sol.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Shin",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ש. Letra del alfabeto hebreo con valor numérico 300. Representa el elemento fuego, el diente y la transformación purificadora. Se asocia tradicionalmente con El Juicio.",
+    "tooltip": false
+  },
+  {
+    "palabra": "Tav",
+    "categoria": "Cabalá",
+    "definicion": "Simbolizado por ת. Última letra del alfabeto hebreo, con valor numérico 400. Representa la marca, el sello, el signo y la culminación. Se asocia tradicionalmente con El Mundo.",
+    "tooltip": false
+  }
 ];
