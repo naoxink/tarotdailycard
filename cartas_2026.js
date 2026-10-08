@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "08.10.2026",
+      "carta": "El Diablo (XV)",
+      "nota": "Hoy estaba claro que voy a sucumbir a los placeres materiales, sobre todo comida brosa. De vez en cuando me viene bien para mi salud mental."
+    },
+    {
       "fecha": "07.10.2026",
       "carta": "La estrella (XVII)",
       "nota": "Hoy tengo todo a mi favor: gestionar de manera equilibrada mis emociones, la esperanza de que todo va a ir genial, el ambiente tranquilo, confianza plena y el sentimiento de que la recompensa esperada ha llegado."
