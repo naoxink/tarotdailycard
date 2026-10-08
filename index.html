@@ -260,7 +260,10 @@
           <div class="glosario-letra-grupo" v-for="grupo in glosarioAgrupadoPorLetra" :key="grupo.letra" :id="'gloss-letra-' + grupo.letra">
             <div class="glosario-letra-titulo">{{ grupo.letra }}</div>
             <div class="glosario-fila" v-for="item in grupo.items" :key="item.palabra">
-              <span class="glosario-fila-palabra">{{ item.palabra.charAt(0).toUpperCase() + item.palabra.slice(1) }}</span>
+              <span class="glosario-fila-palabra">
+                {{ item.palabra.charAt(0).toUpperCase() + item.palabra.slice(1) }}
+                <span class="glosario-fila-cat" v-if="filtroGlosarioCategoria==='todas'">{{ item.categoria }}</span>
+              </span>
               <span class="glosario-fila-definicion">{{ item.definicion }}</span>
             </div>
           </div>
@@ -301,7 +304,8 @@
 
           <div class="test-pregunta-card">
             <span class="badge test-badge-categoria">{{ preguntaActualTest.categoria }}</span>
-            <h3 class="test-pregunta-texto">¿Qué significa <em>"{{ preguntaActualTest.palabra }}"</em>?</h3>
+            <h3 class="test-pregunta-texto">{{ preguntaActualTest.enunciado }}</h3>
+            <div class="test-destacado" :class="{grande: preguntaActualTest.grande}">{{ preguntaActualTest.destacado }}</div>
 
             <div class="test-opciones">
               <button
@@ -348,8 +352,8 @@
               v-for="(p, idx) in testPreguntas"
               :key="idx"
               :class="{fallo: p.opcionElegida && !p.opcionElegida.esCorrecta}">
-              <div class="test-repaso-palabra">{{ idx + 1 }}. {{ p.palabra.charAt(0).toUpperCase() + p.palabra.slice(1) }}</div>
-              <div class="test-repaso-definicion"><strong>Correcta:</strong> {{ p.definicionCorrecta }}</div>
+              <div class="test-repaso-palabra">{{ idx + 1 }}. {{ p.enunciado }} <span class="test-repaso-destacado">{{ p.destacado }}</span></div>
+              <div class="test-repaso-definicion"><strong>Correcta:</strong> {{ p.respuestaCorrecta }}</div>
               <div class="test-repaso-definicion" v-if="p.opcionElegida && !p.opcionElegida.esCorrecta">
                 <strong>Tu respuesta:</strong> {{ p.opcionElegida.texto }}
               </div>

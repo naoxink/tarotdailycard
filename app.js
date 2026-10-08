@@ -628,28 +628,109 @@ createApp({
       return copia;
     };
 
+    const capitalizar = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+    const nombreItem = (i) => capitalizar(i.palabra);
+    const esSimbolica = (i) => i.categoria === 'Astrología' || i.categoria === 'Cabalá';
+
+    // Datos "escondidos" dentro de las definiciones
+    const extraerCarta = (d) => { const m = d.match(/Se asocia (?:tradicionalmente )?con ([^.]+)\./); return m ? m[1].trim() : null; };
+    const extraerGlifo = (d) => { const m = d.match(/Simbolizado por (\S+?)\./); return m ? m[1] : null; };
+    const extraerValor = (d) => { const m = d.match(/valor numérico (\d+)/); return m ? m[1] : null; };
+
+    const etiquetaCategoria = {
+      'Elementos': 'elemento', 'Numerología': 'número', 'Símbolos': 'símbolo',
+      'Colores': 'color', 'Animales': 'animal'
+    };
+
+    // 1 correcta + 3 distractores únicos; null si no hay suficientes
+    const construirOpciones = (correcto, candidatos) => {
+      const unicos = [...new Set(candidatos.filter(t => t && t !== correcto))];
+      if (unicos.length < 3) return null;
+      return barajar([
+        { texto: correcto, esCorrecta: true },
+        ...barajar(unicos).slice(0, 3).map(t => ({ texto: t, esCorrecta: false }))
+      ]);
+    };
+
+    const mismaCategoria = (item) => glosarioCompleto.filter(i => i.categoria === item.categoria);
+
+    const generadoresTest = {
+      // Término -> definición (solo términos no simbólicos)
+      significado: (item) => {
+        if (esSimbolica(item)) return null;
+        const opciones = construirOpciones(item.definicion, glosarioCompleto.map(i => i.definicion));
+        return opciones && { enunciado: '¿Qué significa?', destacado: `"${nombreItem(item)}"`, respuestaCorrecta: item.definicion, opciones, grande: false };
+      },
+      // Definición -> término
+      inverso: (item) => {
+        if (esSimbolica(item)) return null;
+        const opciones = construirOpciones(nombreItem(item), mismaCategoria(item).map(nombreItem));
+        return opciones && {
+          enunciado: `¿Qué ${etiquetaCategoria[item.categoria] || 'término'} corresponde a esta definición?`,
+          destacado: item.definicion, respuestaCorrecta: nombreItem(item), opciones, grande: false
+        };
+      },
+      // Símbolo (♈, א…) -> nombre
+      glifo: (item) => {
+        const glifo = esSimbolica(item) && extraerGlifo(item.definicion);
+        if (!glifo) return null;
+        const opciones = construirOpciones(nombreItem(item), mismaCategoria(item).map(nombreItem));
+        return opciones && {
+          enunciado: item.categoria === 'Cabalá' ? '¿Qué letra hebrea es esta?' : '¿A qué signo, planeta o astro pertenece este símbolo?',
+          destacado: glifo, respuestaCorrecta: nombreItem(item), opciones, grande: true
+        };
+      },
+      // Valor numérico -> letra hebrea
+      valor: (item) => {
+        const valor = item.categoria === 'Cabalá' && extraerValor(item.definicion);
+        if (!valor) return null;
+        const opciones = construirOpciones(nombreItem(item), mismaCategoria(item).map(nombreItem));
+        return opciones && {
+          enunciado: '¿Qué letra hebrea tiene este valor numérico?',
+          destacado: valor, respuestaCorrecta: nombreItem(item), opciones, grande: true
+        };
+      },
+      // Letra / signo / planeta -> carta del tarot
+      carta: (item) => {
+        const carta = esSimbolica(item) && extraerCarta(item.definicion);
+        if (!carta) return null;
+        const cartasPosibles = mismaCategoria(item).map(i => extraerCarta(i.definicion));
+        const opciones = construirOpciones(carta, cartasPosibles);
+        if (!opciones) return null;
+        const glifo = extraerGlifo(item.definicion);
+        return {
+          enunciado: `¿Con qué carta del tarot se asocia ${item.categoria === 'Cabalá' ? 'esta letra hebrea' : 'este signo o astro'}?`,
+          destacado: glifo ? `${glifo}  ${nombreItem(item)}` : nombreItem(item),
+          respuestaCorrecta: carta, opciones, grande: true
+        };
+      }
+    };
+
+    const tiposPorDificultad = {
+      facil:   ['significado', 'inverso', 'glifo'],
+      media:   ['significado', 'inverso', 'glifo', 'valor', 'carta'],
+      dificil: ['inverso', 'carta', 'valor', 'glifo']
+    };
+
     const iniciarTest = (dificultadId) => {
       const dificultad = testDificultadesDisponibles.value.find(d => d.id === dificultadId);
       if (!dificultad || glosarioCompleto.length < 4) return;
 
-      const itemsElegidos = barajar(glosarioCompleto).slice(0, dificultad.preguntas);
+      const permitidos = tiposPorDificultad[dificultadId] || tiposPorDificultad.media;
+      const preguntas = [];
 
-      testPreguntas.value = itemsElegidos.map(item => {
-        const distractores = barajar(glosarioCompleto.filter(i => i.palabra !== item.palabra)).slice(0, 3);
-        const opciones = barajar([
-          { texto: item.definicion, esCorrecta: true },
-          ...distractores.map(d => ({ texto: d.definicion, esCorrecta: false }))
-        ]);
-        return {
-          palabra: item.palabra,
-          categoria: item.categoria,
-          definicionCorrecta: item.definicion,
-          opciones,
-          respondida: false,
-          opcionElegida: null
-        };
-      });
+      for (const item of barajar(glosarioCompleto)) {
+        if (preguntas.length >= dificultad.preguntas) break;
+        for (const tipo of barajar(permitidos)) {
+          const q = generadoresTest[tipo](item);
+          if (q) {
+            preguntas.push({ ...q, tipo, categoria: item.categoria, respondida: false, opcionElegida: null });
+            break;
+          }
+        }
+      }
 
+      testPreguntas.value = preguntas;
       testDificultadSeleccionada.value = dificultad;
       testIndiceActual.value = 0;
       testPuntuacion.value = 0;

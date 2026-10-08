@@ -624,3 +624,56 @@ h2, h3 { font-family: var(--font-titulo); color: var(--accent-soft); letter-spac
 .pregunta, .interpretacion, .entry .note, .carta-mazo-nota, .mini-list-item span {
   overflow-wrap: anywhere;
 }
+
+/* ---------- Corrige sticky (overflow hidden lo anulaba) ---------- */
+.container { overflow-x: clip; }
+
+/* ---------- Glosario: mejoras generales ---------- */
+.glosario-letra-grupo { scroll-margin-top: 64px; }
+.glosario-az { background: var(--bg); }
+.glosario-fila-cat {
+  margin-left: 6px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--text-muted);
+  border: 1px solid rgba(255,255,255,0.12); padding: 1px 6px; border-radius: 6px;
+  vertical-align: middle;
+}
+
+/* ---------- Glosario: móvil ---------- */
+@media (max-width: 700px) {
+  .vista-glosario .toolbar { flex-direction: column; align-items: stretch; gap: 10px; }
+  .toolbar-glosario input[type="text"] { width: 100%; min-width: 0; font-size: 16px; padding: 12px 14px; }
+  .vista-glosario .chip-filters {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    padding-bottom: 2px; -webkit-overflow-scrolling: touch;
+  }
+  .vista-glosario .chip-filters::-webkit-scrollbar { display: none; }
+  .vista-glosario .chip-filters button { flex-shrink: 0; min-height: 38px; padding: 8px 14px; font-size: 0.78rem; }
+
+  .glosario-az {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    top: 0; padding: 6px 8px; -webkit-overflow-scrolling: touch;
+  }
+  .glosario-az::-webkit-scrollbar { display: none; }
+  .glosario-az button { flex: 0 0 38px; width: 38px; height: 38px; font-size: 0.95rem; }
+
+  .glosario-letra-titulo { font-size: 1rem; margin-top: 6px; }
+  .glosario-fila {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3px; padding: 12px 4px;
+    font-size: 0.95rem; line-height: 1.55;
+  }
+  .glosario-fila-palabra { white-space: normal; overflow: visible; font-size: 1.05rem; }
+  .glosario-fila-definicion { color: #cbd5e1; }
+}
+
+/* ---------- Test: elemento destacado ---------- */
+.test-destacado {
+  margin: 0 0 18px 0; padding: 14px 16px; border-radius: 10px;
+  background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4);
+  color: var(--text); line-height: 1.5; font-size: 0.95rem; overflow-wrap: anywhere;
+}
+.test-destacado.grande {
+  text-align: center; font-family: var(--font-cuerpo);
+  font-size: 2.4rem; line-height: 1.2; color: var(--accent-soft); padding: 18px;
+}
+.test-repaso-destacado { color: var(--accent-soft); font-weight: 600; }
