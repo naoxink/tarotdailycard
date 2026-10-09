@@ -280,13 +280,27 @@
         <div v-if="testEstado==='seleccion'" class="test-seleccion">
           <h2 class="test-titulo">🧠 Test de Glosario</h2>
           <p class="test-subtitulo">Pon a prueba lo que sabes sobre los símbolos, elementos y significados del tarot.</p>
+
+          <div class="test-seccion-titulo">Categoría</div>
+          <div class="chip-filters test-categorias">
+            <button v-for="c in categoriasTestOpciones" :key="c.id"
+                    :class="{active: testCategoria===c.id}" @click="elegirCategoriaTest(c.id)">
+              {{ c.nombre }} ({{ c.total }})
+            </button>
+          </div>
+
+          <div class="test-seccion-titulo">Dificultad</div>
           <div class="test-dificultades">
             <button
               v-for="d in testDificultadesDisponibles"
               :key="d.id"
               class="test-dificultad-btn"
+              :class="{'test-dificultad-maestro': d.id==='maestro'}"
               @click="iniciarTest(d.id)">
-              <span class="test-dificultad-nombre">{{ d.nombre }}</span>
+              <span class="test-dificultad-info">
+                <span class="test-dificultad-nombre">{{ d.id==='maestro' ? '🏆 ' : '' }}{{ d.nombre }}</span>
+                <small class="test-dificultad-desc">{{ d.descripcion }}</small>
+              </span>
               <span class="test-dificultad-preguntas">{{ d.preguntas }} preguntas</span>
             </button>
           </div>
@@ -307,7 +321,7 @@
             <h3 class="test-pregunta-texto">{{ preguntaActualTest.enunciado }}</h3>
             <div class="test-destacado" :class="{grande: preguntaActualTest.grande}">{{ preguntaActualTest.destacado }}</div>
 
-            <div class="test-opciones">
+            <div class="test-opciones" :class="{'opciones-grandes': preguntaActualTest.opcionesGrandes}">
               <button
                 v-for="(opcion, idx) in preguntaActualTest.opciones"
                 :key="idx"
@@ -335,12 +349,14 @@
           <div class="test-resultado-card">
             <span class="test-resultado-puntuacion">{{ testPuntuacion }} / {{ testPreguntas.length }}</span>
             <span class="test-resultado-porcentaje">{{ porcentajeAciertosTest }}% de aciertos</span>
+            <span class="test-resultado-config">{{ descripcionConfigTest }}</span>
             <p class="test-resultado-mensaje">{{ mensajeResultadoTest }}</p>
 
             <div class="test-resultado-acciones">
               <button class="compartir-btn" @click="compartirResultadoTest" :disabled="compartiendoTest">
                 {{ compartiendoTest ? 'Generando…' : '🔗 Compartir resultado' }}
               </button>
+              <button class="volver-btn" @click="repetirTest">🔄 Repetir este test</button>
               <button class="volver-btn" @click="reiniciarTest">🔁 Intentar otro test</button>
             </div>
           </div>

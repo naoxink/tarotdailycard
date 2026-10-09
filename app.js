@@ -597,20 +597,47 @@ createApp({
     // TEST DE GLOSARIO
     // ============================================================
 
-    // Dificultades base; el número de preguntas se ajustará al tamaño real
-    // del glosario disponible (por si algún día el glosario fuera pequeño).
+    // Dificultades base; el número de preguntas se ajusta al tamaño de la
+    // categoría elegida (por si fuera pequeña).
     const testDificultadesBase = [
-      { id: 'facil', nombre: 'Fácil', preguntas: 5 },
-      { id: 'media', nombre: 'Media', preguntas: 10 },
-      { id: 'dificil', nombre: 'Difícil', preguntas: 20 }
+      { id: 'facil',   nombre: 'Fácil',   preguntas: 5,  descripcion: 'Conceptos básicos y símbolos' },
+      { id: 'media',   nombre: 'Media',   preguntas: 10, descripcion: 'Añade valores numéricos y cartas asociadas' },
+      { id: 'dificil', nombre: 'Difícil', preguntas: 20, descripcion: 'Elementos de los signos y significados cabalísticos' },
+      { id: 'maestro', nombre: 'Maestro', preguntas: 30, descripcion: 'Preguntas inversas y distractores muy parecidos' }
     ];
 
-    const testDificultadesDisponibles = computed(() => {
-      const maxDisponibles = glosarioCompleto.length;
-      const ajustadas = testDificultadesBase.map(d => ({ ...d, preguntas: Math.min(d.preguntas, maxDisponibles) }));
-      // Evita mostrar dificultades duplicadas si el glosario es muy pequeño
-      return ajustadas.filter((d, idx) => idx === 0 || d.preguntas !== ajustadas[idx - 1].preguntas);
-    });
+    // Categoría elegida (se recuerda entre sesiones)
+    const CLAVE_TEST_CATEGORIA = 'tarotlog_test_categoria';
+    const leerCategoriaTest = () => {
+      try { return localStorage.getItem(CLAVE_TEST_CATEGORIA) || 'todas'; }
+      catch (e) { return 'todas'; }
+    };
+    const testCategoria = ref(leerCategoriaTest());
+    if (testCategoria.value !== 'todas' && !categoriasGlosario.value.includes(testCategoria.value)) {
+      testCategoria.value = 'todas';
+    }
+
+    const elegirCategoriaTest = (cat) => {
+      testCategoria.value = cat;
+      try { localStorage.setItem(CLAVE_TEST_CATEGORIA, cat); } catch (e) {}
+    };
+
+    const poolTest = computed(() =>
+      testCategoria.value === 'todas'
+        ? glosarioCompleto
+        : glosarioCompleto.filter(i => i.categoria === testCategoria.value)
+    );
+
+    const categoriasTestOpciones = computed(() => [
+      { id: 'todas', nombre: 'Todas', total: glosarioCompleto.length },
+      ...categoriasGlosario.value.map(c => ({
+        id: c, nombre: c, total: glosarioCompleto.filter(i => i.categoria === c).length
+      }))
+    ]);
+
+    const testDificultadesDisponibles = computed(() =>
+      testDificultadesBase.map(d => ({ ...d, preguntas: Math.min(d.preguntas, poolTest.value.length) }))
+    );
 
     const testEstado = ref('seleccion'); // 'seleccion' | 'jugando' | 'resultado'
     const testDificultadSeleccionada = ref(null);
@@ -636,6 +663,9 @@ createApp({
     const extraerCarta = (d) => { const m = d.match(/Se asocia (?:tradicionalmente )?con ([^.]+)\./); return m ? m[1].trim() : null; };
     const extraerGlifo = (d) => { const m = d.match(/Simbolizado por (\S+?)\./); return m ? m[1] : null; };
     const extraerValor = (d) => { const m = d.match(/valor numérico (\d+)/); return m ? m[1] : null; };
+    const extraerElemento = (d) => { const m = d.match(/Signo de (fuego|tierra|aire|agua)/i); return m ? m[1].toLowerCase() : null; };
+    const extraerRepresenta = (d) => { const m = d.match(/Representa ([^.]+)\./); return m ? capitalizar(m[1].trim()) : null; };
+    const esSigno = (i) => i.categoria === 'Astrología' && !!extraerElemento(i.definicion);
 
     const etiquetaCategoria = {
       'Elementos': 'elemento', 'Numerología': 'número', 'Símbolos': 'símbolo',
@@ -703,23 +733,104 @@ createApp({
           destacado: glifo ? `${glifo}  ${nombreItem(item)}` : nombreItem(item),
           respuestaCorrecta: carta, opciones, grande: true
         };
+      },
+      // Maestro: definición correcta entre definiciones de la MISMA categoría
+      significadoCategoria: (item) => {
+        if (esSimbolica(item)) return null;
+        const opciones = construirOpciones(item.definicion, mismaCategoria(item).map(i => i.definicion));
+        return opciones && { enunciado: '¿Qué significa?', destacado: `"${nombreItem(item)}"`, respuestaCorrecta: item.definicion, opciones, grande: false };
+      },
+      // Carta -> letra / signo / astro
+      cartaInversa: (item) => {
+        const carta = esSimbolica(item) && extraerCarta(item.definicion);
+        if (!carta) return null;
+        const opciones = construirOpciones(nombreItem(item), mismaCategoria(item).map(nombreItem));
+        return opciones && {
+          enunciado: `¿Qué ${item.categoria === 'Cabalá' ? 'letra hebrea' : 'signo o astro'} se asocia tradicionalmente con esta carta?`,
+          destacado: carta, respuestaCorrecta: nombreItem(item), opciones, grande: true
+        };
+      },
+      // Letra hebrea -> valor numérico
+      valorInverso: (item) => {
+        const valor = item.categoria === 'Cabalá' && extraerValor(item.definicion);
+        if (!valor) return null;
+        const opciones = construirOpciones(valor, mismaCategoria(item).map(i => extraerValor(i.definicion)));
+        return opciones && {
+          enunciado: '¿Qué valor numérico tiene esta letra hebrea?',
+          destacado: `${extraerGlifo(item.definicion) || ''}  ${nombreItem(item)}`.trim(),
+          respuestaCorrecta: valor, opciones, grande: true
+        };
+      },
+      // Nombre -> símbolo (♈, א…)
+      glifoInverso: (item) => {
+        const glifo = esSimbolica(item) && extraerGlifo(item.definicion);
+        if (!glifo) return null;
+        const opciones = construirOpciones(glifo, mismaCategoria(item).map(i => extraerGlifo(i.definicion)));
+        return opciones && {
+          enunciado: item.categoria === 'Cabalá' ? '¿Cuál es el símbolo de esta letra hebrea?' : '¿Cuál es el símbolo de este signo o astro?',
+          destacado: nombreItem(item), respuestaCorrecta: glifo, opciones, grande: true, opcionesGrandes: true
+        };
+      },
+      // Letra hebrea -> qué representa
+      representa: (item) => {
+        const r = item.categoria === 'Cabalá' && extraerRepresenta(item.definicion);
+        if (!r) return null;
+        const opciones = construirOpciones(r, mismaCategoria(item).map(i => extraerRepresenta(i.definicion)));
+        return opciones && {
+          enunciado: '¿Qué representa esta letra hebrea?',
+          destacado: `${extraerGlifo(item.definicion) || ''}  ${nombreItem(item)}`.trim(),
+          respuestaCorrecta: r, opciones, grande: true
+        };
+      },
+      // Qué representa -> letra hebrea
+      representaInverso: (item) => {
+        const r = item.categoria === 'Cabalá' && extraerRepresenta(item.definicion);
+        if (!r) return null;
+        const opciones = construirOpciones(nombreItem(item), mismaCategoria(item).map(nombreItem));
+        return opciones && { enunciado: '¿Qué letra hebrea representa esto?', destacado: r, respuestaCorrecta: nombreItem(item), opciones, grande: false };
+      },
+      // Signo -> elemento
+      elementoSigno: (item) => {
+        const el = esSigno(item) && extraerElemento(item.definicion);
+        if (!el) return null;
+        const opciones = construirOpciones(capitalizar(el), ['Fuego', 'Tierra', 'Aire', 'Agua']);
+        return opciones && {
+          enunciado: '¿De qué elemento es este signo?',
+          destacado: `${extraerGlifo(item.definicion) || ''}  ${nombreItem(item)}`.trim(),
+          respuestaCorrecta: capitalizar(el), opciones, grande: true
+        };
+      },
+      // Elemento -> signo (distractores de otros elementos)
+      signoElemento: (item) => {
+        const el = esSigno(item) && extraerElemento(item.definicion);
+        if (!el) return null;
+        const distractores = glosarioCompleto
+          .filter(i => esSigno(i) && extraerElemento(i.definicion) !== el)
+          .map(nombreItem);
+        const opciones = construirOpciones(nombreItem(item), distractores);
+        return opciones && {
+          enunciado: '¿Cuál de estos signos pertenece al elemento…?',
+          destacado: capitalizar(el), respuestaCorrecta: nombreItem(item), opciones, grande: true
+        };
       }
     };
 
     const tiposPorDificultad = {
       facil:   ['significado', 'inverso', 'glifo'],
       media:   ['significado', 'inverso', 'glifo', 'valor', 'carta'],
-      dificil: ['inverso', 'carta', 'valor', 'glifo']
+      dificil: ['inverso', 'carta', 'valor', 'glifo', 'elementoSigno', 'representa'],
+      maestro: ['significadoCategoria', 'inverso', 'cartaInversa', 'valorInverso', 'glifoInverso',
+                'representa', 'representaInverso', 'signoElemento']
     };
 
     const iniciarTest = (dificultadId) => {
       const dificultad = testDificultadesDisponibles.value.find(d => d.id === dificultadId);
-      if (!dificultad || glosarioCompleto.length < 4) return;
+      if (!dificultad || poolTest.value.length === 0) return;
 
       const permitidos = tiposPorDificultad[dificultadId] || tiposPorDificultad.media;
       const preguntas = [];
 
-      for (const item of barajar(glosarioCompleto)) {
+      for (const item of barajar(poolTest.value)) {
         if (preguntas.length >= dificultad.preguntas) break;
         for (const tipo of barajar(permitidos)) {
           const q = generadoresTest[tipo](item);
@@ -736,6 +847,13 @@ createApp({
       testPuntuacion.value = 0;
       testEstado.value = 'jugando';
     };
+
+    const repetirTest = () => iniciarTest(testDificultadSeleccionada.value.id);
+
+    const descripcionConfigTest = computed(() => {
+      const cat = testCategoria.value === 'todas' ? 'Todas las categorías' : testCategoria.value;
+      return `${testDificultadSeleccionada.value ? testDificultadSeleccionada.value.nombre : ''} · ${cat}`;
+    });
 
     const preguntaActualTest = computed(() => testPreguntas.value[testIndiceActual.value] || null);
 
@@ -807,7 +925,7 @@ createApp({
 
       ctx.fillStyle = '#9aa5c0';
       ctx.font = '400 18px sans-serif';
-      ctx.fillText(`Dificultad: ${testDificultadSeleccionada.value?.nombre || ''}`, width / 2, 172);
+      ctx.fillText(descripcionConfigTest.value, width / 2, 172);
 
       ctx.fillStyle = '#f1f5f9';
       ctx.font = '700 96px Georgia, serif';
@@ -846,7 +964,7 @@ createApp({
       compartiendoTest.value = true;
       try {
         const blob = await generarImagenResultadoTest();
-        const textoCompartir = `🔮 He sacado ${testPuntuacion.value}/${testPreguntas.value.length} (${porcentajeAciertosTest.value}%) en el Test de Glosario de Tarot Log`;
+        const textoCompartir = `🔮 He sacado ${testPuntuacion.value}/${testPreguntas.value.length} (${porcentajeAciertosTest.value}%) en el Test de Glosario de Tarot Log · ${descripcionConfigTest.value}`;
         const archivo = new File([blob], 'tarot-log-test-glosario.png', { type: 'image/png' });
 
         if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
@@ -1114,6 +1232,7 @@ createApp({
       testPreguntas, testIndiceActual, testPuntuacion, preguntaActualTest,
       iniciarTest, responderTest, siguientePreguntaTest, reiniciarTest,
       porcentajeAciertosTest, mensajeResultadoTest, compartirResultadoTest, compartiendoTest,
+      testCategoria, categoriasTestOpciones, elegirCategoriaTest, repetirTest, descripcionConfigTest,
     };
   }
 }).mount('#app');
