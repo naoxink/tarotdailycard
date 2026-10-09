@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "09.10.2026",
+      "carta": "VI de bastos",
+      "nota": "Algunas ideas empiezan a dar frutos pero aún queda trabajo."
+    },
+    {
       "fecha": "08.10.2026",
       "carta": "El Diablo (XV)",
       "nota": "Hoy estaba claro que voy a sucumbir a los placeres materiales, sobre todo comida brosa. De vez en cuando me viene bien para mi salud mental."
