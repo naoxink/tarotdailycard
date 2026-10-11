@@ -14,6 +14,16 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "11.10.2026",
+      "carta": "IV de bastos",
+      "nota": "Tengo la fuerza y energía para conseguir lo que estoy buscando; todavía queda un camino pero ya podría ir consiguiendo los primeros resultados."
+    },
+    {
+      "fecha": "10.10.2026",
+      "carta": "V de copas",
+      "nota": "Necesito tener organizadas mis ideas, tengo un popurrí y no puede ser mezclar todo."
+    },
+    {
       "fecha": "09.10.2026",
       "carta": "VI de bastos",
       "nota": "Algunas ideas empiezan a dar frutos pero aún queda trabajo."
