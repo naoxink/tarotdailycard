@@ -7,12 +7,22 @@ window.TAROT_YEAR_DATA[2026] = {
       "nota": "No hay que tomarse todo demasiado en serio."
     },
     "semana": {
-      "carta": "El Colgado (XII)",
-      "nota": "Esta semana quizás tenga que cambiar la manera en la que abordo algunos problemas."
+      "carta": "",
+      "nota": ""
     }
   },
 
   "registros": [
+    {
+      "fecha": "13.10.2026",
+      "carta": "El Ciclo (XX)",
+      "nota": "No dormirme en una etapa que ya ha cumplido y seguir el cambio. Quizás he de reconocer un cambio interno y ser consciente de un nuevo estado."
+    },
+    {
+      "fecha": "12.10.2026",
+      "carta": "V de bastos",
+      "nota": "El ímpetu y la intención no sirve de nada desordenado."
+    },
     {
       "fecha": "11.10.2026",
       "carta": "IV de bastos",
