@@ -14,6 +14,11 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "14.10.2026",
+      "carta": "VIII de bastos",
+      "nota": "Evitar impulsos aleatorios, hay que gestionarlos mejor, organizarse. De esta forma transformaré esa \"nube\" borrosa de impulsos en los que me darán buen resultado."
+    },
+    {
       "fecha": "13.10.2026",
       "carta": "El Ciclo (XX)",
       "nota": "No dormirme en una etapa que ya ha cumplido y seguir el cambio. Quizás he de reconocer un cambio interno y ser consciente de un nuevo estado."
