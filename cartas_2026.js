@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "15.10.2026",
+      "carta": "X de copas",
+      "nota": "",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
       "fecha": "14.10.2026",
       "carta": "VIII de bastos",
       "nota": "Evitar impulsos aleatorios, hay que gestionarlos mejor, organizarse. De esta forma transformaré esa \"nube\" borrosa de impulsos en los que me darán buen resultado."
