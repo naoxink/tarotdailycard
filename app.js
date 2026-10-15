@@ -1,26 +1,20 @@
-const { createApp, ref, computed, watch, onMounted } = Vue;
+const { createApp, ref, computed, onMounted } = Vue;
 
 createApp({
   setup() {
 
     // ============================================================
-    // Navegación (secciones tipo dashboard, sincronizadas con el hash)
+    // Navegación (sincronizada con el hash)
     // ============================================================
-    const esMovil = window.matchMedia('(max-width: 700px)').matches;
-    const vistaInicial = esMovil ? 'diario' : 'dashboard';
+    const vistaInicial = 'diario';
+    const vistasValidas = ['diario', 'glosario', 'test', 'anadir'];
 
     const vista = ref(vistaInicial);
-    const idTiradaSeleccionada = ref(null);
 
     const parseHash = () => {
       const hash = location.hash.replace('#', '');
-      if (hash.startsWith('tirada/')) {
-        vista.value = 'tirada-detalle';
-        idTiradaSeleccionada.value = hash.slice('tirada/'.length);
-      } else {
-        vista.value = hash || vistaInicial;
-        idTiradaSeleccionada.value = null;
-      }
+      // Cualquier hash antiguo (dashboard, tiradas, mazos, tirada/...) cae en el diario
+      vista.value = vistasValidas.includes(hash) ? hash : vistaInicial;
     };
     parseHash();
     window.addEventListener('hashchange', parseHash);
@@ -28,29 +22,6 @@ createApp({
     const irA = (v) => {
       vista.value = v;
       location.hash = v;
-    };
-
-    const verDetalleTirada = (tirada) => {
-      location.hash = `tirada/${tirada.id}`;
-    };
-
-    const compartirTirada = async (tirada) => {
-      const url = `${location.origin}${location.pathname}#tirada/${tirada.id}`;
-      const textoResumen = `🔮 ${tirada.pregunta}\n${url}`;
-      if (navigator.share) {
-        try {
-          await navigator.share({ title: 'Tarot Log', text: textoResumen, url });
-          return;
-        } catch (e) {
-          if (e.name === 'AbortError') return;
-        }
-      }
-      try {
-        await navigator.clipboard.writeText(url);
-        alert('Enlace copiado al portapapeles.');
-      } catch (e) {
-        prompt('Copia este enlace:', url);
-      }
     };
 
     // ============================================================
@@ -99,14 +70,17 @@ createApp({
 
     // ---------- Fusionar pendientes guardados en localStorage ----------
     const CLAVE_PENDIENTES_REGISTROS = 'tarotlog_pendientes_registros';
-    const CLAVE_PENDIENTES_TIRADAS = 'tarotlog_pendientes_tiradas';
-
+    const CLAVE_ULTIMO_MAZO = 'tarotlog_ultimo_mazo';
+    const MAZOS_BASE = [
+      'El gran tarot esotérico', 'Lost Hollow Tarot', 'Maravilla Tarot',
+      'Night Sun Tarot', 'Pagan Otherworlds', 'Tarot del Toro'
+    ];
+    const leerUltimoMazo = () => {
+      try { return localStorage.getItem(CLAVE_ULTIMO_MAZO) || ''; }
+      catch (e) { return ''; }
+    };
     const leerPendientesRegistros = () => {
       try { return JSON.parse(localStorage.getItem(CLAVE_PENDIENTES_REGISTROS) || '[]'); }
-      catch (e) { return []; }
-    };
-    const leerPendientesTiradas = () => {
-      try { return JSON.parse(localStorage.getItem(CLAVE_PENDIENTES_TIRADAS) || '[]'); }
       catch (e) { return []; }
     };
 
@@ -115,6 +89,7 @@ createApp({
       registros.push(...pendientesRegistrosIniciales);
       registros.sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
     }
+    const mazosConocidos = [...new Set([...MAZOS_BASE, ...registros.map(r => r.mazo).filter(Boolean)])];
 
     // `registros` y `especiales` vienen de cartas.js / cartas_2026.js (scope global, no cambian tras cargar)
     const entradasTotales = registros.length;
@@ -160,10 +135,11 @@ createApp({
     })();
 
     const registradoHoy = registros.some(r => r.fecha === hoyString);
+    const registroHoy = registros.find(r => r.fecha === hoyString) || null;
 
     const ultimasEntradas = registros.slice(0, 5);
 
-    // ---------- Gráfica de palos del mes (barra horizontal) ----------
+    // ---------- Gráfica de palos del mes (opcional: ya no se pinta en ninguna vista) ----------
     const graficaPalosMesHtml = (() => {
       const registrosMes = registros.filter(item => {
         const [, m, y] = item.fecha.split('.').map(Number);
@@ -195,7 +171,7 @@ createApp({
       return html;
     })();
 
-    // ---------- Gráfica de tendencia anual (SVG) ----------
+    // ---------- Gráfica de tendencia anual (opcional: ya no se pinta en ninguna vista) ----------
     const graficaAnualHtml = (() => {
       const registrosAnio = registros.filter(item => {
         const [, , y] = item.fecha.split('.').map(Number);
@@ -309,7 +285,7 @@ createApp({
         return registros.filter(r => r.carta.trim().toLowerCase() === objetivo);
       }
       return registros.filter(r => {
-        const texto = (r.carta + ' ' + r.nota).toLowerCase();
+        const texto = (r.carta + ' ' + r.nota + ' ' + (r.mazo || '')).toLowerCase();
         const coincideTexto = !filtroDiarioTexto.value || texto.includes(filtroDiarioTexto.value.toLowerCase());
         const coincidePalo = !filtroDiarioPalo.value || getSuitFromCarta(r.carta) === filtroDiarioPalo.value;
         return coincideTexto && coincidePalo;
@@ -366,10 +342,8 @@ createApp({
           : { dia: d, vacio: true, esHoy });
       }
 
-      // Obtenemos el nombre nativo del mes a partir de la fecha de referencia
       const fechaRef = new Date(anio, mesIdx, 1);
       const nombreMes = fechaRef.toLocaleDateString('es-ES', { month: 'long' });
-      // Capitalizamos la primera letra (ej. "agosto" -> "Agosto")
       const nombreCapitalizado = nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
 
       return { clave: `${anio}-${mesIdx}`, nombre: nombreCapitalizado, anio, dias: celdas };
@@ -385,162 +359,10 @@ createApp({
     });
 
     // ============================================================
-    // TIRADAS
+    // GLOSARIO (fuente compartida en glosario.js)
     // ============================================================
-    const tiradas = ref([]);
-    const filtroTiradaTexto = ref('');
-    const filtroTiradaConsultante = ref('');
-
-    onMounted(async () => {
-      try {
-        const res = await fetch('tiradas.json');
-        const originales = await res.json();
-        tiradas.value = [...originales, ...leerPendientesTiradas()];
-      } catch (e) {
-        console.error('Error cargando tiradas.json', e);
-      }
-    });
-
-    const tiradaSeleccionada = computed(() => {
-      return tiradas.value.find(t => t.id === idTiradaSeleccionada.value) || null;
-    });
-
-    const tiradasFiltradas = computed(() => {
-      return [...tiradas.value]
-        .filter(t => {
-          const texto = (t.pregunta + ' ' + t.interpretacion).toLowerCase();
-          const coincideTexto = !filtroTiradaTexto.value || texto.includes(filtroTiradaTexto.value.toLowerCase());
-          const coincideConsultante = !filtroTiradaConsultante.value ||
-            (t.consultante || 'Anónimo').toLowerCase().includes(filtroTiradaConsultante.value.toLowerCase());
-          return coincideTexto && coincideConsultante;
-        })
-        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-    });
-
-    const ultimasTiradasList = computed(() => {
-      return [...tiradas.value].sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, 5);
-    });
-
-    const consultantesDisponibles = computed(() => {
-      return [...new Set(tiradas.value.map(t => t.consultante || 'Anónimo'))];
-    });
-
-    const tiradasPendientesCount = computed(() => tiradas.value.filter(t => t.pendiente).length);
-    const tiradasPendientesList = computed(() => tiradas.value.filter(t => t.pendiente));
-
-    const formatearFecha = (fechaString) => {
-      const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(fechaString).toLocaleDateString('es-ES', opciones);
-    };
-
-    const verEnTiradas = (tirada) => {
-      irA('tiradas');
-      filtroTiradaTexto.value = '';
-      filtroTiradaConsultante.value = '';
-    };
-
-    // ============================================================
-    // MAZOS
-    // ============================================================
-    const indiceMazos = ref([]);
-    const idMazoSeleccionado = ref('');
-    const mazoActual = ref(null);
-    const cartaExpandidaId = ref(null);
-    const filtroMazoTexto = ref('');
-    const filtroMazoTipo = ref('todos');
-    const soloPendientes = ref(false);
-
-    onMounted(async () => {
-      try {
-        const res = await fetch('mazos.json');
-        indiceMazos.value = await res.json();
-        if (indiceMazos.value.length > 0) idMazoSeleccionado.value = indiceMazos.value[0].id;
-      } catch (e) {
-        console.error('Error cargando el índice de mazos.', e);
-      }
-    });
-
-    watch(idMazoSeleccionado, async (nuevoId) => {
-      cartaExpandidaId.value = null;
-      filtroMazoTexto.value = '';
-      filtroMazoTipo.value = 'todos';
-      soloPendientes.value = false;
-      if (!nuevoId) return;
-      const info = indiceMazos.value.find(m => m.id === nuevoId);
-      if (info && info.archivo) {
-        try {
-          const res = await fetch(info.archivo);
-          mazoActual.value = await res.json();
-        } catch (e) {
-          console.error(`Error cargando el mazo: ${info.archivo}`, e);
-        }
-      }
-    });
-
-    const tiposDisponibles = computed(() => {
-      if (!mazoActual.value) return [];
-      return [...new Set(mazoActual.value.cartas.map(c => c.tipo))];
-    });
-
-    const cartasMazoFiltradas = computed(() => {
-      if (!mazoActual.value) return [];
-      return mazoActual.value.cartas.filter(c => {
-        const coincideTexto = !filtroMazoTexto.value || c.nombre.toLowerCase().includes(filtroMazoTexto.value.toLowerCase());
-        const coincideTipo = filtroMazoTipo.value === 'todos' || c.tipo === filtroMazoTipo.value;
-        const coincidePendiente = !soloPendientes.value || !c.nota_personal;
-        return coincideTexto && coincideTipo && coincidePendiente;
-      });
-    });
-
-    const progresoMazo = computed(() => {
-      if (!mazoActual.value) return { total: 0, completadas: 0, porcentaje: 0 };
-      const total = mazoActual.value.cartas.length;
-      const completadas = mazoActual.value.cartas.filter(c => c.nota_personal && c.nota_personal.trim()).length;
-      return { total, completadas, porcentaje: total ? Math.round((completadas / total) * 100) : 0 };
-    });
-
-    const toggleCartaExpandida = (id) => {
-      cartaExpandidaId.value = cartaExpandidaId.value === id ? null : id;
-    };
-
-    // ---------- Glosario (fuente compartida en glosario.js) ----------
     const glosarioCompleto = window.GLOSARIO_DATA || [];
-    const glosarioTooltip = glosarioCompleto.filter(item => item.tooltip !== false);
 
-    const formatearMarkdownLigero = (texto) => {
-      if (!texto) return '';
-      let procesado = texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      procesado = procesado.replace(/\*(.*?)\*/g, '<em>$1</em>');
-      procesado = procesado.replace(/\n/g, '<br>');
-      return procesado;
-    };
-
-    const procesarAnotaciones = (texto) => {
-      if (!texto) return '';
-      let textoProcesado = texto;
-      const flexibilizarAcentos = (palabra) => palabra
-        .replace(/[aá]/gi, '[aá]')
-        .replace(/[eé]/gi, '[eé]')
-        .replace(/[ií]/gi, '[ií]')
-        .replace(/[oó]/gi, '[oó]')
-        .replace(/[uúü]/gi, '[uúü]');
-
-      glosarioTooltip.forEach(item => {
-        const baseRegex = flexibilizarAcentos(item.palabra);
-        const regexStr = `(?<=^|\\s|[.,;:!¡¿?\\n])(${baseRegex}(?:s|es)?)(?=\\s|[.,;:!¡¿?\\n]|$)`;
-        const regex = new RegExp(regexStr, 'gi');
-        textoProcesado = textoProcesado.replace(regex, `<span class="palabra-clave" data-tooltip="${item.definicion}">$1</span>`);
-      });
-      return textoProcesado;
-    };
-
-    const procesarNotaFinal = (texto) => {
-      if (!texto) return 'No has escrito ninguna interpretación para esta carta todavía.';
-      const paso1 = procesarAnotaciones(texto);
-      return formatearMarkdownLigero(paso1);
-    };
-
-    // ---------- Página Glosario (vista compacta) ----------
     const filtroGlosarioTexto = ref('');
     const filtroGlosarioCategoria = ref('todas');
 
@@ -968,13 +790,10 @@ createApp({
         const archivo = new File([blob], 'tarot-log-test-glosario.png', { type: 'image/png' });
 
         if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
-          // Compartir nativo con imagen (móvil sobre todo)
           await navigator.share({ title: 'Test de Glosario - Tarot Log', text: textoCompartir, files: [archivo] });
         } else if (navigator.share) {
-          // Algunos navegadores tienen share pero no soportan archivos
           await navigator.share({ title: 'Test de Glosario - Tarot Log', text: textoCompartir });
         } else {
-          // Sin Web Share API: se descarga la imagen directamente
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
@@ -996,77 +815,35 @@ createApp({
     // AÑADIR (formulario + localStorage + exportación)
     // ============================================================
     const pendientesRegistros = ref(pendientesRegistrosIniciales);
-    const pendientesTiradas = ref(leerPendientesTiradas());
-    const palosOpcionesTirada = ['Arcanos Mayores', 'Bastos', 'Espadas', 'Pentáculos', 'Copas'];
 
     const hoyISO = `${hoy.getFullYear()}-${mesActualStr}-${String(hoy.getDate()).padStart(2, '0')}`;
-    const tabAñadir = ref('tirada');
 
-    // --- Registro diario ---
-    const formRegistro = ref({ fecha: hoyISO, carta: '', nota: '' });
+    const mazoPorDefecto = leerUltimoMazo() || (registros.find(r => r.mazo) || {}).mazo || '';
+    const formRegistro = ref({ fecha: hoyISO, carta: '', nota: '', mazo: mazoPorDefecto });
 
     const guardarRegistro = () => {
       if (!formRegistro.value.carta.trim()) { alert('Indica la carta.'); return; }
       const [y, m, d] = formRegistro.value.fecha.split('-');
+      const mazo = formRegistro.value.mazo.trim();
       const nuevo = { fecha: `${d}.${m}.${y}`, carta: formRegistro.value.carta.trim(), nota: formRegistro.value.nota.trim() };
+      if (mazo) nuevo.mazo = mazo;
+      try { localStorage.setItem(CLAVE_ULTIMO_MAZO, mazo); } catch (e) {}
       const actuales = leerPendientesRegistros();
       actuales.push(nuevo);
       localStorage.setItem(CLAVE_PENDIENTES_REGISTROS, JSON.stringify(actuales));
       location.reload();
     };
 
-    // --- Tirada ---
-    const nuevaCartaTirada = () => ({ posicion: '', nombre: '', palo: 'Arcanos Mayores' });
-    const formTirada = ref({ pregunta: '', consultante: '', interpretacion: '', cartas: [nuevaCartaTirada()] });
-
-    const añadirCartaFormTirada = () => formTirada.value.cartas.push(nuevaCartaTirada());
-    const quitarCartaFormTirada = (idx) => {
-      if (formTirada.value.cartas.length > 1) formTirada.value.cartas.splice(idx, 1);
-    };
-
-    const generarIdTirada = (fechaISO) => {
-      const clave = fechaISO.replaceAll('-', '');
-      const todas = [...tiradas.value, ...leerPendientesTiradas()];
-      const usados = todas.filter(t => t.id && t.id.startsWith(`t-${clave}-`)).length;
-      return `t-${clave}-${String(usados + 1).padStart(2, '0')}`;
-    };
-
-    const guardarTirada = () => {
-      if (!formTirada.value.pregunta.trim() || !formTirada.value.interpretacion.trim()) {
-        alert('Rellena al menos la pregunta y la interpretación.');
-        return;
-      }
-      const nueva = {
-        id: generarIdTirada(hoyISO),
-        fecha: hoyISO,
-        consultante: formTirada.value.consultante.trim() || undefined,
-        pregunta: formTirada.value.pregunta.trim(),
-        cartas: formTirada.value.cartas.filter(c => c.nombre.trim()),
-        interpretacion: formTirada.value.interpretacion.trim()
-      };
-      const actuales = leerPendientesTiradas();
-      actuales.push(nueva);
-      localStorage.setItem(CLAVE_PENDIENTES_TIRADAS, JSON.stringify(actuales));
-      location.reload();
-    };
-
-    // --- Borrar pendientes ---
     const borrarPendienteRegistro = (idx) => {
       const actuales = leerPendientesRegistros();
       actuales.splice(idx, 1);
       localStorage.setItem(CLAVE_PENDIENTES_REGISTROS, JSON.stringify(actuales));
       location.reload();
     };
-    const borrarPendienteTirada = (idx) => {
-      const actuales = leerPendientesTiradas();
-      actuales.splice(idx, 1);
-      localStorage.setItem(CLAVE_PENDIENTES_TIRADAS, JSON.stringify(actuales));
-      location.reload();
-    };
 
     // --- Exportar (copiar al portapapeles + mostrar texto) ---
     const exportacion = ref(null); // { titulo, texto, instrucciones, copiado }
-    
+
     const copiarAlPortapapeles = async (texto) => {
       try {
         await navigator.clipboard.writeText(texto);
@@ -1085,43 +862,35 @@ createApp({
         return ok;
       }
     };
-    
+
     const mostrarExportacion = async (titulo, texto, instrucciones) => {
       const copiado = await copiarAlPortapapeles(texto);
       exportacion.value = { titulo, texto, instrucciones, copiado };
     };
-    
+
     const recopiarExportacion = async () => {
       if (!exportacion.value) return;
       exportacion.value.copiado = await copiarAlPortapapeles(exportacion.value.texto);
     };
-    
+
     const cerrarExportacion = () => { exportacion.value = null; };
-    
-    const exportarTiradas = () => {
-      const combinado = [...tiradas.value].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-      mostrarExportacion(
-        'tiradas.json',
-        JSON.stringify(combinado, null, 2) + '\n',
-        'Reemplaza todo el contenido de tiradas.json por este texto y haz commit.'
-      );
-    };
-    
+
     const exportarRegistros = () => {
       if (!pendientesRegistros.value.length) { alert('No hay registros pendientes.'); return; }
-    
+
       // Más recientes primero, igual que en cartas_2026.js
       const ordenados = [...pendientesRegistros.value]
         .sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
-    
+
       const texto = ordenados.map(r =>
         `    {\n` +
         `      "fecha": ${JSON.stringify(r.fecha)},\n` +
         `      "carta": ${JSON.stringify(r.carta)},\n` +
-        `      "nota": ${JSON.stringify(r.nota || '')}\n` +
+        `      "nota": ${JSON.stringify(r.nota || '')}${r.mazo ? ',' : ''}\n` +
+        (r.mazo ? `      "mazo": ${JSON.stringify(r.mazo)}\n` : '') +
         `    },`
       ).join('\n');
-    
+
       mostrarExportacion(
         'Registros nuevos',
         texto + '\n',
@@ -1130,7 +899,7 @@ createApp({
     };
 
     // ============================================================
-    // BÚSQUEDA GLOBAL
+    // BÚSQUEDA GLOBAL (diario + glosario)
     // ============================================================
     const busquedaGlobal = ref('');
     const mostrarBusqueda = ref(false);
@@ -1142,24 +911,10 @@ createApp({
       const resultados = [];
 
       registros.forEach(r => {
-        if ((r.carta + ' ' + r.nota).toLowerCase().includes(q)) {
+        if ((r.carta + ' ' + r.nota + ' ' + (r.mazo || '')).toLowerCase().includes(q)) {
           resultados.push({ key: 'd-' + r.fecha, tipo: 'Diario', texto: `${r.fecha} · ${r.carta}`, vista: 'diario', carta: r.carta });
         }
       });
-
-      tiradas.value.forEach((t, i) => {
-        if ((t.pregunta + ' ' + t.interpretacion).toLowerCase().includes(q)) {
-          resultados.push({ key: 't-' + i, tipo: 'Tirada', texto: t.pregunta, vista: 'tiradas' });
-        }
-      });
-
-      if (mazoActual.value) {
-        mazoActual.value.cartas.forEach(c => {
-          if ((c.nombre + ' ' + (c.nota_personal || '')).toLowerCase().includes(q)) {
-            resultados.push({ key: 'm-' + c.id, tipo: 'Mazo', texto: c.nombre, vista: 'mazos', cartaId: c.id });
-          }
-        });
-      }
 
       glosarioCompleto.forEach(item => {
         if ((item.palabra + ' ' + item.definicion).toLowerCase().includes(q)) {
@@ -1182,13 +937,6 @@ createApp({
         filtroDiarioTexto.value = '';
         filtroCartaActiva.value = r.carta ? r.carta.trim() : null;
       }
-      if (r.vista === 'tiradas') {
-        filtroTiradaTexto.value = busquedaGlobal.value;
-        filtroTiradaConsultante.value = '';
-      }
-      if (r.vista === 'mazos' && r.cartaId) {
-        cartaExpandidaId.value = r.cartaId;
-      }
       if (r.vista === 'glosario') {
         filtroGlosarioTexto.value = r.termino;
         filtroGlosarioCategoria.value = 'todas';
@@ -1202,28 +950,17 @@ createApp({
       anioActual, mesActualStr, nombresMeses, hoyString, palos, colorPalo, obtenerClaseBadge,
 
       especiales, entradasTotales, cartasDistintas, cartasFrecuentes, maxRepeticiones,
-      paloFrecuente, racha, registradoHoy, ultimasEntradas,
+      paloFrecuente, racha, registradoHoy, registroHoy, ultimasEntradas,
       graficaPalosMesHtml, graficaAnualHtml,
 
       filtroDiarioTexto, filtroDiarioPalo, filtroCartaActiva,
       registrosAgrupados, toggleHistorial, verEnDiario, ultimosTresMeses,
 
-      tiradas, filtroTiradaTexto, filtroTiradaConsultante, tiradasFiltradas,
-      ultimasTiradasList, consultantesDisponibles, tiradasPendientesCount,
-      tiradasPendientesList, formatearFecha, verEnTiradas,
-      idTiradaSeleccionada, tiradaSeleccionada, verDetalleTirada, compartirTirada,
-
-      indiceMazos, idMazoSeleccionado, mazoActual, cartaExpandidaId,
-      filtroMazoTexto, filtroMazoTipo, soloPendientes, tiposDisponibles,
-      cartasMazoFiltradas, progresoMazo, toggleCartaExpandida, procesarNotaFinal,
-
       busquedaGlobal, mostrarBusqueda, onBlurBusqueda, resultadosBusqueda, irAResultado,
 
-      tabAñadir, formRegistro, guardarRegistro,
-      formTirada, añadirCartaFormTirada, quitarCartaFormTirada, guardarTirada,
-      pendientesRegistros, pendientesTiradas, borrarPendienteRegistro, borrarPendienteTirada,
-      exportarTiradas, exportarRegistros, palosOpcionesTirada,
-      exportacion, recopiarExportacion, cerrarExportacion,
+      formRegistro, guardarRegistro,
+      pendientesRegistros, borrarPendienteRegistro, exportarRegistros,
+      exportacion, recopiarExportacion, cerrarExportacion, mazosConocidos,
 
       filtroGlosarioTexto, filtroGlosarioCategoria, categoriasGlosario,
       glosarioFiltrado, glosarioAgrupadoPorLetra, letrasDisponibles, irALetra, claseBadgeGlosario,
