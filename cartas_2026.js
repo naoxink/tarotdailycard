@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "16.10.2026",
+      "carta": "El Anciano (VIIII) [IX]",
+      "nota": "",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
       "fecha": "15.10.2026",
       "carta": "X de copas",
       "nota": "",
