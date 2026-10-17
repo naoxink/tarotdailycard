@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "17.10.2026",
+      "carta": "X de espadas",
+      "nota": "Puedo dar por completado un ciclo emocional. Sólo debo ser consciente de ello. Parece que estoy en un equilibrio actualmente.",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
       "fecha": "16.10.2026",
       "carta": "El Anciano (VIIII) [IX]",
       "nota": "",
