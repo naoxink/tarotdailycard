@@ -14,6 +14,18 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "19.10.2026",
+      "carta": "II de bastos",
+      "nota": "En la resolución del conflicto interno está la recompensa. Hay que usar ese impulso natural para resolverlo. Puedo usar lo que hasta ahora he ido obteniendo para “desbloquear” el conflicto actual.",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
+      "fecha": "18.10.2026",
+      "carta": "III de copas",
+      "nota": "Disfrutar de lo positivo. Puedo transformar en buenas muchas ideas de mi interior y disfrutarlas de otra manera a través de mi consciencia.",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
       "fecha": "17.10.2026",
       "carta": "X de espadas",
       "nota": "Puedo dar por completado un ciclo emocional. Sólo debo ser consciente de ello. Parece que estoy en un equilibrio actualmente.",
