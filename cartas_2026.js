@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "20.10.2026",
+      "carta": "IX de pentáculos",
+      "nota": "He conseguido los frutos en el sentido de las ideas, queda un poco para obtenerlos materialmente. Lo bueno es que ya tengo una base sólida y será muy fácil obtenerlos siempre y cuando lo siga trabajando y mimando.",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
       "fecha": "19.10.2026",
       "carta": "II de bastos",
       "nota": "En la resolución del conflicto interno está la recompensa. Hay que usar ese impulso natural para resolverlo. Puedo usar lo que hasta ahora he ido obteniendo para “desbloquear” el conflicto actual.",
