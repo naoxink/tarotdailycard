@@ -14,6 +14,18 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "22.10.2026",
+      "carta": "II de bastos",
+      "nota": "",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
+      "fecha": "21.10.2026",
+      "carta": "II de pentáculos",
+      "nota": "Esta carta me está indicando que la parte consciente la tengo muy presente pero me cuesta la subconsciente. Hay un valor en reconocer esa parte pero parece ser que está bloqueada, algo dentro de esta parte está pesando más de lo normal.",
+      "mazo": "El gran tarot esotérico"
+    },
+    {
       "fecha": "20.10.2026",
       "carta": "IX de pentáculos",
       "nota": "He conseguido los frutos en el sentido de las ideas, queda un poco para obtenerlos materialmente. Lo bueno es que ya tengo una base sólida y será muy fácil obtenerlos siempre y cuando lo siga trabajando y mimando.",
