@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "24.10.2026",
+      "carta": "III de espadas",
+      "nota": "Revisar muy bien las decisiones que puedan parecer distintas pero que acabarán dando el mismo resultado. Evitar traicionarme a mí mismo y elegir lo que realmente quiero.",
+      "mazo": "Night Sun Tarot"
+    },
+    {
       "fecha": "23.10.2026",
       "carta": "Sota de bastos",
       "nota": "Todavía tengo que trabajar mucho mi impulso interior. Tengo controlado una parte de mi fuerza interna pero en otras partes aún no sé qué estoy haciendo conforme las hago. Quizás es hora de pararse y estudiar primero qué acciones tomar aprovechando que el terreno está ahora tranquilo y fértil.",
