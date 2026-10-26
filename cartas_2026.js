@@ -14,6 +14,18 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "26.10.2026",
+      "carta": "Reina de espadas",
+      "nota": "Hoy es día de analizar y pensar con tranquilidad las cosas. Evitar tirar de emociones e impulsos. Ver las cosas con distancia.",
+      "mazo": "Night Sun Tarot"
+    },
+    {
+      "fecha": "25.10.2026",
+      "carta": "La muerte (XIII)",
+      "nota": "Algo se acaba, aunque duela, empezamos con lo siguiente.",
+      "mazo": "Night Sun Tarot"
+    },
+    {
       "fecha": "24.10.2026",
       "carta": "III de espadas",
       "nota": "Revisar muy bien las decisiones que puedan parecer distintas pero que acabarán dando el mismo resultado. Evitar traicionarme a mí mismo y elegir lo que realmente quiero.",
