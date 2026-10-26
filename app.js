@@ -73,7 +73,7 @@ createApp({
     const CLAVE_ULTIMO_MAZO = 'tarotlog_ultimo_mazo';
     const MAZOS_BASE = [
       'El gran tarot esotérico', 'Lost Hollow Tarot', 'Maravilla Tarot',
-      'Night Sun Tarot', 'Pagan Otherworlds', 'Tarot del Toro'
+      'Night Sun Tarot', 'Pagan Otherworlds', 'Tarot del Toro', 'Goetia'
     ];
     const leerUltimoMazo = () => {
       try { return localStorage.getItem(CLAVE_ULTIMO_MAZO) || ''; }
