@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "27.10.2026",
+      "carta": "30 - Forneus - 04 de pentáculos",
+      "nota": "Organizarme con brío para conseguir lo que persigo y disfrutarlo como nadie.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "26.10.2026",
       "carta": "Reina de espadas",
       "nota": "Hoy es día de analizar y pensar con tranquilidad las cosas. Evitar tirar de emociones e impulsos. Ver las cosas con distancia.",
