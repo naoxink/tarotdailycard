@@ -367,7 +367,7 @@ createApp({
     const filtroGlosarioCategoria = ref('todas');
 
     const categoriasGlosario = computed(() => {
-      const orden = ['Arcanos Mayores', 'Elementos', 'Numerología', 'Astrología', 'Símbolos', 'Colores', 'Animales', 'Cabalá'];categoriasGlosario
+      const orden = ['Arcanos Mayores', 'Elementos', 'Numerología', 'Astrología', 'Símbolos', 'Colores', 'Animales', 'Cabalá', 'Ars Goetia'];
       const presentes = new Set(glosarioCompleto.map(item => item.categoria));
       return orden.filter(c => presentes.has(c));
     });
