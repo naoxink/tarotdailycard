@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "28.10.2026",
+      "carta": "67 - Amduscias - 05 de espadas",
+      "nota": "Seguir mi intuición en situaciones de victoria o derrota; en momentos de no retorno. Agilidad mental. ¿Me siento atacado por mis propios pensamientos? Puede ser.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "27.10.2026",
       "carta": "30 - Forneus - 04 de pentáculos",
       "nota": "Organizarme con brío para conseguir lo que persigo y disfrutarlo como nadie.",
