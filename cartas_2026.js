@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "29.10.2026",
+      "carta": "37 - Phanix - 02 de bastos",
+      "nota": "Usar fuerzas complementarias, no hay que conformarse con un sólo incentivo, puedo añadirle SEGURAMENTE otro complementario que me haga ver el proyecto o situación desde una perspectiva más amplia.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "28.10.2026",
       "carta": "67 - Amduscias - 05 de espadas",
       "nota": "Seguir mi intuición en situaciones de victoria o derrota; en momentos de no retorno. Agilidad mental. ¿Me siento atacado por mis propios pensamientos? Puede ser.",
