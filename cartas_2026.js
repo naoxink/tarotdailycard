@@ -16,7 +16,7 @@ window.TAROT_YEAR_DATA[2026] = {
     {
       "fecha": "29.10.2026",
       "carta": "37 - Phanix - 02 de bastos",
-      "nota": "Usar fuerzas complementarias, no hay que conformarse con un sólo incentivo, puedo añadirle SEGURAMENTE otro complementario que me haga ver el proyecto o situación desde una perspectiva más amplia.",
+      "nota": "Usar fuerzas complementarias, no hay que conformarse con un sólo incentivo, puedo añadirle SEGURAMENTE otro complementario que me haga ver el proyecto o situación desde una perspectiva más amplia y más equilibrado.",
       "mazo": "Goetia"
     },
     {
