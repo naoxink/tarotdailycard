@@ -16,7 +16,7 @@ window.TAROT_YEAR_DATA[2026] = {
     {
       "fecha": "30.10.2026",
       "carta": "08 - Bathin - 10 de pentáculos",
-      "nota": "Hay que continuar el camino con fuerza y dinamismo. ¡Vamos!",
+      "nota": "Hay que continuar el camino con fuerza y dinamismo. ¡Vamos! - Cuidado con ir desbocado por la vida, puede afectar a mi salud de forma directa y física.",
       "mazo": "Goetia"
     },
     {
