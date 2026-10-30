@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "30.10.2026",
+      "carta": "08 - Bathin - 10 de pentáculos",
+      "nota": "Hay que continuar el camino con fuerza y dinamismo. ¡Vamos!",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "29.10.2026",
       "carta": "37 - Phanix - 02 de bastos",
       "nota": "Usar fuerzas complementarias, no hay que conformarse con un sólo incentivo, puedo añadirle SEGURAMENTE otro complementario que me haga ver el proyecto o situación desde una perspectiva más amplia y más equilibrado.",
