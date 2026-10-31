@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "31.10.2026",
+      "carta": "60 - Vapula - 07 de copas",
+      "nota": "No todo es lo que parece. También hay que evitar vivir de las ilusiones, hay que tener un pie en la tierra y ser consciente de la realidad o las ilusiones te acabarán comiendo.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "30.10.2026",
       "carta": "08 - Bathin - 10 de pentáculos",
       "nota": "Hay que continuar el camino con fuerza y dinamismo. ¡Vamos! - Cuidado con ir desbocado por la vida, puede afectar a mi salud de forma directa y física.",
