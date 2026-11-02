@@ -14,6 +14,18 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "02.11.2026",
+      "carta": "35 - Marchosias - 09 de copas",
+      "nota": "Hoy es día de gratificación. Disfrute y satisfacción. Día de emociones y sentimientos.",
+      "mazo": "Goetia"
+    },
+    {
+      "fecha": "01.11.2026",
+      "carta": "74 - El recipiente - As de copas",
+      "nota": "",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "31.10.2026",
       "carta": "60 - Vapula - 07 de copas",
       "nota": "No todo es lo que parece. También hay que evitar vivir de las ilusiones, hay que tener un pie en la tierra y ser consciente de la realidad o las ilusiones te acabarán comiendo.",
