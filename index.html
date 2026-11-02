@@ -131,7 +131,10 @@
                 {{ item.palabra.charAt(0).toUpperCase() + item.palabra.slice(1) }}
                 <span class="glosario-fila-cat" v-if="filtroGlosarioCategoria==='todas'">{{ item.categoria }}</span>
               </span>
-              <span class="glosario-fila-definicion">{{ item.definicion }}</span>
+              <span class="glosario-fila-definicion">
+                {{ item.definicion }}
+                <button v-if="esCartaUsable(item)" class="glosario-usar-btn" @click="usarEnFormulario(item)">✚ Usar como carta del día</button>
+              </span>
             </div>
           </div>
 
@@ -256,6 +259,12 @@
           <label>Carta
             <input type="text" v-model="formRegistro.carta" placeholder="Ej: El sol (XIX)" required>
           </label>
+          <button type="button" class="sugerencia-goetia" v-if="sugerenciaGoetia" @click="aplicarSugerenciaGoetia">
+            <span class="sugerencia-goetia-texto">{{ sugerenciaGoetia.texto }}</span>
+            <span class="sugerencia-goetia-sig">
+              {{ sugerenciaGoetia.significado }}<template v-if="sugerenciaGoetia.naturaleza"> · {{ sugerenciaGoetia.naturaleza }}</template>
+            </span>
+          </button>
           <label>Mazo
             <input type="text" v-model="formRegistro.mazo" list="lista-mazos" placeholder="Elige o escribe un mazo" autocomplete="off">
             <datalist id="lista-mazos">

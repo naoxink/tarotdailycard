@@ -405,6 +405,20 @@ button, input, select, textarea { font-family: inherit; color: inherit; }
 }
 .glosario-fila-definicion { color: #cbd5e1; }
 
+.glosario-usar-btn {
+  display: block;
+  margin-top: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.74rem;
+  cursor: pointer;
+}
+.glosario-usar-btn:active { background: var(--accent); color: var(--bg-deep); }
+
 /* ============================================================
    TEST
    ============================================================ */
@@ -498,6 +512,20 @@ button, input, select, textarea { font-family: inherit; color: inherit; }
 }
 .form-anadir textarea { resize: vertical; }
 .form-anadir .compartir-btn { width: 100%; }
+
+.sugerencia-goetia {
+  display: flex; flex-direction: column; gap: 2px;
+  width: 100%; margin-top: -6px;
+  padding: 8px 12px;
+  text-align: left;
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.sugerencia-goetia:active { background: rgba(212, 175, 55, 0.14); }
+.sugerencia-goetia-texto { font-size: 0.9rem; color: var(--accent-soft); font-weight: 600; }
+.sugerencia-goetia-sig { font-size: 0.76rem; color: var(--text-muted); line-height: 1.4; }
 
 .pendientes-box { margin-top: 8px; padding-top: 16px; border-top: 1px dashed rgba(255, 255, 255, 0.12); }
 .pendientes-box h3 { margin-bottom: 10px; font-size: 0.95rem; }

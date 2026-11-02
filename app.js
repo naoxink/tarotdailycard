@@ -821,6 +821,86 @@ createApp({
     const mazoPorDefecto = leerUltimoMazo() || (registros.find(r => r.mazo) || {}).mazo || '';
     const formRegistro = ref({ fecha: hoyISO, carta: '', nota: '', mazo: mazoPorDefecto });
 
+    // --- Ayuda Goetia: sugerencia por número + rellenar desde el glosario ---
+    const formatearCartaGoetia = (raw) => {
+      const c = raw.trim();
+
+      // Arcano mayor: "V - El Papa" -> "El Papa (V)"
+      let m = c.match(/^([IVXL]+)\s*-\s*(.+)$/);
+      if (m) return `${m[2]} (${m[1]})`;
+
+      // Numerales: "Copas 09" -> "09 de copas" · "Copas 01" -> "As de copas"
+      m = c.match(/^(Bastos|Copas|Oros|Espadas)\s+(\d{2})$/i);
+      if (m) {
+        const palo = m[1].toLowerCase() === 'oros' ? 'pentáculos' : m[1].toLowerCase();
+        return m[2] === '01' ? `As de ${palo}` : `${m[2]} de ${palo}`;
+      }
+
+      // Figuras: "Paje de Bastos" -> "Sota de bastos", "Reina de Oros" -> "Reina de pentáculos"
+      m = c.match(/^(Rey|Reina|Paje|Caballero) de (Bastos|Copas|Oros|Espadas)$/i);
+      if (m) {
+        const figura = m[1].toLowerCase() === 'paje' ? 'Sota' : capitalizar(m[1].toLowerCase());
+        const palo = m[2].toLowerCase() === 'oros' ? 'pentáculos' : m[2].toLowerCase();
+        return `${figura} de ${palo}`;
+      }
+
+      return c; // El Loco, etc.
+    };
+
+    const parseGoetia = (item) => {
+      if (item.categoria !== 'Ars Goetia') return null;
+      const d = item.definicion;
+      const num = (d.match(/Demonio nº (\d+)/i) || d.match(/Nº (\d+)/i) || [])[1];
+      const carta = (d.match(/Carta: ([^.]+)\./) || [])[1];
+      if (!num || !carta) return null;
+      const n = Number(num);
+      const cartaFmt = formatearCartaGoetia(carta);
+      return {
+        num: n,
+        nombre: item.palabra,
+        significado: (d.match(/Significado: ([^.]+)\./) || [])[1] || '',
+        naturaleza: (d.match(/Naturaleza: ([^.]+)\./) || [])[1] || '',
+        texto: `${n} - ${item.palabra} - ${cartaFmt}`
+      };
+    };
+
+    const goetiaPorNumero = {};
+    glosarioCompleto.forEach(item => {
+      const g = parseGoetia(item);
+      if (g) goetiaPorNumero[g.num] = g;
+    });
+
+    const mazoEsGoetia = computed(() => formRegistro.value.mazo.trim().toLowerCase().includes('goetia'));
+
+    // Si el mazo es Goetia y la carta empieza por un número, propone la carta completa
+    const sugerenciaGoetia = computed(() => {
+      if (!mazoEsGoetia.value) return null;
+      const m = formRegistro.value.carta.match(/^\s*(\d{1,2})(?!\d)/);
+      if (!m) return null;
+      const s = goetiaPorNumero[Number(m[1])];
+      if (!s || formRegistro.value.carta.trim() === s.texto) return null;
+      return s;
+    });
+
+    const aplicarSugerenciaGoetia = () => {
+      if (sugerenciaGoetia.value) formRegistro.value.carta = sugerenciaGoetia.value.texto;
+    };
+
+    // Desde el glosario: rellena el formulario y salta a "Añadir"
+    const esCartaUsable = (item) => item.categoria === 'Arcanos Mayores' || item.categoria === 'Ars Goetia';
+
+    const usarEnFormulario = (item) => {
+      if (item.categoria === 'Ars Goetia') {
+        const g = parseGoetia(item);
+        if (!g) return;
+        formRegistro.value.carta = g.texto;
+        formRegistro.value.mazo = 'Goetia';
+      } else {
+        formRegistro.value.carta = capitalizar(item.palabra);
+      }
+      irA('anadir');
+    };
+
     const guardarRegistro = () => {
       if (!formRegistro.value.carta.trim()) { alert('Indica la carta.'); return; }
       const [y, m, d] = formRegistro.value.fecha.split('-');
@@ -970,6 +1050,8 @@ createApp({
       iniciarTest, responderTest, siguientePreguntaTest, reiniciarTest,
       porcentajeAciertosTest, mensajeResultadoTest, compartirResultadoTest, compartiendoTest,
       testCategoria, categoriasTestOpciones, elegirCategoriaTest, repetirTest, descripcionConfigTest,
+
+      sugerenciaGoetia, aplicarSugerenciaGoetia, esCartaUsable, usarEnFormulario,
     };
   }
 }).mount('#app');
