@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "03.11.2026",
+      "carta": "19 - Saleos - 02 de espadas",
+      "nota": "Decidir pensando bien aunque el momento sea rápido, tenso o emocional.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "02.11.2026",
       "carta": "35 - Marchosias - 09 de copas",
       "nota": "Hoy es día de gratificación. Disfrute y satisfacción. Día de emociones y sentimientos.",
