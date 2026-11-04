@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "04.11.2026",
+      "carta": "63 - Andras - Caballero de bastos",
+      "nota": "Hoy mejor usar la acción creativa. Sobrepasar los intentos pasados. Usar la creatividad para lo imprevisto y desconocido.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "03.11.2026",
       "carta": "19 - Saleos - 02 de espadas",
       "nota": "Decidir pensando bien aunque el momento sea rápido, tenso o emocional.",
