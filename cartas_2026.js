@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "05.11.2026",
+      "carta": "55 - Orobas - El Mundo (XXI)",
+      "nota": "Termino ya este ciclo de la mejor manera posible. La idea es comenzar partiendo de lo ya aprendido.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "04.11.2026",
       "carta": "63 - Andras - Caballero de bastos",
       "nota": "Hoy mejor usar la acción creativa. Sobrepasar los intentos pasados. Usar la creatividad para lo imprevisto y desconocido.",
