@@ -14,6 +14,24 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "08.11.2026",
+      "carta": "22 - Ipos - La Fuerza (XI)",
+      "nota": "Vamos, tengo fuerza dentro, hay que encontrarla y usarla.",
+      "mazo": "Goetia"
+    },
+    {
+      "fecha": "07.11.2026",
+      "carta": "69 - Decarabia - La Estrella (XVII)",
+      "nota": "",
+      "mazo": "Goetia"
+    },
+    {
+      "fecha": "06.11.2026",
+      "carta": "63 - Andras - Caballero de bastos",
+      "nota": "",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "05.11.2026",
       "carta": "55 - Orobas - El Mundo (XXI)",
       "nota": "Termino ya este ciclo de la mejor manera posible. La idea es comenzar partiendo de lo ya aprendido.",
