@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "09.11.2026",
+      "carta": "31 - Foras - Sota de espadas",
+      "nota": "Asentar lo aprendido. Pararse a estudiar lo recorrido y apuntarse lo importante para una siguiente vez.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "08.11.2026",
       "carta": "22 - Ipos - La Fuerza (XI)",
       "nota": "Vamos, tengo fuerza dentro, hay que encontrarla y usarla.",
