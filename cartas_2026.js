@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "10.11.2026",
+      "carta": "28 - Berith - 02 de pentáculos",
+      "nota": "Reconocer la relatividad de las cosas que ocurren, de las tareas, de las recompensas. Mantenerme en equilibrio con estas cosas para avanzar airoso.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "09.11.2026",
       "carta": "31 - Foras - Sota de espadas",
       "nota": "Asentar lo aprendido. Pararse a estudiar lo recorrido y apuntarse lo importante para una siguiente vez.",
