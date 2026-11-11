@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "11.11.2026",
+      "carta": "73 - La Espada - As de espadas",
+      "nota": "Usar la comunicación como herramienta principal. Necesito mejorar mi claridad mental.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "10.11.2026",
       "carta": "28 - Berith - 02 de pentáculos",
       "nota": "Reconocer la relatividad de las cosas que ocurren, de las tareas, de las recompensas. Mantenerme en equilibrio con estas cosas para avanzar airoso.",
