@@ -44,7 +44,7 @@
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background-color: var(--bg-deep); }
 
 body {
   margin: 0;
@@ -66,7 +66,20 @@ body {
     linear-gradient(180deg, var(--bg-deep) 0%, var(--bg) 45%, var(--bg-deep) 100%);
   background-attachment: fixed;
   overflow-x: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: calc(var(--nav-alto) + env(safe-area-inset-bottom, 0px));
+}
+
+/* Franja sólida bajo la barra de estado de iOS: el contenido que hace scroll
+   no se ve borroso/translúcido por debajo de ella (mide 0 donde no hay safe-area) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg-deep);
+  z-index: 300;
+  pointer-events: none;
 }
 
 h1, h2, h3 { margin: 0; font-family: var(--font-titulo); color: var(--accent-soft); font-weight: 600; letter-spacing: 0.3px; }
@@ -409,7 +422,7 @@ input, select, textarea { font-size: 16px !important; }
    GLOSARIO
    ============================================================ */
 .glosario-az {
-  position: sticky; top: 0; z-index: 5;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
   display: flex; gap: 2px;
   overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
   margin-bottom: 10px; padding: 4px 6px;
@@ -427,7 +440,7 @@ input, select, textarea { font-size: 16px !important; }
 }
 .glosario-az button:active { background: var(--accent); color: #1a1306; }
 
-.glosario-letra-grupo { margin-bottom: 8px; scroll-margin-top: 56px; }
+.glosario-letra-grupo { margin-bottom: 8px; scroll-margin-top: calc(56px + env(safe-area-inset-top, 0px)); }
 .glosario-letra-titulo {
   margin-bottom: 2px; padding-bottom: 2px;
   font-family: var(--font-titulo); font-size: 0.95rem; font-weight: 600; letter-spacing: 1px;
@@ -449,8 +462,9 @@ input, select, textarea { font-size: 16px !important; }
 .glosario-fila-definicion { color: #c9c8e2; }
 
 .glosario-usar-btn {
-  display: inline-block;
-  margin-top: 4px;
+  display: block;
+  width: fit-content;
+  margin-top: 6px;
   min-height: 32px;
   padding: 4px 12px;
   background: transparent;
@@ -559,6 +573,21 @@ input, select, textarea { font-size: 16px !important; }
   outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
 }
 .form-anadir textarea { resize: vertical; }
+
+/* iOS estira el selector de fecha a todo el ancho con mucha altura:
+   se quita su apariencia nativa y se ajusta al contenido */
+.form-anadir input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  align-self: flex-start;
+  min-height: 38px;
+  padding: 6px 12px;
+  text-align: left;
+}
+.form-anadir input[type="date"]::-webkit-date-and-time-value { text-align: left; min-height: 1.2em; }
 .form-anadir .compartir-btn { width: 100%; }
 
 .sugerencia-goetia {
