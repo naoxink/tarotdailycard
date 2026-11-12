@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "12.11.2026",
+      "carta": "54 - Murmur - La Emperatriz (III)",
+      "nota": "",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "11.11.2026",
       "carta": "73 - La Espada - As de espadas",
       "nota": "Usar la comunicación como herramienta principal. Necesito mejorar mi claridad mental.",
