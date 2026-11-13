@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "13.11.2026",
+      "carta": "21 - Marax - 04 de espadas",
+      "nota": "Parar. Tomarse un tiempo para pensar y ordenar la mente. Tranquilizarse para poder planear lo siguiente y ordenar lo pasado.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "12.11.2026",
       "carta": "54 - Murmur - La Emperatriz (III)",
       "nota": "",
