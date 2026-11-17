@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "17.11.2026",
+      "carta": "61 - Zagan - El Emperador (IV)",
+      "nota": "Hoy debo mantenerme firme y ser fuerte al presentar mi autoridad.",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "16.11.2026",
       "carta": "39 - Malphas - La Torre (XVI)",
       "nota": "Estoy atrapado dentro de una estructura, debo romperla para poder avanzar y mejorar, sobre todo para estar mejor conmigo mismo.",
