@@ -14,6 +14,12 @@ window.TAROT_YEAR_DATA[2026] = {
 
   "registros": [
     {
+      "fecha": "18.11.2026",
+      "carta": "54 - Murmur - La Emperatriz (III)",
+      "nota": "",
+      "mazo": "Goetia"
+    },
+    {
       "fecha": "17.11.2026",
       "carta": "61 - Zagan - El Emperador (IV)",
       "nota": "Hoy debo mantenerme firme y ser fuerte al presentar mi autoridad.",
