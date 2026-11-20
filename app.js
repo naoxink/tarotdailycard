@@ -84,11 +84,24 @@ createApp({
       catch (e) { return []; }
     };
 
+    // Identifica una entrada por fecha + carta
+    const clavePend = (r) => `${r.fecha}|${(r.carta || '').trim().toLowerCase()}`;
+
+    // `registros` todavía solo contiene lo que viene del repo (cartas_2026.js)
+    const clavesRepo = new Set(registros.map(clavePend));
+    const yaSubido = (r) => clavesRepo.has(clavePend(r));
+
     const pendientesRegistrosIniciales = leerPendientesRegistros();
-    if (pendientesRegistrosIniciales.length) {
-      registros.push(...pendientesRegistrosIniciales);
+    const pendientesNuevos = pendientesRegistrosIniciales.filter(r => !yaSubido(r));
+    const numSinSubir = pendientesNuevos.length;
+    const numYaSubidos = pendientesRegistrosIniciales.length - numSinSubir;
+
+    // Solo se fusionan los que NO están ya en el repo (evita duplicados)
+    if (pendientesNuevos.length) {
+      registros.push(...pendientesNuevos);
       registros.sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
     }
+
     const mazosConocidos = [...new Set([...MAZOS_BASE, ...registros.map(r => r.mazo).filter(Boolean)])];
 
     // `registros` y `especiales` vienen de cartas.js / cartas_2026.js (scope global, no cambian tras cargar)
@@ -921,6 +934,37 @@ createApp({
       location.reload();
     };
 
+    const limpiarSubidos = () => {
+      if (!numYaSubidos) return;
+      if (!confirm(`¿Quitar de este dispositivo ${numYaSubidos} registro(s) que ya están en el repositorio?`)) return;
+      const restantes = leerPendientesRegistros().filter(r => !yaSubido(r));
+      localStorage.setItem(CLAVE_PENDIENTES_REGISTROS, JSON.stringify(restantes));
+      location.reload();
+    };
+
+    // --- Editar nota de un pendiente ---
+    const editandoIdx = ref(null);
+    const notaEditada = ref('');
+
+    const editarPendienteRegistro = (idx) => {
+      editandoIdx.value = idx;
+      notaEditada.value = pendientesRegistros.value[idx].nota || '';
+    };
+
+    const cancelarEdicionPendiente = () => {
+      editandoIdx.value = null;
+      notaEditada.value = '';
+    };
+
+    const guardarEdicionPendiente = () => {
+      const actuales = leerPendientesRegistros();
+      const idx = editandoIdx.value;
+      if (idx === null || !actuales[idx]) { cancelarEdicionPendiente(); return; }
+      actuales[idx].nota = notaEditada.value.trim();
+      localStorage.setItem(CLAVE_PENDIENTES_REGISTROS, JSON.stringify(actuales));
+      location.reload(); // igual que guardar/borrar: refresca diario, calendario y exportación
+    };
+
     // --- Exportar (copiar al portapapeles + mostrar texto) ---
     const exportacion = ref(null); // { titulo, texto, instrucciones, copiado }
 
@@ -956,10 +1000,11 @@ createApp({
     const cerrarExportacion = () => { exportacion.value = null; };
 
     const exportarRegistros = () => {
-      if (!pendientesRegistros.value.length) { alert('No hay registros pendientes.'); return; }
+      const sinSubir = pendientesRegistros.value.filter(r => !yaSubido(r));
+      if (!sinSubir.length) { alert('No hay registros pendientes de subir.'); return; }
 
       // Más recientes primero, igual que en cartas_2026.js
-      const ordenados = [...pendientesRegistros.value]
+      const ordenados = [...sinSubir]
         .sort((a, b) => parseFecha(b.fecha) - parseFecha(a.fecha));
 
       const texto = ordenados.map(r =>
@@ -1040,6 +1085,7 @@ createApp({
 
       formRegistro, guardarRegistro,
       pendientesRegistros, borrarPendienteRegistro, exportarRegistros,
+      editandoIdx, notaEditada, editarPendienteRegistro, cancelarEdicionPendiente, guardarEdicionPendiente,
       exportacion, recopiarExportacion, cerrarExportacion, mazosConocidos,
 
       filtroGlosarioTexto, filtroGlosarioCategoria, categoriasGlosario,
@@ -1052,6 +1098,7 @@ createApp({
       testCategoria, categoriasTestOpciones, elegirCategoriaTest, repetirTest, descripcionConfigTest,
 
       sugerenciaGoetia, aplicarSugerenciaGoetia, esCartaUsable, usarEnFormulario,
+      numSinSubir, numYaSubidos, yaSubido, limpiarSubidos,
     };
   }
 }).mount('#app');

@@ -29,7 +29,7 @@
         <button :class="{active: vista==='diario'}" @click="irA('diario')">Diario</button>
         <button :class="{active: vista==='glosario'}" @click="irA('glosario')">Glosario</button>
         <button :class="{active: vista==='test'}" @click="irA('test')">Test 🧠</button>
-        <button :class="{active: vista==='anadir'}" @click="irA('anadir')">Añadir ✚</button>
+        <button :class="{active: vista==='anadir'}" @click="irA('anadir')">Añadir ✚<span class="nav-badge" v-if="numSinSubir">{{ numSinSubir }}</span></button>
       </nav>
 
       <div class="global-search">
@@ -47,6 +47,10 @@
 
       <!-- ================= DIARIO ================= -->
       <section v-if="vista==='diario'" class="vista-diario">
+
+        <div class="aviso-pendientes" v-if="numSinSubir > 0" @click="irA('anadir')">
+          📤 {{ numSinSubir }} {{ numSinSubir === 1 ? 'carta sin subir' : 'cartas sin subir' }} al repositorio
+        </div>
 
         <div class="hoy-card" :class="{vacia: !registroHoy}">
           <span class="label">Hoy · {{ hoyString }}</span>
@@ -288,7 +292,11 @@
         </form>
 
         <div class="pendientes-box" v-if="pendientesRegistros.length">
-          <h3>Pendientes de subir al repositorio</h3>
+          <h3>Guardadas en este dispositivo</h3>
+          <p class="pendientes-resumen">
+            <strong>{{ numSinSubir }}</strong> sin subir
+            <template v-if="numYaSubidos"> · <strong>{{ numYaSubidos }}</strong> ya en el repositorio</template>
+          </p>
 
           <div class="export-panel" v-if="exportacion">
             <div class="export-panel-header">
@@ -305,11 +313,29 @@
             </div>
           </div>
 
-          <div class="pendiente-item" v-for="(r, idx) in pendientesRegistros" :key="idx">
-            <span>📅 {{ r.fecha }} · {{ r.carta }}</span>
-            <button class="icon-btn" @click="borrarPendienteRegistro(idx)">🗑</button>
+          <div class="pendiente-item" :class="{subido: yaSubido(r)}" v-for="(r, idx) in pendientesRegistros" :key="idx">
+            <template v-if="editandoIdx !== idx">
+              <span>
+                {{ yaSubido(r) ? '✅' : '📤' }} {{ r.fecha }} · {{ r.carta }}
+                <small class="estado-subida">{{ yaSubido(r) ? 'ya en el repo' : 'sin subir' }}</small>
+              </span>
+              <span class="pendiente-acciones">
+                <button class="icon-btn" title="Editar nota" v-if="!yaSubido(r)" @click="editarPendienteRegistro(idx)">✏️</button>
+                <button class="icon-btn" title="Borrar" @click="borrarPendienteRegistro(idx)">🗑</button>
+              </span>
+            </template>
+            <div class="pendiente-edicion" v-else>
+              <strong>📅 {{ r.fecha }} · {{ r.carta }}</strong>
+              <textarea v-model="notaEditada" rows="4" placeholder="Nota…"></textarea>
+              <div class="export-acciones">
+                <button class="compartir-btn" @click="guardarEdicionPendiente">Guardar nota</button>
+                <button class="volver-btn" @click="cancelarEdicionPendiente">Cancelar</button>
+              </div>
+            </div>
           </div>
-          <button class="volver-btn" @click="exportarRegistros">📋 Copiar registros nuevos</button>
+
+          <button class="volver-btn" v-if="numSinSubir" @click="exportarRegistros">📋 Copiar registros sin subir</button>
+          <button class="volver-btn" v-if="numYaSubidos" @click="limpiarSubidos">🧹 Limpiar los {{ numYaSubidos }} ya subidos</button>
         </div>
 
       </section>
